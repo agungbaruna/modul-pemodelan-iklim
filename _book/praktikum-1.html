@@ -208,7 +208,10 @@ div.csl-indent {
   <li><a href="#instalasi-wrf" id="toc-instalasi-wrf" class="nav-link" data-scroll-target="#instalasi-wrf"><span class="toc-section-number">1.3.6</span>  Instalasi WRF</a></li>
   <li><a href="#instalasi-wrf-pre-processing-wps" id="toc-instalasi-wrf-pre-processing-wps" class="nav-link" data-scroll-target="#instalasi-wrf-pre-processing-wps"><span class="toc-section-number">1.3.7</span>  Instalasi WRF Pre-Processing (WPS)</a></li>
   </ul></li>
-  <li><a href="#prosedur-praktikum-menjalankan-simulasi-wrf-arw" id="toc-prosedur-praktikum-menjalankan-simulasi-wrf-arw" class="nav-link" data-scroll-target="#prosedur-praktikum-menjalankan-simulasi-wrf-arw"><span class="toc-section-number">1.4</span>  Prosedur Praktikum: Menjalankan Simulasi WRF-ARW</a></li>
+  <li><a href="#prosedur-praktikum-menjalankan-simulasi-wrf-arw" id="toc-prosedur-praktikum-menjalankan-simulasi-wrf-arw" class="nav-link" data-scroll-target="#prosedur-praktikum-menjalankan-simulasi-wrf-arw"><span class="toc-section-number">1.4</span>  Prosedur Praktikum: Menjalankan Simulasi WRF-ARW</a>
+  <ul class="collapse">
+  <li><a href="#program-wps" id="toc-program-wps" class="nav-link" data-scroll-target="#program-wps"><span class="toc-section-number">1.4.1</span>  Program WPS</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -516,7 +519,8 @@ div.csl-indent {
 <span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a><span class="va">CC</span><span class="op">=</span>gcc <span class="ex">./configure</span> <span class="at">--prefix</span><span class="op">=</span><span class="va">$ODIR</span></span>
 <span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. Instalasi</span></span>
 <span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span> check install</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
-<li><p>openMPI Jika Anda tidak berencana menjalankan WRF dengan 1 prosesor, Anda dapat melewati langkah ini. Akan tetapi, kami menyarankan untuk memasang program ini untuk mempersingkat waktu dalam mensimulasikan WRF.</p>
+<li><p>openMPI</p>
+<p>Jika Anda tidak berencana menjalankan WRF dengan 1 prosesor, Anda dapat melewati langkah ini. Akan tetapi, kami menyarankan untuk memasang program ini untuk mempersingkat waktu dalam mensimulasikan WRF.</p>
 <div class="sourceCode" id="cb22"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 0. Buka folder libraries</span></span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> <span class="va">$ODIR</span>/pyWRF-install/libraries</span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Extract </span></span>
@@ -723,7 +727,203 @@ div.csl-indent {
 <p></p><figcaption class="figure-caption">Gambar&nbsp;1.9: Diagram WRF</figcaption><p></p>
 </figure>
 </div>
-<p>Untuk lebih mudah dalam menjalankan WRF, lokasi yang akan dipilih untuk menjalankan WRF adalah Kota Surabaya dengan periode 1 - 3 Januari 2022.</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+
+</div>
+</div>
+<section id="program-wps" class="level3" data-number="1.4.1">
+<h3 data-number="1.4.1" class="anchored" data-anchor-id="program-wps"><span class="header-section-number">1.4.1</span> Program WPS</h3>
+<p>Untuk lebih mudah dalam memahami alur proses simulasi WRF pada modul ini, lokasi/domain yang dipilih untuk adalah Kota Surabaya dengan periode 1 - 3 Januari 2022 dengan data GFS dan ERA5. Interval waktu dari kedua data tersebut adalah 6 jam, yaitu pukul 00:00, 06:00, 12:00, dan 18:00 waktu Zulu (GMT+0). Langkah awal sebelum menjalankan WRF adalah menentukan lokasi dan waktu terlebih dahulu di dalam program WPS. Seperti yang telah dijelaskan sebelumnya, WPS memiliki 3 program utama, yaitu <code>geogrid.exe</code>, <code>ungrib.exe</code>, dan <code>metgrid.exe</code>.</p>
+<p>Sesuai dengan kelanjutan dari subbab sebelumnya mengenai instalasi WRF, Anda saat ini berada di dalam folder <code>WPS/</code>. Jika lupa, Anda bisa mengetikkan perintah ini.</p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> <span class="va">$HOME</span>/WRF-Model/WPS</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Kemudian, Jika Anda menutup terminal bash atau mematikan laptop/komputer, definisikan kembali ENVIRONMENT VARIABLE seperti pada saat proses memasang WRF dan WPS, hanya <code>LD_LIBRARY_PATH</code> dan <code>PATH</code>.</p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">ODIR</span><span class="op">=</span><span class="va">$HOME</span>/WRF-Model</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">PATH</span><span class="op">=</span><span class="va">$ODIR</span>/bin:<span class="va">$PATH</span></span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">LD_LIBRARY_PATH</span><span class="op">=</span><span class="va">$ODIR</span>/lib:<span class="va">$LD_LIBRARY_PATH</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Langkah-langkah menjalankan program WPS adalah sebagai berikut.</p>
+<ol type="1">
+<li><p>Buka file <code>namelist.wps</code>. Isi dari file tersebut pada saat awal kurang lebih seperti ini.</p>
+<pre><code>&amp;share
+ wrf_core = 'ARW',
+ max_dom = 2,
+ start_date = '2019-09-04_12:00:00','2019-09-04_12:00:00',
+ end_date   = '2019-09-06_00:00:00','2019-09-04_12:00:00',
+ interval_seconds = 10800
+/
+
+&amp;geogrid
+ parent_id         =   1,    1,
+ parent_grid_ratio =   1,    3,
+ i_parent_start    =   1,   53,
+ j_parent_start    =   1,   25,
+ e_we              =  150, 220,
+ e_sn              =  130, 214,
+ geog_data_res = 'default','default',
+ dx = 15000,
+ dy = 15000,
+ map_proj = 'lambert',
+ ref_lat   =  33.00,
+ ref_lon   = -79.00,
+ truelat1  =  30.0,
+ truelat2  =  60.0,
+ stand_lon = -79.0,
+ geog_data_path = '/glade/work/wrfhelp/WPS_GEOG/'
+/
+
+&amp;ungrib
+ out_format = 'WPS',
+ prefix = 'FILE',
+/
+
+&amp;metgrid
+ fg_name = 'FILE'
+/</code></pre>
+<p>Terdapat berbagai macam parameter di dalam <code>&amp;share</code>, <code>&amp;geogrid</code>, <code>&amp;ungrib</code>, dan <code>&amp;metgrid</code>. Anda perlu mengubah beberapa parameter tersebut yang dapat disesuaikan dengan simulasi. Tapi, Anda harus memperhatikan aturan atau template yang telah diberikan di dalam panduan pengguna. Untuk lebih rincinya, Anda bisa lihat di <a href="https://www2.mmm.ucar.edu/wrf/users/docs/user_guide_v4/v4.4/users_guide_chap3.html">Panduan Pengguna WRF-ARW Bab 3</a>.</p>
+<p>Di dalam tahapan ini, Anda perlu mengubah parameter-parameter yang ada di dalam <code>&amp;geogrid</code>. Pada contoh yang telah kami berikan, Anda perlu mengganti parameter <code>&amp;geogrid</code> dan <code>&amp;share</code>. File namelist.wps di atas berubah menjadi seperti ini. Penjelasan setiap variabel dapat dilihat pada <a href="#tbl-namelistwps">Tabel&nbsp;<span>1.2</span></a></p>
+<pre><code>&amp;share
+ wrf_core = 'ARW',                                                                 
+ max_dom = 3,                                                                      
+ start_date = '2022-01-01_00:00:00','2022-01-01_00:00:00','2022-01-01_00:00:00',   
+ end_date   = '2022-01-03_18:00:00','2022-01-03_18:00:00','2022-01-03_18:00:00',   
+ interval_seconds = 21600,                                                         
+ io_form_geogrid = 2,                                                              
+/
+
+&amp;geogrid
+ parent_id         =   1,   1,   1,
+ parent_grid_ratio =   1,   3,   9,                                                  
+ i_parent_start    =   1,  11,  15,
+ j_parent_start    =   1,  11,  15,
+ e_we              =  33,  40,  46,                                                 
+ e_sn              =  33,  40,  46,                                                 
+ geog_data_res = 'default','default','default',                                     
+ dx = 18000,                                                                        
+ dy = 18000,                                                                        
+ map_proj = 'mercator',                                                             
+ ref_lat   =  -7.328457529144323,                                                   
+ ref_lon   = 112.7412453984603,                                                     
+ truelat1  =  -7.328457529144323,                                                   
+ geog_data_path = '/home/absen/WRF-Model/data/WPS_GEOG/'                                 
+/
+
+&amp;ungrib
+ out_format = 'WPS',
+ prefix = 'FILE',
+/
+
+&amp;metgrid
+ fg_name = 'FILE'
+ io_form_metgrid = 2, 
+/</code></pre>
+<div id="tbl-namelistwps" class="anchored">
+<table class="table">
+<caption>Tabel&nbsp;1.2: Informasi beberapa variabel di dalam <code>namelist.wps</code></caption>
+<colgroup>
+<col style="width: 11%">
+<col style="width: 88%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Variabel</th>
+<th style="text-align: left;">Keterangan</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>wrf_core</code></td>
+<td style="text-align: left;">Tipe penyelesaian WRF, ARW atau NMM</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>max_dom</code></td>
+<td style="text-align: left;">Jumlah domain, semakin banyak domain maka semakin tinggi resolusi spasialnya</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>start_date</code></td>
+<td style="text-align: left;">Waktu mulai simulasi sesuai dengan data masukan. Sesuai dengan jumlah domain. Format: <code>YYYY-MM-DD_HH:mm:ss</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>end_date</code></td>
+<td style="text-align: left;">Waktu akhir simulasi sesuai dengan data masukan. Sesuai dengan jumlah domain. Format: <code>YYYY-MM-DD_HH:mm:ss</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>interval_seconds</code></td>
+<td style="text-align: left;">Interval waktu dari data masukan (dalam detik)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>io_from_geogrid</code></td>
+<td style="text-align: left;">Tipe format file luaran <code>geogrid.exe</code> (1 = binary, 2 = netcdf, 3 = GRIB1)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>parent_id</code></td>
+<td style="text-align: left;">Untuk domain paling kasar, nilainya 1. Domain selanjutnya juga bernilai 1 yang menandakan bahwa subdomain merupakan bagian dari domain utamanya.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>parent_grid_ratio</code></td>
+<td style="text-align: left;">Rasio piksel dari dx dan dy pada domain ke-1. Domain paling kasar adalah 1 dan selanjutnya mengikuti rasio yang diinginkan.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>i_parent_start</code></td>
+<td style="text-align: left;">Nomor indeks acuan untuk koordinat X. Domain paling kasar bernilai 1, ditentukan dari kiri-bawah</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>j_parent_start</code></td>
+<td style="text-align: left;">Nomor indeks acuan untuk koordinat Y. Domain paling kasar bernilai 1, ditentukan dari kiri-bawah</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>e_we</code></td>
+<td style="text-align: left;">Jumlah grid/piksel dari barat ke timur mengikuti rumus <code>parent_grid_ratio</code> * N + 1, dengan N &gt; 0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>e_sn</code></td>
+<td style="text-align: left;">Jumlah grid/piksel dari selatan ke utara mengikuti rumus <code>parent_grid_ratio</code> * N + 1, dengan N &gt; 0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>geog_data_res</code></td>
+<td style="text-align: left;">Pemilihan resolusi spasial dari data statik</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>dx</code></td>
+<td style="text-align: left;">Resolusi spasial pada koordinat X (dalam meter)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>dy</code></td>
+<td style="text-align: left;">Resolusi spasial pada koordinat Y (dalam meter)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>map_proj</code></td>
+<td style="text-align: left;">Sistem proyeksi peta (<code>mercator</code>, <code>lambert</code>, <code>polar</code>, <code>lat-lon</code>). Untuk simulasi di sekitar khatulistiwa, direkomendasikan menggunakan <code>mercator</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>ref_lat</code></td>
+<td style="text-align: left;">Koordinat lintang titik tengah acuan dari domain paling kasar</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>ref_lon</code></td>
+<td style="text-align: left;">Koordinat bujur titik tengah acuan dari domain paling kasar</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>truelat1</code></td>
+<td style="text-align: left;">Koordinat lintang sebenarnya. Dibutuhkan untuk sistem proyeksi <code>mercator</code>, <code>polar</code>, dan <code>lambert</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>geog_data_path</code></td>
+<td style="text-align: left;">Lokasi folder <code>WPS_GEOG</code></td>
+</tr>
+</tbody>
+</table>
+</div></li>
+<li><p><code>ungrib.exe</code></p></li>
+<li><p><code>metgrid.exe</code></p></li>
+</ol>
 
 
 <div id="refs" class="references csl-bib-body" role="doc-bibliography">
@@ -770,6 +970,7 @@ Sonkaew T, Cumwan S, Kanta W, Macatangay R. Finding the optimum microphysics and
 Wilby RL, Wigley TM. 1997. Downscaling general circulation model output: A review of methods and limitations. <em>Progress in physical geography</em>. 21(4):530–548.
 </div>
 </div>
+</section>
 </section>
 
 </main> <!-- /main -->
