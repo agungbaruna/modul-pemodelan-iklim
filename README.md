@@ -1,5 +1,7 @@
 # Modul Pemodelan Iklim
 
+Semua data dapat diunduh di https://drive.google.com/drive/folders/1tEYU2EgnqEEIu2NNqyVS64R73qzzN5zK?usp=share_link
+
 Materi:
 
 1.  Instalasi R dan RStudio
