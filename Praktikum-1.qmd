@@ -1,0 +1,207 @@
+# Prosedur Instalasi
+
+## Pengecekan Software Dasar
+
+Proses instalasi terbagi menjadi dua bagian, yaitu instalasi software pendukung dan model WRF. Sebelum memasang software seperti HDF5, ZLIB, LIBPNG, MPICH, dan NETCDF, Anda perlu mengecek software dasar untuk memasang beberapa software pendukung tersebut. Berikut ini adalah langkah-langkahnya.
+
+1. Mengecek instalasi beberapa software dengan perintah sebagai berikut. 
+```{bash}
+which gfortran gcc m4 g++ make
+```
+
+2. Jika tidak muncul respons seperti gambar pada langkah no.1, maka install software tersebut pada Ubuntu atau WSL dengan cara mengetik perintah sebagai berikut.
+
+```{bash, indent="     ", eval=F}
+sudo apt-get install gfortran gcc m4 g++ 
+sudo apt-get update
+```
+
+3.	Unduh semua file yang berada pada tautan [ipb.link/wrf](ipb.link/wrf) dan buat folder baru di direktori yang Anda inginkan. Misalnya di direktori `D:` dengan folder bernama `WRF` 
+
+## Instalasi Software Pendukung
+
+Langkah-langkah di bawah ini merupakan tahapan instalasi beberapa software yang diperlukan sebelum memasang WRF maupun WPS.
+
+1. Buka terminal. Kemudian, buka file `.bashrc` dengan mengetik perintah `sudo nano ~/.bashrc`
+2. Ketik beberapa ENVIRONMENT VARIABLE berikut pada file `.bashrc` dan letakkan paling bawah 
+```{bash, indent="     ", eval=F}
+export DIR=/mnt/d/WRF/LIBRARIES
+export CC=gcc
+export CXX=g++
+export FC=gfortran
+export FCFLAGS=-m64
+export F77=gfortran
+export FFLAGS=-m64
+export NETCDF=$DIR/netcdf
+export LDFLAGS="-L$DIR/grib2/lib -L$DIR/netcdf/lib"
+export LD_LIBRARY_PATH=$DIR/grib2/lib:$DIR/netcdf/lib:$LD_LIBRARY_PATH
+export CPPFLAGS="-I$DIR/grib2/include -I$DIR/netcdf/include"
+export PATH=$DIR/grib2/bin:$NETCDF/bin:$PATH
+export JASPERLIB=$DIR/grib2/lib
+export JASPERINC=$DIR/grib2/include 
+```
+  Kemudian, tekan CTRL+X untuk kembali ke terminal dan tekan Y
+  
+3.	Pergi ke direktori instalasi WRF dan WPS dengan cara mengetik perintah `cd /mnt/d/WRF`
+4.	Ekstrak semua file kompres 
+5.	Pergi ke direktori LIBRARIES dengan mengetik perintah `cd LIBRARIES`
+6.	Pastikan kembali file software pendukung berada di folder LIBRARIES.
+7.	Instalasi zlib. Software ini digunakan untuk kompresi data dan dibutuhkan sebelum memasang NETCDF.
+```{bash, eval = F, indent = "    "}
+cd zlib-1.2.11
+./configure --prefix=$DIR/grib2
+sudo make check install
+cd .. 
+```
+8. Instalasi HDF5.
+```{bash, eval = F, indent = "    "}
+cd hdf5-1.12.0
+./configure --prefix=$DIR/grib2 --with-zlib=$DIR/grib2 --enable-fortran 
+sudo make check install
+cd .. 
+```
+9.	Instalasi LIBPNG
+```{bash, eval = F, indent = "    "}
+cd libpng-1.6.37
+./configure --prefix=$DIR/grib2 --with-zlib-prefix=$DIR/grib2
+sudo make check install
+cd ..
+```
+10.	Instalasi MPICH. Software ini memiliki kemampuan untuk menjalankan program secara paralel. Anda direkomendasikan untuk memasang software ini jika Anda mensimulasikan model WRF dengan area yang cukup luas dengan resolusi tinggi (Catatan: *library* ini opsional tergantung dari pengguna ingin menjalankan model dengan banyak prosesor atau 1 prosesor saja).
+```{bash, eval = F, indent = "    "}
+cd mpich-3.4.1
+./configure --prefix=$DIR/grib2 --with-device=ch3
+sudo make check install
+cd ..
+```
+
+11.	Instalasi JASPER
+```{bash, eval = F, indent = "    "}
+cd jasper-1.900.1
+./configure --prefix=$DIR/grib2
+sudo make check install
+cd ..
+```
+
+12.	Instalasi NETCDF. NETCDF yang dipasang terbagi menjadi 2 bagian, yaitu dengan bahasa C dan Fortran. Ketik perintah berikut untuk instalasi NETCDF-C.
+```{bash, eval = F, indent = "    "}
+cd netcdf-c-4.7.4
+./configure --prefix=$DIR/netcdf --disable-dap --disable-shared
+sudo make check install
+cd .. 
+```
+  Kemudian, ketik perintah berikut untuk memasang NETCDF-FORTRAN.
+```{bash, eval = F, indent = "    "}
+cd netcdf-fortran-4.5.3
+./configure --prefix=$DIR/netcdf --disable-dap --disable-shared
+sudo make check install
+cd .. 
+cd ..
+```
+
+## Instalasi WRF dan WPS
+
+Setelah software pendukung telah berhasil dipasang, Anda dapat memasang model WRF dan software WPS dengan langkah-langkah berikut.
+
+1. Pergi ke direktori hasil kompresi WRF dengan mengetik perintah sebagai berikut. `cd WRF`
+
+2. Ketik perintah berikut untuk mulai memasang WRF.
+```{bash, eval = F, indent = "    "}
+./configure
+```
+Pilih dmpar dengan compiler gfortran jika sudah menginstal mpich dengan mengetik angka 34 atau 32 jika tidak memasang mpich. Tekan Enter dan setelah itu ketik angka 1, kemudian Enter lagi. Jika sudah selesai melakukan konfigurasi, langkah selanjutnya ketikkan perintah berikut.
+```{bash, eval = F, indent = "    "}
+./compile -j 4 em_real 
+```
+#NB: Proses instalasi berlangsung sekitar 20-30 menit tergantung jenis prosesor. Opsi `-j 4` membantu proses instalasi lebih cepat dengan menggunakan 4 prosesor atau dijalankan secara paralel. Tapi, Anda perlu memasang MPICH terlebih dahulu. 
+
+3.	Untuk mengecek proses instalasi sudah selesai, ketikkan perintah sebagai berikut.
+```{bash, eval = F, indent = "    "}
+ls -ls main/*.exe
+```
+
+4.	Keluar dari direktori WRF dengan perintah sebagai berikut.
+```{bash, eval = F, indent = "    "}
+cd ..
+```
+
+5.	Pergi ke direktori hasil kompresi WPS dengan mengetik perintah sebagai berikut.
+```{bash, eval = F, indent = "    "}
+cd WPS
+```
+
+6.	Ketik perintah berikut untuk mulai memasang WPS 
+```{bash, eval = F, indent = "    "}
+./configure
+./compile
+```
+
+7.	Untuk mengecek proses instalasi sudah selesai, ketikkan perintah sebagai berikut.
+```{bash, eval = F, indent = "    "}
+ls -ls *.exe
+```
+  Jika sudah terdapat program `geogrid.exe`, `metgrid.exe`, dan `ungrib.exe`, maka WRF siap untuk dijalankan.
+
+
+# Prosedur Menjalankan Model WRF
+
+1.	Menjalankan WRF Pre-Processing (WPS)
+    a.	Ekstrak file geog_high_res_mandatory.tar.gz dengan mengetik perintah berikut. 
+        ```{bash, eval = F, indent = "        "}
+        gunzip geog_high_res_mandatory.tar.gz
+        tar -xf geog_high_res_mandatory.tar
+        ```
+    b.	Menuju direktori WPS.
+        ```{bash, eval = F, indent="    "}
+        cd WPS
+        ```
+    c.	Mengubah beberapa informasi dari namelist.wps yang terletak di direktori WPS. Informasi ini terdiri dari penentuan lokasi simulasi, waktu simulasi, format luaran geogrid, kategori tutupan lahan (MODIS atau USGS), dll (Informasi lebih lanjut dapat dilihat pada WRF-ARW User Guide).
+    d. Menjalankan program `geogrid.exe` dengan perintah. 
+       ```{bash, eval=F, indent="    "}
+       ./geogrid.exe
+       ```
+       Program ini akan berhasil dijalankan apabila terdapat luaran geo_em*.nc pada setiap domain (Misal: jika max_dom pada namelist.wps diatur menjadi 4 (max_dom=4), maka terdapat 4 file geo_em: geo_em.d01.nc, geo_em.d02.nc, geo_em.d03.nc, dan geo_em.d04.nc) 
+    e.	Menghubungkan beberapa file Boundary Condition and Initial Condition dengan perintah (contoh: data GFS)
+        ```{bash, eval = F, indent = "        "}
+        ./link_grib.csh direktori_data_GFS
+        ```
+    f.	Menghubungkan tabel variabel (Vtable) dengan perintah
+        ```{bash, eval = F, indent = "        "}
+        ln -sf ungrib/Variable_Tables/Vtable.GFS Vtable
+        ```
+    g.	Menjalankan program ungrib.exe dengan perintah 
+        ```{bash, eval = F, indent = "        "}
+        ./ungrib.exe
+        ```
+    h.	Menjalankan program metgrid.exe dengan perintah 
+        ```{bash, eval = F, indent = "        "}
+        ./metgrid.exe
+        ```
+
+2.	Menjalankan WRF
+    a.	Menuju direktori ..WRF/test/em_real dengan mengetik perintah:
+        ```{bash, eval = F, indent = "        "}
+        cd ../WRF/test/em_real
+        ```
+    b.	Menghubungkan file met_em* menuju lokasi ..WRF/test/em_real dengan perintah (tergantung direktori masing-masing komputer)
+        ```{bash, eval = F, indent = "        "}
+        ln -sf ../../../WPS/met_em* .
+        ```
+    ATAU bisa juga dilakukan dengan memindahkan (cut-paste) file met_em dari folder WPS ke folder em_real.
+    c.Mengubah beberapa parameter dan variabel di dalam file namelist.input (Informasi setiap parameter dapat dilihat pada WRF-ARW User Guide atau file `README.namelist`)
+    Pastikan pada bagian &time_control dan &domain sesuai dengan file namelist.wps
+    d.	Menjalankan program real.exe dengan mengetik perintah
+        ```{bash, eval = F, indent = "        "}
+        ./real.exe
+        ```
+    Hasil dari program real.exe adalah file wrfbdy_d<domain> dan wrfinput_d<domain>
+    NB: Jika terdapat error, pastikan informasi dari salah satu file met_em* sesuai dengan yang ada di file namelist.input. Untuk memastikannya, Anda bisa mengetik perintah pada terminal: 
+        ```{bash, eval = F, indent = "        "}
+        ncdump -h met_em.d<domain>.<date>.nc
+        ```
+    e.	Mengetik perintah tail rsl.error.0000 pada terminal. Jika terdapat perintah SUCCESS COMPLETE REAL_EM INIT di paling bawah, maka model siap dijalankan dengan mengetik perintah: 
+        ```{bash, eval = F, indent = "        "}
+        ./wrf.exe
+        ```
+    f.	Model WRF telah berhasil disimulasikan jika terdapat file wrfout* (Misal: wrfout_d01_2013-02-01_00:00:00). Ekstensi dari file tersebut adalah NetCDF (*.nc) yang dapat dibaca pada aplikasi NCL, ArcMap, Panoply, kecuali GrADS. [ARWpost](https://www2.mmm.ucar.edu/wrf/src/ARWpost_V3.tar.gz) diperlukan untuk membaca file luaran WRF pada aplikasi GrADS.
+    g.	Ketika menjalankan program wrf.exe, ada file wrfrst* yang berfungsi untuk **melanjutkan** simulasi WRF ketika berhenti di tengah-tengah, seperti mati listrik.

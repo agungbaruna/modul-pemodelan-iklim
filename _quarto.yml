@@ -1,0 +1,45 @@
+project:
+  type: book
+
+book:
+  title: "Module Praktikum Pemodelan Iklim"
+  author: "Agung Baruna Setiawan Noor"
+  date: "1/10/2023"
+  chapters:
+    - index.qmd
+    - praktikum-1.ipynb
+    # - summary.qmd
+bibliography: references.bib
+crossref:
+  chapters: true
+  fig-prefix: Gambar # (default is "Figure")
+  fig-title: Gambar
+  tbl-prefix: Tabel # (default is "Table")
+  tbl-title: Tabel
+csl: ipb.csl
+code-overflow: wrap
+code-block-border-left: true
+code-block-bg: "EFF5F5"
+
+format:
+  html:
+    theme: cosmo
+  pdf:
+    colorlinks: true
+    geometry:
+      - top=30mm
+      - left=20mm
+      - right=20mm
+      - bottom=30mm
+      - heightrounded
+    documentclass: scrbook
+    papersize: letter
+    toc-title: "Daftar Isi"
+    cite-method: biblatex
+    biblio-title: "Daftar Pustaka"
+
+highlight-style: github
+include-in-header: 
+  text: |
+    \usepackage{fvextra}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,commandchars=\\\{\}}

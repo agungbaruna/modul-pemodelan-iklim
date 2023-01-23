@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.280">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Module Praktikum Pemodelan Iklim - 1&nbsp; Dynamical Downscaling: Model Weather Research Forecasting (WRF)</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./index.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+</head><body class="nav-sidebar floating">\usepackage{fvextra}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,commandchars=\\\{\}}
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+
+
+
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title"><em>Dynamical Downscaling</em>: Model Weather Research Forecasting (WRF)</span></h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Module Praktikum Pemodelan Iklim</a> 
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">Pendahuluan</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./praktikum-1.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title"><em>Dynamical Downscaling</em>: Model Weather Research Forecasting (WRF)</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#pendahuluan" id="toc-pendahuluan" class="nav-link active" data-scroll-target="#pendahuluan"><span class="toc-section-number">1.1</span>  Pendahuluan</a></li>
+  <li><a href="#dasar-dasar-pemrograman-bash" id="toc-dasar-dasar-pemrograman-bash" class="nav-link" data-scroll-target="#dasar-dasar-pemrograman-bash"><span class="toc-section-number">1.2</span>  Dasar-dasar Pemrograman Bash</a></li>
+  <li><a href="#prosedur-praktikum-instalasi-wrf" id="toc-prosedur-praktikum-instalasi-wrf" class="nav-link" data-scroll-target="#prosedur-praktikum-instalasi-wrf"><span class="toc-section-number">1.3</span>  Prosedur Praktikum: Instalasi WRF</a>
+  <ul class="collapse">
+  <li><a href="#menjalankan-windows-subsystem-linux-wsl-di-windows-1011" id="toc-menjalankan-windows-subsystem-linux-wsl-di-windows-1011" class="nav-link" data-scroll-target="#menjalankan-windows-subsystem-linux-wsl-di-windows-1011"><span class="toc-section-number">1.3.1</span>  Menjalankan <em>Windows Subsystem Linux</em> (WSL) di Windows 10/11</a></li>
+  <li><a href="#sebelum-mulai" id="toc-sebelum-mulai" class="nav-link" data-scroll-target="#sebelum-mulai"><span class="toc-section-number">1.3.2</span>  Sebelum Mulai</a></li>
+  <li><a href="#data-dan-package-pendukung" id="toc-data-dan-package-pendukung" class="nav-link" data-scroll-target="#data-dan-package-pendukung"><span class="toc-section-number">1.3.3</span>  Data dan Package Pendukung</a></li>
+  <li><a href="#instalasi-software-compiler" id="toc-instalasi-software-compiler" class="nav-link" data-scroll-target="#instalasi-software-compiler"><span class="toc-section-number">1.3.4</span>  Instalasi Software Compiler</a></li>
+  <li><a href="#instalasi-package" id="toc-instalasi-package" class="nav-link" data-scroll-target="#instalasi-package"><span class="toc-section-number">1.3.5</span>  Instalasi Package</a></li>
+  <li><a href="#instalasi-wrf" id="toc-instalasi-wrf" class="nav-link" data-scroll-target="#instalasi-wrf"><span class="toc-section-number">1.3.6</span>  Instalasi WRF</a></li>
+  <li><a href="#instalasi-wrf-pre-processing-wps" id="toc-instalasi-wrf-pre-processing-wps" class="nav-link" data-scroll-target="#instalasi-wrf-pre-processing-wps"><span class="toc-section-number">1.3.7</span>  Instalasi WRF Pre-Processing (WPS)</a></li>
+  </ul></li>
+  <li><a href="#prosedur-praktikum-menjalankan-simulasi-wrf-arw" id="toc-prosedur-praktikum-menjalankan-simulasi-wrf-arw" class="nav-link" data-scroll-target="#prosedur-praktikum-menjalankan-simulasi-wrf-arw"><span class="toc-section-number">1.4</span>  Prosedur Praktikum: Menjalankan Simulasi WRF-ARW</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title"><em>Dynamical Downscaling</em>: Model Weather Research Forecasting (WRF)</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="pendahuluan" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="pendahuluan"><span class="header-section-number">1.1</span> Pendahuluan</h2>
+<p>Global Climate Model (GCM) adalah alat utama dan paling komprehensif yang digunakan dalam mensimulasikan kondisi iklim pada masa lalu maupun masa depan. GCM memiliki kemampuan dalam melakukan simulasi variabilitas iklim, sifat-sifat fisis, serta kimia di bumi dengan perhitungan secara matematis yang menggambarkan proses, interaksi, dan timbal balik pada atmosfer, lautan, dan biotik. Kelemahan dalam GCM adalah ketidakmampuan menangkap kejadian-kejadian iklim pada skala regional maupun lokal karena memiliki resolusi spasial yang terlalu kasar, yaitu sekitar &gt;100 km. Metode <em>downscaling</em> di dalam ilmu iklim umum digunakan pada kajian hidrologi <span class="citation" data-cites="piani2010suhu">(<a href="#ref-piani2010suhu" role="doc-biblioref">Piani, Weedon, <em>et al.</em> 2010</a>)</span>, pertanian <span class="citation" data-cites="glotter2014">(<a href="#ref-glotter2014" role="doc-biblioref">Glotter <em>et al.</em> 2014</a>)</span>, dan sistem perkotaan <span class="citation" data-cites="smid2018">(<a href="#ref-smid2018" role="doc-biblioref">Smid and Costa 2018</a>)</span>. Sebagai contoh pada kajian hidrologi, teknik <em>downscaling</em> digunakan untuk pemodelan debit sungai dan banjir <span class="citation" data-cites="piani2010pr">(<a href="#ref-piani2010pr" role="doc-biblioref">Piani, Haerter, <em>et al.</em> 2010</a>)</span>. Metode <em>downscaling</em> adalah cara mendapatkan informasi lebih spesifik dengan resolusi tinggi. Kata <em>downscaling</em> biasanya merujuk pada peningkatan resolusi spasial maupun temporal. Terdapat dua cara dalam melakukan metode ini, yaitu statistik dan dinamik. Di dalam ilmu iklim, metode ini umum digunakan pada GCM. Wilby dan Wigley <span class="citation" data-cites="wilby1997">(<a href="#ref-wilby1997" role="doc-biblioref">Wilby and Wigley 1997</a>)</span> mengelompokkan teknik <em>downscaling</em> menjadi 4 kategori, yaitu</p>
+<ol type="1">
+<li><p>Regresi</p>
+<p>Metode regresi merupakan metode downscaling paling awal yang telah digunakan pada kajian perubahan iklim. Hal ini dapat dibuktikan dari penelitian oleh Kim pada tahun 1984 <span class="citation" data-cites="kim1984">(<a href="#ref-kim1984" role="doc-biblioref">Kim <em>et al.</em> 1984</a>)</span>. Pendekatan ini secara umum membangun hubungan linier atau non-linier antara parameter titik lokasi dengan prediktor variabel dari resolusi kasar. Contoh dari metode ini adalah regresi linier sederhana, regresi linier berganda, Artificial Neural Network (ANN), regresi komponen utama (Principle Component Regression/PCR), dan lain sebagainya. Sudah banyak penelitian yang menerapkan metode ini untuk kajian perubahan iklim <span class="citation" data-cites="pahlavan2018 huth2000 goly2014 sachindra2014">(<a href="#ref-huth2000" role="doc-biblioref">Huth and Kyselỳ 2000</a>; <a href="#ref-goly2014" role="doc-biblioref">Goly <em>et al.</em> 2014</a>; <a href="#ref-sachindra2014" role="doc-biblioref">Sachindra <em>et al.</em> 2014</a>; <a href="#ref-pahlavan2018" role="doc-biblioref">Pahlavan <em>et al.</em> 2018</a>)</span>.</p></li>
+<li><p>Pola cuaca</p>
+<p>Metode ini dibangun dari hubungan statistik dari variabel cuaca di stasiun observasi atau rata-rata area dengan klasifikasi cuaca tertentu yang dapat diturunkan secara obyektif maupun subyektif. Metode ini secara obyektif dapat meliputi komponen utama, Canonical Correlation Analyses (CCA), aturan Fuzzy, dan Neural Networks. Contoh prosedur pengelompokkan pola cuaca, yaitu European Grosswetterlagen dan British Isles Lamb Weather Types.</p></li>
+<li><p>Stokastik</p>
+<p>Model WGEN <span class="citation" data-cites="richardson1981">(<a href="#ref-richardson1981" role="doc-biblioref">Richardson 1981</a>)</span> merupakan contoh dari pendekatan ini. Model WGEN dapat membangkitkan data curah hujan harian yang diperoleh dari peluang kejadian hujan (hujan dan tidak hujan) dengan menggunakan rantai Markov order satu. Model ini telah digunakan dalam kajian perubahan iklim dan analisis dampak. Model stokastik yang telah diperoleh dari data observasi deret waktu dapat divalidasi dengan GCM dan perlu dikalibrasi terlebih dahulu.</p></li>
+<li><p><em>Limited-area climate models</em> (LAM)</p>
+<p>Metode terakhir untuk melakukan <em>downscaling</em> terhadap GCM adalah dengan menyematkan model iklim dengan area terbatas. Sebenarnya, LAM pada saat ini dapat diistilahkan sebagai <em>Regional Climate Model</em> (RCM). RCM memiliki resolusi spasial kurang dari 100 km. RCM memerlukan sumber daya komputer yang hampir sama dengan menjalankan GCM. RCM memiliki kemampuan dalam mensimulasikan proses-proses atmosfer pada skala menengah, seperti curah hujan orografis dan konveksi awan atau skala tinggi, seperti turbulensi. Contoh dari RCM adalah Weather Research Forecasting (WRF) <span class="citation" data-cites="skamarock2019">(<a href="#ref-skamarock2019" role="doc-biblioref">Skamarock <em>et al.</em> 2019</a>)</span>.</p></li>
+</ol>
+<p>Teknik <em>dynamical downscaling</em> dapat menjelaskan proses-proses fisika (hukum termodinamika, hukum kekekalan energi, hukum gerak) untuk setiap skala piksel. Teknik ini membutuhkan kondisi batas menggunakan data GCM dan perlu menentukan pemilihan lokasi. Teknik ini merujuk pada penggunaan RCM untuk meningkatkan skala spasial dan temporal. Model iklim regional meliputi komponen dinamik, fisik, maupun kimia. Komponen dinamik atmosfer memperhitungkan komponen fisika atmosfer yang mencakup proses-proses fisik, seperti radiasi gelombang panjang dan pendek, presipitasi, dan proses pertukaran energi di permukaan bumi atau laut. Proses pada skala sub-piksel dimodelkan oleh berbagai skema parameterisasi yang tentunya dapat berasal dari perhitungan matematika (integral atau diferensial) serta statistik.</p>
+<p>WRF merupakan salah satu teknik <em>dynamical downscaling</em>. Penggunaan model WRF semakin berkembang saat ini dengan tujuan riset dan operasional. WRF memiliki spesifikasi dalam berbagai aplikasi prediksi di dalam sistem bumi, seperti kimia atmosfer, hidrologi, kebakaran hutan, siklon, dan iklim regional. Sebanyak lebih dari 36.000 pengguna WRF tersebar di 162 negara, termasuk Indonesia yang telah menggunakan WRF untuk kebutuhan operasional <span class="citation" data-cites="powers2017">(<a href="#ref-powers2017" role="doc-biblioref">Powers <em>et al.</em> 2017</a>)</span>. Ada dua jenis model WRF berdasarkan penyelesaian persamaan aliran fluida atmosfer, yaitu <em>Advanced Research WRF</em> (ARW) dan <em>Nonhydrostatic Mesoscale Model</em> (NMM). WRF-ARW dikembangkan oleh National Centre of Atmosphere Research (NCAR), sedangkan WRF-NMM dikembangkan oleh National Centre of Environmental Prediction (NCEP) <span class="citation" data-cites="skamarock2019">(<a href="#ref-skamarock2019" role="doc-biblioref">Skamarock <em>et al.</em> 2019</a>)</span>. Secara umum, WRF mampu melakukan simulasi beberapa komponen <em>Numerical Weather Prediction</em> (NWP) <a href="#fig-nwpkomponen">Gambar&nbsp;<span>1.1</span></a>. Berdasarkan aplikasi tertentu, WRF memiliki beberapa turunan model, seperti WRF-Chem (kimia atmosfer), WRF-Hydro (hidrologi), dan WRF-Fire (kebakaran hutan dan lahan). Di dalam praktikum ini, Anda hanya perlu memahami cara instalasi dan simulasi WRF-ARW.</p>
+<div id="fig-nwpkomponen" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="Pictures/param_nwp.png" class="img-fluid figure-img" style="width:40.0%"></p>
+<p></p><figcaption class="figure-caption">Gambar&nbsp;1.1: Beberapa parameter dalam <em>Numerical Weather Prediction</em> <span class="citation" data-cites="sonkaew">(<a href="#ref-sonkaew" role="doc-biblioref">Sonkaew <em>et al.</em></a>)</span></figcaption><p></p>
+</figure>
+</div>
+<p>WRF diimplementasikan ke dalam bahasa pemrograman komputer. Jika Anda melihat repositori github <a href="https://github.com/wrf-model/WRF">WRF</a>, Jenis bahasa pemrograman yang paling banyak digunakan adalah Fortran. Untuk perhitungan fisik, kimia, dan matematis diketik dalam bahasa Fortran. Model WRF dapat dijalankan pada personal komputer hingga super komputer. Sebenarnya, Anda dapat menjalankan WRF dengan 1 prosesor saja. Akan tetapi, waktu proses simulasi mungkin akan lama akibat dari resolusi spasial dan temporal yang tinggi, juga cakupan pemilihan wilayah simulasi. Proses perhitungan model dinamik maupun fisik akan lebih cepat jika menggunakan banyak prosesor atau yang bisa disebut dengan <strong>komputasi paralel</strong>. Kerangka kerja perangkat lunak WRF mendukung komputasi paralel yang efisien pada berbagai platform komputasi. Model atmosfer membawa kumpulan komputasi yang sama di setiap grid vertikal maupun horizontal <a href="#fig-modeliklim">Gambar&nbsp;<span>1.2</span></a>. Komputer melakukan perhitungan fisik atmosfer untuk setiap grid secara paralel. Kita mungkin telah mengenal jenis prosesor yang tersedia saat ini, seperti Intel dan AMD. Jenis prosesor yang mereka buat dapat mempengaruhi kecepatan proses perhitungan. Untuk perhitungan paralel, Anda dapat menggunakan tipe prosesor desktop, mobile (prosesor di laptop), maupun server, tetapi juga perlu memperhatikan banyaknya <em>core</em> maupun frekuensi yang digunakan.</p>
+<div id="fig-modeliklim" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="Pictures/AtmosphericModelSchematic.png" class="img-fluid figure-img" style="width:40.0%"></p>
+<p></p><figcaption class="figure-caption">Gambar&nbsp;1.2: Ilustrasi Model Iklim</figcaption><p></p>
+</figure>
+</div>
+<p>Terkait dengan bahasa pemrograman yang digunakan di dalam WRF, yaitu bahasa Fortran dan C, kode skrip terlebih dahulu harus dikompilasi dengan program Compiler. Compiler ini bertujuan mengubah bahasa dari kode yang diketik menjadi bahasa mesin. Ada berbagai macam program Compiler yang tersedia secara gratis, salah satunya adalah <a href="https://gcc.gnu.org/">GNU Compiler Collection (gcc)</a>. Selain GNU, perusahaan seperti Intel (icc, ifort, …), AMD (aocc), maupun NVIDIA (pgi) juga memiliki program Compiler yang dapat digunakan secara gratis serta mendukung komputasi paralel. Di dalam modul praktikum ini, Anda dapat memilih salah satu dari dua Compiler yang akan dijelaskan, yaitu GCC atau Intel. Perbedaan terhadap jenis Compiler ini dapat mempengaruhi waktu simulasi pada satu jenis prosesor yang sama <a href="#fig-wrfbenchmark">Gambar&nbsp;<span>1.3</span></a>.</p>
+<div id="fig-wrfbenchmark" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="Pictures/WRFBenchmark.png" class="img-fluid figure-img" style="width:40.0%"></p>
+<p></p><figcaption class="figure-caption">Gambar&nbsp;1.3: Perbedaan waktu simulasi WRF pada tipe Compiler, Distro, dan Prosesor yang digunakan</figcaption><p></p>
+</figure>
+</div>
+</section>
+<section id="dasar-dasar-pemrograman-bash" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="dasar-dasar-pemrograman-bash"><span class="header-section-number">1.2</span> Dasar-dasar Pemrograman Bash</h2>
+<p>Sebagai salah satu tool scripting populer pada UNIX, Bash sangatlah berguna bagi para user Linux atau SysAdmin. Nama Bash merupakan akronim dari <em>Bourne Again Shell</em>. Sebagian besar model iklim, Bash digunakan untuk menjalankan instalasi dan simulasi. Pengguna model-model iklim disarankan mempelajari dasar-dasar pemrograman ini agar memahami berbagai perintah dari cara kerja instalasi dan simulasi model tersebut, biasanya terdapat file bernama <strong>README</strong>. File ini berisi mengenai cara instalasi, simulasi, informasi file, dan berbagai aplikasi tambahan untuk menjalankan model iklim tersebut.</p>
+<p>Bash merupakan shell default dari sistem operasi Linux. Anda bisa menjalankan shell lain, seperti ksh (Korn Shell), zsh, dan csh (C shell). Untuk menjalankan Bash, Anda bisa menekan Ctrl+Alt+T atau carilah aplikasi Terminal. Khusus Windows 10, Anda dapat mencari aplikasi “Ubuntu” atau “wsl.exe”. Tampilan Bash seperti pada Gambar 2. Tulisan menunjukkan nama user dan tanda berarti lokasi folder saat ini.</p>
+<div id="fig-bashubuntu" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="./Pictures/bash_shell.png" class="img-fluid figure-img" style="width:40.0%"></p>
+<p></p><figcaption class="figure-caption">Gambar&nbsp;1.4: Bash pada Ubuntu</figcaption><p></p>
+</figure>
+</div>
+<p>Jika Anda mengetik perintah <code>pwd</code> pada Bash, hasilnya adalah seperti di bawah ini atau bisa dilihat pada <a href="#fig-bashpwd">Gambar&nbsp;<span>1.5</span></a>.</p>
+<div id="fig-bashpwd" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="./Pictures/pwd.png" class="img-fluid figure-img" style="width:40.0%"></p>
+<p></p><figcaption class="figure-caption">Gambar&nbsp;1.5: Perintah <code>pwd</code> pada terminal Bash</figcaption><p></p>
+</figure>
+</div>
+<p>Perintah dasar lainnya yang sering digunakan oleh pengguna Linux adalah <code>ls</code> atau <code>ll</code> (<a href="#fig-lsubuntu">Gambar&nbsp;<span>1.6</span></a>). Perintah ini berfungsi untuk melihat nama folder dan file yang berada di direktori pada lokasi saat ini. Untuk berpindah lokasi folder, Anda dapat mengetik perintah <code>cd</code> dan pilih folder yang ingin dibuka, contohnya <code>cd Documents/</code> atau <code>cd Documents</code> (<a href="#fig-cdubuntu">Gambar&nbsp;<span>1.7</span></a>). Anda dapat kembali ke folder sebelumnya dengan mengetik perintah <code>cd ..</code></p>
+<div id="fig-lsubuntu" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="./Pictures/ls.png" class="img-fluid figure-img" style="width:60.0%"></p>
+<p></p><figcaption class="figure-caption">Gambar&nbsp;1.6: Perintah <code>ls</code> pada terminal Bash</figcaption><p></p>
+</figure>
+</div>
+<div id="fig-cdubuntu" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="./Pictures/cd.png" class="img-fluid figure-img" style="width:60.0%"></p>
+<p></p><figcaption class="figure-caption">Gambar&nbsp;1.7: Perintah <code>cd</code> pada terminal Bash</figcaption><p></p>
+</figure>
+</div>
+<p>Anda dapat membuat folder baru dengan perintah <code>mkdir</code>, memindahkan folder atau file dengan <code>mv</code>, menghapus file dengan <code>rm</code>, menghapus folder dengan <code>rmdir</code>, membuat file baru dengan <code>touch</code>, dan menyalin folder atau file dengan <code>cp</code>. Contoh penggunaan beberapa perintah tersebut dapat dilihat sebagai berikut.</p>
+<ul>
+<li><p>Misalkan kita ingin membuat folder “Tes-folder”</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> Tes-folder</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Anda juga dapat membuat lebih dari 1 folder, misalnya “Tes-folder-1” dan “Tes-folder-2”</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> Tes-folder-1 Tes-folder-2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Untuk memastikan ketiga folder tersebut telah dibuat, ketik perintah <code>ls</code></p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>Misalkan kita ingin membuat file “tes-file” di dalam folder “Tes-folder”</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> Tes-folder</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">touch</span> tes-file</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Kemudian, file “tes-file” kita pindahkan ke direktori sebelumnya dan ganti namanya dengan “tes-file-pindah”</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mv</span> tes-file ../tes-file-pindah</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Kembali ke folder sebelumnya</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ..</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Ketik perintah <code>ls</code> untuk memastikan file “tes-file” telah dipindahkan ke direktori sebelumnya dengan berubah nama menjadi “tes-file-pindah”</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>File “tes-file-pindah” dihapus menggunakan perintah <code>rm</code></p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span> tes-file-pindah</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+</ul>
+</section>
+<section id="prosedur-praktikum-instalasi-wrf" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="prosedur-praktikum-instalasi-wrf"><span class="header-section-number">1.3</span> Prosedur Praktikum: Instalasi WRF</h2>
+<p>Kami menyarankan untuk menggunakan sistem operasi Linux dengan Distro Ubuntu. Jika Anda menggunakan Windows 10/11, Anda dapat memasang Windows Subsystem Linux (WSL) dan pasang Distro Ubuntu. Saat kami menguji WRF di Ubuntu, proses instalasi serta simulasi tidak mengalami masalah. Anda dipersilahkan menggunakan distro yang lain, seperti Fedora, CentOS, Almalinux, atau Manjaro, tetapi kami tidak dapat menjamin keberhasilan instalasi dan simulasi pada distro tersebut. Untuk pengguna MacOS, Anda dapat menggunakan Virtual Machine (mis. Virtual Box, VMWare, QEMU) atau Docker.</p>
+<section id="menjalankan-windows-subsystem-linux-wsl-di-windows-1011" class="level3" data-number="1.3.1">
+<h3 data-number="1.3.1" class="anchored" data-anchor-id="menjalankan-windows-subsystem-linux-wsl-di-windows-1011"><span class="header-section-number">1.3.1</span> Menjalankan <em>Windows Subsystem Linux</em> (WSL) di Windows 10/11</h3>
+<p>Untuk menjalankan WRF, Anda memerlukan sistem operasi berbasis Linux dengan distribusi yang tersedia saat ini. Pada modul ini, distro Ubuntu yang dipilih untuk simulasi WRF. Bagi Anda pengguna Windows 10/11, WSL dapat digunakan. Selain WSL, Anda juga dapat menggunakan Cygwin. WSL dapat dijalankan pada Windows 10/11 dan Windows Server 2019 dengan versi minimum 1803. Saat ini, WSL versi 2 (WSL-2) telah tersedia yang dapat berjalan pada Windows 10 versi 1903 ke atas. Kami merekomendasikan Anda untuk memasang WSL-2 daripada WSL-1 karena prosesnya lebih cepat. Untuk mengaktifkan WSL, Anda dapat mengikuti beberapa langkah-langkah berikut ini.</p>
+<ol type="1">
+<li><p>Unduh WSL-2 pada <a href="https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi">halaman ini</a> dan Install.</p></li>
+<li><p>Pergi ke menu Control Panel <span class="math inline">\(\rightarrow\)</span> Program and Features</p></li>
+<li><p>Di sebelah kiri, klik Turn Windows Features On or Off</p></li>
+<li><p>Scroll ke paling bawah. Kemudian, aktifkan tanda centang pada <strong>Windows Subsystem for Linux</strong> dan <strong>Virtual Machine Platform</strong></p></li>
+<li><p>Tunggu proses <em>update</em> sampai selesai, kemudian klik <strong>Restart Now</strong> (pastikan simpan data-data pekerjaan dan tutup semua aplikasi)</p></li>
+<li><p>Setelah proses restart selesai, carilah aplikasi dan unduh Ubuntu pada Microsoft Store</p></li>
+<li><p>Buka aplikasi Ubuntu yang telah terunduh dan tunggu konfigurasi selesai</p></li>
+<li><p>Masukkan Username dan Password (<strong>Catatan</strong>: kami sarankan sama dengan user dan pass Windows 10, tapi boleh beda. Hasil ketikan password <strong>tidak</strong> muncul di terminal)</p></li>
+<li><p>Ketikkan pada terminal</p>
+<pre class="{bash}"><code>sudo apt update</code></pre></li>
+<li><p>Anda juga dapat membuka terminal Ubuntu pada terminal Windows Power Shell dengan mengetik <code>wsl</code> atau <code>wsl.exe</code></p></li>
+</ol>
+</section>
+<section id="sebelum-mulai" class="level3" data-number="1.3.2">
+<h3 data-number="1.3.2" class="anchored" data-anchor-id="sebelum-mulai"><span class="header-section-number">1.3.2</span> Sebelum Mulai</h3>
+<p>Anda perlu mencoba dasar pemrograman Bash sebelum memulai mengunduh data, memasang beberapa package, sampai menjalankan simulasi WRF. Silahkan Anda ikuti langkah-langkah di bawah ini agar memudahkan dalam mencoba praktikum ini.</p>
+<ol type="1">
+<li><p>Buka terminal Bash</p>
+<ul>
+<li><p>Untuk Windows 10/11, buka aplikasi Windows Power Shell. Kemudian, ketikkan perintah seperti di bawah ini. Setelahnya, akan muncul terminal Bash.</p>
+<pre class="shell"><code>wsl</code></pre></li>
+<li><p>Untuk Ubuntu atau disto Linux lainnya, carilah program <strong>Terminal</strong> atau bisa menggunakan shortcut <strong>Ctrl+Alt+T</strong></p></li>
+</ul></li>
+<li><p>Saat Anda membuka terminal, pastikan lokasi folder/direktori saat ini adalah <code>/home/&lt;user_name&gt;</code>, di mana <code>user_name</code> adalah nama user pada laptop/komputer Anda masing-masing. Perhatikan kembali <a href="#fig-bashpwd">Gambar&nbsp;<span>1.5</span></a> bahwa untuk melihat lokasi direktori Anda sekarang bisa mengetik perintah <code>pwd</code> pada terminal atau dengan melihat simbol <code>~</code> yang terletak di sebelah kiri <code>$</code>.</p></li>
+<li><p>Buat folder kerja dengan nama <code>WRF-Model</code> untuk menampung data-data, package, serta source code WRF. Perintah pada terminal Bash adalah sebagai berikut.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> WRF-Model</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>Kemudian, bukalah folder <code>WRF-Model</code> dengan perintah</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> WRF-Model</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Sekarang, Anda berada di folder <code>WRF-Model</code> (Perhatikan <code>~</code> berubah menjadi <code>~/WRF-Model</code>)</p></li>
+<li><p>Di dalam <code>WRF-Model</code>, buatlah folder <code>data</code> guna untuk meletakkan data masukan WRF (data statik dan data cuaca).</p></li>
+</ol>
+<p>Langkah-langkah di atas masih berlanjut pada subbab selanjutnya.</p>
+</section>
+<section id="data-dan-package-pendukung" class="level3" data-number="1.3.3">
+<h3 data-number="1.3.3" class="anchored" data-anchor-id="data-dan-package-pendukung"><span class="header-section-number">1.3.3</span> Data dan Package Pendukung</h3>
+<section id="perangkat-lunak" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="perangkat-lunak">Perangkat Lunak</h4>
+<p>Untuk memasang WRF, Anda perlu menyiapkan perangkat lunak pendukung serta data contoh untuk mensimulasikan WRF. Perangkat lunak tersebut dapat diunduh melalui halaman <a href="https://www.github.com/agungbaruna/pyWRF-install">Github ini</a>. Untuk mengunduh source code, pilih <strong>&lt;&gt; Code</strong> <span class="math inline">\(\rightarrow\)</span> <strong>Download ZIP</strong> (<a href="#fig-download-source-code">Gambar&nbsp;<span>1.8</span></a>). Anda dapat mengunduh secara manual atau menggunakan perintah <code>git clone</code> pada terminal.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt <span class="at">-y</span> install git <span class="co">#Install program git jika belum ada</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://www.github.com/agungbaruna/pyWRF-install</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-download-source-code" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="Pictures/pyWRF-install.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Gambar&nbsp;1.8: Unduh source code</figcaption><p></p>
+</figure>
+</div>
+<p>Setelah software pendukung telah diunduh, unduh source code WPS (WRF Pre-Processing) dan WRF pada halaman <a href="https://www.github.com/wrf-model">Github NCAR</a>. Source code WRF berisi algoritma perhitungan fisik dan dinamik atmosfer, sedangkan source code WPS berisi algoritma untuk persiapan data masukan atmosfer dari GCM dan pemilihan lokasi.</p>
+<ul>
+<li>WRF Pre-Processing (WPS): <a href="https://www.github.com/wrf-model/WPS">https://www.github.com/wrf-model/WPS</a></li>
+<li>Model WRF: <a href="www.github.com/wrf-model/WRF">www.github.com/wrf-model/WRF</a></li>
+</ul>
+</section>
+<section id="data" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="data">Data</h4>
+<p>Data-data masukan untuk WRF telah tersedia dan unduh pada halaman web <a href="https://s.id/wrf-data">https://s.id/wrf-data</a>. Kami menyarankan untuk menggunakan Wi-Fi karena ukuran data cukup besar. Data yang telah diunduh Anda pindahkan ke folder <code>data</code> yang berada di dalam <code>WRF-Model</code>.</p>
+</section>
+<section id="global-forecast-system-gfs" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="global-forecast-system-gfs">1. Global Forecast System (GFS)</h4>
+<p>Untuk data masukan yang digunakan berasal dari NOAA yang bernama Global Forecasts System (GFS). GFS memiliki resolusi spasial <span class="math inline">\(0.25^o\)</span> (~ 25 km), <span class="math inline">\(0.50^o\)</span> (~50 km), dan <span class="math inline">\(1.00^o\)</span> (~ 100 km) dengan temporal per 6 jam. GFS memiliki produk data prakiraan maupun analisis/histori cuaca secara global. Anda dapat mengunduh data ini pada salah satu halaman web berikut.</p>
+<ul>
+<li>AWS S3 Bucket: <a href="https://noaa-gfs-bdp-pds.s3.amazonaws.com">https://noaa-gfs-bdp-pds.s3.amazonaws.com</a></li>
+<li>Resarch Data Archive (RDA) NCAR: <a href="https://rda.ucar.edu/datasets/ds084.1">https://rda.ucar.edu/datasets/ds084.1</a></li>
+<li>NCEP Central Operations: <a href="https://nomads.ncep.noaa.gov/">https://nomads.ncep.noaa.gov/</a></li>
+</ul>
+<p>Data GFS yang digunakan dalam praktikum ini memiliki waktu 1-3 Januari 2022 pada pukul 00:00, 06:00, 12:00, dan 18:00 UTC dengan resolusi spasial <span class="math inline">\(1.00^o\)</span> yang telah diunduh pada halaman web AWS S3 Bucket. Produk GFS yang digunakan adalah analisis/histori.</p>
+</section>
+<section id="era5" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="era5">2. ERA5</h4>
+<p>Selain GFS, Anda dapat menggunakan data masukan dari institusi lain, seperti ECMWF pada produk ERA5. ERA5 merupakan data reanalisis sehingga hanya memiliki produk histori. Anda dapat mengunduhnya melalui Climate Data Store (CDS) pada halaman <a href="https://cds.climate.copernicus.eu">https://cds.climate.copernicus.eu</a>. ERA5 memiliki resolusi spasial sebesar <span class="math inline">\(0.25^o\)</span> dengan temporal per 1 jam. Data ERA5 memiliki dua tipe, yaitu data permukaan tanah (<em>Single Levels</em>) dan atmosfer untuk setiap ketinggian (<em>Pressure Levels</em>). Anda diharuskan mengunduh dua tipe data ini dengan variabel yang dipilih adalah sebagai berikut.</p>
+<ul>
+<li><a href="https://cds.climate.copernicus.eu/cdsapp#!/dataset/reanalysis-era5-pressure-levels?tab=overview">ERA5 hourly data on Pressure Levels</a>:
+<ul>
+<li>geopotential</li>
+<li>relative humidity</li>
+<li>specific humidity</li>
+<li>temperature</li>
+<li>u-component wind</li>
+<li>v-component wind</li>
+</ul></li>
+<li><a href="https://cds.climate.copernicus.eu/cdsapp#!/dataset/reanalysis-era5-single-levels?tab=overview">ERA5 hourly data on Single Levels</a>:
+<ul>
+<li>10m u-component of wind</li>
+<li>10m v-component of wind</li>
+<li>2m dewpoint temperature</li>
+<li>2m temperature</li>
+<li>land sea mask</li>
+<li>mean sea level pressure</li>
+<li>sea ice cover</li>
+<li>sea surface temperature</li>
+<li>skin temperature</li>
+<li>snow depth</li>
+<li>soil temperature level 1</li>
+<li>soil temperature level 2</li>
+<li>soil temperature level 3</li>
+<li>soil temperature level 4</li>
+<li>surface_pressure</li>
+<li>volumetric soil water layer 1</li>
+<li>volumetric soil water layer 2</li>
+<li>volumetric soil water layer 3</li>
+<li>volumetric soil water layer 4</li>
+</ul></li>
+</ul>
+<p>Anda tidak diharuskan mengunduh semua jam karena CDS membatasi banyaknya permintaan data dari pengguna sehingga Anda tidak dapat mengunduh semua data sekaligus. Data ERA5 yang akan digunakan pada praktikum ini memiliki waktu yang sama dengan GFS.</p>
+</section>
+<section id="data-statik-wps" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="data-statik-wps">3. Data Statik WPS</h4>
+<p>Data statik ini wajib diunduh untuk menjalankan WRF. Data ini berisi seperti tipe permukaan lahan, nilai Leaf Area Index (LAI), tipe tanah, dan elevasi permukaan. Anda dapat mengunduhnya di <a href="https://www2.mmm.ucar.edu/wrf/src/wps_files/geog_high_res_mandatory.tar.gz">https://www2.mmm.ucar.edu/wrf/src/wps_files/geog_high_res_mandatory.tar.gz</a>. File dari data tersebut berukuran 2 GB dan setelah diekstrak dapat mencapai 30 GB. Data ini sudah tersedia di dalam link <a href="https://s.id/wrf-data">https://s.id/wrf-data</a>. Untuk mengekstrak file ini, gunakan perintah berikut</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> data</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">gunzip</span> geog_high_res_mandatory.tar.gz</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tar</span> <span class="at">-xf</span> geog_high_res_mandatory.tar</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> .. <span class="co"># Kembali ke folder WRF-Model</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Setelah itu, folder <code>WPS_GEOG</code> akan muncul di dalam folder <code>data/</code></p>
+</section>
+</section>
+<section id="instalasi-software-compiler" class="level3" data-number="1.3.4">
+<h3 data-number="1.3.4" class="anchored" data-anchor-id="instalasi-software-compiler"><span class="header-section-number">1.3.4</span> Instalasi Software Compiler</h3>
+<p>Instalasi ini meliputi cara melakukan kompilasi dengan dua Compiler berbeda, yaitu GNU dan Intel. Anda dipersilahkan memilih salah satu langkah. Proses kompilasi untuk semua package yang telah terunduh tidak dapat dilakukan pada Compiler yang berbeda.</p>
+<section id="gnu" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="gnu">1. GNU</h4>
+<p>Sebelum Anda memasuki tahapan instalasi package yang terdapat dalam folder <code>pyWRF-install</code>, pasang terlebih dahulu package dependencies dengan perintah di bawah ini.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt <span class="at">-y</span> update <span class="kw">&amp;&amp;</span> <span class="fu">sudo</span> apt <span class="at">-y</span> upgrade</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt <span class="at">-y</span> install gfortran gcc make m4 csh</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="intel" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="intel">2. Intel</h4>
+<p>Berbeda dengan GNU, tipe Compiler Intel memang agak rumit untuk memasangnya. Namun, Compiler ini sebenarnya lebih efisien dalam hal kecepatan saat mensimulasikan WRF. Kami sudah membandingkan waktu simulasi dengan Compiler tipe ini lebih cepat dibandingkan dengan GNU <a href="#fig-wrfbenchmark">Gambar&nbsp;<span>1.3</span></a>.</p>
+<p>Anda dapat memperoleh software ini di halaman resmi <a href="https://www.intel.com/content/www/us/en/developer/articles/tool/oneapi-standalone-components.html">Intel</a>. Kami sudah menyediakan software tersebut di dalam halaman web <a href="https://s.id/wrf-intel-compiler">s.id/wrf-intel-compiler</a>. Terdapat tiga file instalasi Compiler, yaitu Fortran, C, dan MPI (untuk komputasi paralel). Jumlah ukuran tiga file tersebut cukup besar, sekitar 2,5 GB. Letakkan ketiga file ini di dalam folder <code>WRF-Model</code>. Perhatikan langkah-langkah berikut ini untuk memasang ketiga file tersebut.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 0. Package pendukung</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt <span class="at">-y</span> install make m4 csh</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. C Compiler</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> l_dpcpp-cpp-compiler_p_2023.0.0.25393_offline.sh <span class="at">-a</span> <span class="at">-s</span> <span class="at">--eula</span> accept</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Fortran Compiler</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> l_fortran-compiler_p_2023.0.0.25394_offline.sh <span class="at">-a</span> <span class="at">-s</span> <span class="at">--eula</span> accept</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. MPI</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> l_mpi_oneapi_p_2021.8.0.25329_offline.sh <span class="at">-a</span> <span class="at">-s</span> <span class="at">--eula</span> accept</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Lokasi folder hasil instalasi terdapat di <code>~/intel</code>. Secara default, perintah untuk memanggil program Compiler belum diatur. Untungnya, Intel menyediakan skrip untuk memanggil semua program Compiler secara default, yaitu terdapat di dalam <code>~/intel/oneapi/setvars.sh</code>. Perintah untuk memanggil skrip <code>setvars.sh</code> adalah sebagai berikut.</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> ~/intel/oneapi/setvars.sh</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+<section id="instalasi-package" class="level3" data-number="1.3.5">
+<h3 data-number="1.3.5" class="anchored" data-anchor-id="instalasi-package"><span class="header-section-number">1.3.5</span> Instalasi Package</h3>
+<p>Instalasi beberapa package meliputi zlib, libpng, jasper, hdf5, netcdf-c, dan netcdf-fortran. Perlu diperhatikan dan lihat pada terminal bahwa Anda berada di folder <code>~/WRF-Model</code>. Masukkan beberapa perintah <strong>ENVIRONMENT VARIABEL</strong> di bawah ini. Langkah ini wajib dilakukan pada saat melakukan instalasi package dan juga WRF. Pendefinisian <strong>ENVIRONMENT VARIABLE</strong> ini berlaku untuk GNU maupun Intel.</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">ODIR</span><span class="op">=</span><span class="va">$HOME</span>/WRF-Model</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">PATH</span><span class="op">=</span><span class="va">$ODIR</span>/bin:<span class="va">$PATH</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">LD_LIBRARY_PATH</span><span class="op">=</span><span class="va">$ODIR</span>/lib:<span class="va">$LD_LIBRARY_PATH</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">LDFLAGS</span><span class="op">=</span>-L<span class="va">$ODIR</span>/lib</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">CPPFLAGS</span><span class="op">=</span>-I<span class="va">$ODIR</span>/include</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">NETCDF</span><span class="op">=</span><span class="va">$ODIR</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">HDF5</span><span class="op">=</span><span class="va">$ODIR</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">JASPERLIB</span><span class="op">=</span><span class="va">$ODIR</span>/lib</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">JASPERINC</span><span class="op">=</span><span class="va">$ODIR</span>/include</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="gnu-1" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="gnu-1">1. GNU</h4>
+<p>Berikut ini langkah-langkah memasang package pada Compiler <strong>GNU</strong>. Buka terlebih dahulu folder <code>pyWRF-install/libraries</code> dengan mengetik perintah <code>cd pyWRF-install/libraries</code>.</p>
+<ol type="1">
+<li><p>zlib</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 0. Buka folder libraries</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> <span class="va">$ODIR</span>/pyWRF-install/libraries</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Extract </span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="fu">tar</span> <span class="at">-xf</span> zlib-1.2.13.tar.gz</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Buka folder hasil ekstrak</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> zlib-1.2.13</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Konfigurasi </span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="va">CC</span><span class="op">=</span>gcc <span class="ex">./configure</span> <span class="at">--prefix</span><span class="op">=</span><span class="va">$ODIR</span></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. Instalasi</span></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span> check install</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>libpng</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 0. Buka folder libraries</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> <span class="va">$ODIR</span>/pyWRF-install/libraries</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Extract </span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="fu">tar</span> <span class="at">-xf</span> libpng-1.6.37.tar.gz</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Buka folder hasil ekstrak</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> libpng-1.6.37</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Konfigurasi </span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a><span class="va">CC</span><span class="op">=</span>gcc <span class="ex">./configure</span> <span class="at">--prefix</span><span class="op">=</span><span class="va">$ODIR</span></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. Instalasi</span></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span> check install</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>jasper</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 0. Buka folder libraries</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> <span class="va">$ODIR</span>/pyWRF-install/libraries</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Extract </span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="fu">tar</span> <span class="at">-xf</span> jasper-1.900.1.tar.gz  </span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Buka folder hasil ekstrak</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> jasper-1.900.1</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Konfigurasi </span></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a><span class="va">CC</span><span class="op">=</span>gcc <span class="ex">./configure</span> <span class="at">--prefix</span><span class="op">=</span><span class="va">$ODIR</span></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. Instalasi</span></span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span> check install</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>openMPI Jika Anda tidak berencana menjalankan WRF dengan 1 prosesor, Anda dapat melewati langkah ini. Akan tetapi, kami menyarankan untuk memasang program ini untuk mempersingkat waktu dalam mensimulasikan WRF.</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 0. Buka folder libraries</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> <span class="va">$ODIR</span>/pyWRF-install/libraries</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Extract </span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="fu">tar</span> <span class="at">-xf</span> openmpi-4.1.4.tar.gz  </span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Buka folder hasil ekstrak</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> openmpi-4.1.4</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Konfigurasi </span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a><span class="va">CC</span><span class="op">=</span>gcc <span class="va">FC</span><span class="op">=</span>gfortran <span class="ex">./configure</span> <span class="at">--prefix</span><span class="op">=</span><span class="va">$ODIR</span></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. Instalasi</span></span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span> check install</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>hdf5</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 0. Buka folder libraries</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> <span class="va">$ODIR</span>/pyWRF-install/libraries</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Extract </span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="fu">tar</span> <span class="at">-xf</span> hdf5-1.12.0.tar.gz </span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Buka folder hasil ekstrak</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> hdf5-1.12.0</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Konfigurasi </span></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a><span class="va">CC</span><span class="op">=</span>gcc <span class="va">FC</span><span class="op">=</span>gfortran <span class="ex">./configure</span> <span class="at">--prefix</span><span class="op">=</span><span class="va">$ODIR</span> <span class="at">--with-default-api-version</span><span class="op">=</span>v18 <span class="at">--enable-fortran</span></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. Instalasi</span></span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span></span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span> install</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>netcdf-c</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 0. Buka folder libraries</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> <span class="va">$ODIR</span>/pyWRF-install/libraries</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Extract </span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="fu">tar</span> <span class="at">-xf</span> netcdf-c-4.7.4.tar.gz </span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Buka folder hasil ekstrak</span></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> netcdf-c-4.7.4</span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Konfigurasi </span></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a><span class="va">CC</span><span class="op">=</span>gcc <span class="ex">./configure</span> <span class="at">--prefix</span><span class="op">=</span><span class="va">$ODIR</span> <span class="at">--disable-dap</span></span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. Instalasi</span></span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span></span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span> install</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>netcdf-fortran</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 0. Buka folder libraries</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> <span class="va">$ODIR</span>/pyWRF-install/libraries</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Extract </span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="fu">tar</span> <span class="at">-xf</span> netcdf-fortran-4.5.3.tar.gz </span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Buka folder hasil ekstrak</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> netcdf-fortran-4.5.3</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Konfigurasi </span></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a><span class="va">CC</span><span class="op">=</span>gcc <span class="va">FC</span><span class="op">=</span>gfortran <span class="ex">./configure</span> <span class="at">--prefix</span><span class="op">=</span><span class="va">$ODIR</span></span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. Instalasi</span></span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span></span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span> install</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+</ol>
+</section>
+<section id="intel-1" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="intel-1">2. Intel</h4>
+<p>Berikut ini langkah-langkah memasang package pada Compiler <strong>Intel</strong>. Buka terlebih dahulu folder <code>pyWRF-install/libraries</code> dengan mengetik perintah <code>cd pyWRF-install/libraries</code>. Untuk proses instalasi menggunakan Intel, sama saja dengan GNU. Hanya saja, perbedaannya adalah definisi dari variabel <code>CC</code> maupun <code>FC</code>. Untuk Intel, variabel <code>CC=icc</code> dan <code>FC=ifort</code>. Jangan lupa untuk mengaktifkan <strong>ENVIRONMENT VARIABLE</strong> dari Intel dengan mengetik perintah.</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> ~/intel/oneapi/setvars.sh</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol type="1">
+<li><p>zlib</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 0. Buka folder libraries</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> <span class="va">$ODIR</span>/pyWRF-install/libraries</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Extract </span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="fu">tar</span> <span class="at">-xf</span> zlib-1.2.13.tar.gz</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Buka folder hasil ekstrak</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> zlib-1.2.13</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Konfigurasi </span></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a><span class="va">CC</span><span class="op">=</span>icc <span class="va">CFLAGS</span><span class="op">=</span><span class="st">'-diag-disable=10441'</span> <span class="ex">./configure</span> <span class="at">--prefix</span><span class="op">=</span><span class="va">$ODIR</span></span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. Instalasi</span></span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span> check install</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>libpng</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 0. Buka folder libraries</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> <span class="va">$ODIR</span>/pyWRF-install/libraries</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Extract </span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="fu">tar</span> <span class="at">-xf</span> libpng-1.6.37.tar.gz</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Buka folder hasil ekstrak</span></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> libpng-1.6.37</span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Konfigurasi </span></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a><span class="va">CC</span><span class="op">=</span>icc <span class="va">CFLAGS</span><span class="op">=</span><span class="st">'-diag-disable=10441'</span> <span class="ex">./configure</span> <span class="at">--prefix</span><span class="op">=</span><span class="va">$ODIR</span></span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. Instalasi</span></span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span> check install</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>jasper</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 0. Buka folder libraries</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> <span class="va">$ODIR</span>/pyWRF-install/libraries</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Extract </span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="fu">tar</span> <span class="at">-xf</span> jasper-1.900.1.tar.gz  </span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Buka folder hasil ekstrak</span></span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> jasper-1.900.1</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Konfigurasi </span></span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a><span class="va">CC</span><span class="op">=</span>icc <span class="va">CFLAGS</span><span class="op">=</span><span class="st">'-diag-disable=10441'</span> <span class="ex">./configure</span> <span class="at">--prefix</span><span class="op">=</span><span class="va">$ODIR</span></span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. Instalasi</span></span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span> check install</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>hdf5</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 0. Buka folder libraries</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> <span class="va">$ODIR</span>/pyWRF-install/libraries</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Extract </span></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="fu">tar</span> <span class="at">-xf</span> hdf5-1.12.0.tar.gz </span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Buka folder hasil ekstrak</span></span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> hdf5-1.12.0</span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Konfigurasi </span></span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a><span class="va">CC</span><span class="op">=</span>icc <span class="va">FC</span><span class="op">=</span>ifort <span class="va">CFLAGS</span><span class="op">=</span><span class="st">'-diag-disable=10441'</span> <span class="ex">./configure</span> <span class="at">--prefix</span><span class="op">=</span><span class="va">$ODIR</span> <span class="at">--with-default-api-version</span><span class="op">=</span>v18 <span class="at">--enable-fortran</span></span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. Instalasi</span></span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span></span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span> install</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>netcdf-c</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 0. Buka folder libraries</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> <span class="va">$ODIR</span>/pyWRF-install/libraries</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Extract </span></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a><span class="fu">tar</span> <span class="at">-xf</span> netcdf-c-4.7.4.tar.gz </span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Buka folder hasil ekstrak</span></span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> netcdf-c-4.7.4</span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Konfigurasi </span></span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a><span class="va">CC</span><span class="op">=</span>icc <span class="va">CFLAGS</span><span class="op">=</span><span class="st">'-diag-disable=10441'</span> <span class="ex">./configure</span> <span class="at">--prefix</span><span class="op">=</span><span class="va">$ODIR</span> <span class="at">--disable-dap</span></span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. Instalasi</span></span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span></span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span> install</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>netcdf-fortran</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 0. Buka folder libraries</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> <span class="va">$ODIR</span>/pyWRF-install/libraries</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Extract </span></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="fu">tar</span> <span class="at">-xf</span> netcdf-fortran-4.5.3.tar.gz </span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Buka folder hasil ekstrak</span></span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> netcdf-fortran-4.5.3</span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Konfigurasi </span></span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a><span class="va">CC</span><span class="op">=</span>icc <span class="va">FC</span><span class="op">=</span>ifort <span class="va">CFLAGS</span><span class="op">=</span><span class="st">'-diag-disable=10441'</span> <span class="ex">./configure</span> <span class="at">--prefix</span><span class="op">=</span><span class="va">$ODIR</span></span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. Instalasi</span></span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span></span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span> install</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+</ol>
+</section>
+</section>
+<section id="instalasi-wrf" class="level3" data-number="1.3.6">
+<h3 data-number="1.3.6" class="anchored" data-anchor-id="instalasi-wrf"><span class="header-section-number">1.3.6</span> Instalasi WRF</h3>
+<p>Proses instalasi WRF membutuhkan waktu agak lama, yaitu sekitar 30-60 menit. Tentunya, ini bergantung pada spesifikasi prosesor yang Anda gunakan, serta tipe Compiler. Ikuti langkah-langkah berikut.</p>
+<ol type="1">
+<li><p>Buka direktori <code>WRF</code> yang berada di dalam <code>$ODIR/WRF</code> dengan perintah.</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> <span class="va">$ODIR</span>/WRF</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>Jalankan file <code>configure</code> dengan perintah.</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./configure</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Anda akan disajikan beberapa teks di dalamnya. Anda disuruh untuk memilih opsi Compiler. Tipe Compiler tersebut selain GNU dan Intel, ada pula IBM, PGI, Fujitsu, Pathscale, dan CRAY. Jika Anda menggunakan Compiler tipe GNU, ketikkan angka <strong>35</strong>. Untuk Intel, ketik angka <strong>16</strong>. Setelah itu, tekan Enter. <img src="Pictures/wrf-configure-gnu.png" class="img-fluid" style="width:30.0%" alt="Konfigurasi WRF dengan Compiler GNU"> <img src="Pictures/wrf-configure-intel.png" class="img-fluid" style="width:30.0%" alt="Konfigurasi WRF dengan Compiler GNU"></p></li>
+<li><p>Untuk melakukan instalasi, ketik perintah ini.</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./compile</span> em_real <span class="at">-j</span> jumlah_prosesor</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>dimana <code>jumlah_prosesor</code> adalah jumlah dari prosesor pada laptop/komputer Anda yang akan digunakan untuk proses instalasi dan kompilasi kode-kode WRF. Proses kompilasi akan memakan waktu yang sangat lama apabila Anda hanya menggunakan 1 prosesor. Pastikan berbagai program pada komputer/laptop Anda yang saat ini sedang dibuka, seperti Google Chrome atau Spotify harap ditutup terlebih dahulu karena ini membantu proses instalasi lebih stabil.<br>
+</p></li>
+<li><p><strong>Untuk Compiler Intel</strong>, setelah langkah ke-2 dijalankan, buka file <code>configure.wrf</code> dengan perintah.</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nano</span> configure.wrf</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Kemudian, scroll ke bawah dengan menekan tombol <span class="math inline">\(\downarrow\)</span> pada keyboard dan ubahlah isinya sesuai aturan pada tabel di bawah ini.</p>
+<div id="tbl-dm" class="anchored">
+<table class="table">
+<caption>Tabel&nbsp;1.1: Pengubahan variabel <code>DM_FC</code> dan <code>DM_CC</code></caption>
+<thead>
+<tr class="header">
+<th style="text-align: center;">Sebelum</th>
+<th style="text-align: center;">Sesudah</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><code>DM_FC = mpif90 -f90=$(SFC)</code></td>
+<td style="text-align: center;"><code>DM_FC = mpiifort -f90=$(SFC)</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>DM_CC = mpicc -cc=$(SCC)</code></td>
+<td style="text-align: center;"><code>DM_CC = mpiicc -cc=$(SCC)</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Setelah selesai diubah, keluar dari editor nano dengan menekan tombol <strong>Ctrl + X</strong></p></li>
+</ol>
+<p>Proses instalasi WRF berhasil dilakukan apabila terdapat file yang berekstensi <code>.exe</code>: <code>ndown.exe</code>, <code>tc.exe</code>, <code>real.exe</code>, dan <code>wrf.exe</code> di dalam folder <code>main</code>. Anda bisa melihatnya dengan perintah</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> main/<span class="pp">*</span>.exe</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb38"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="ex">main/ndown.exe</span>  main/real.exe  main/tc.exe  main/wrf.exe</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="instalasi-wrf-pre-processing-wps" class="level3" data-number="1.3.7">
+<h3 data-number="1.3.7" class="anchored" data-anchor-id="instalasi-wrf-pre-processing-wps"><span class="header-section-number">1.3.7</span> Instalasi WRF Pre-Processing (WPS)</h3>
+<p>Program WPS digunakan untuk menyesuaikan data masukan dari berbagai sumber (ECMWF, GFS, NAM, …) sebelum ke simulasi WRF. Terdapat 3 program utama: <code>geogrid.exe</code>, <code>ungrib.exe</code>, dan <code>metgrid.exe</code>. Berikut ini kegunaan dari ketiga program utama WPS.</p>
+<ul>
+<li><code>geogrid.exe</code>: memilih lokasi yang akan dilakukan simulasi. Luaran program ini berupa file <code>geo_em*</code> yang berisi nilai-nilai dari variabel di dalam file hasil ekstrak geog_high_res_mandatory.tar</li>
+<li><code>ungrib.exe</code>: mengubah file berformat <code>grib</code> menjadi <code>nc</code>, serta memungkinkan dapat melakukan interpolasi (waktu dan lokasi)</li>
+<li><code>metgrid.exe</code>: menggabungkan</li>
+</ul>
+<p>Proses instalasi WPS tidak membutuhkan waktu yang lama, sekitar 2-5 menit. Untuk melakukan instalasi WPS, ikuti langkah-langkah berikut ini.</p>
+<ol type="1">
+<li><p>Saat ini, Anda berada di folder <code>WRF</code>. Buka folder <code>WPS</code> dengan perintah</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> <span class="va">$ODIR</span>/WPS</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>Jalankan file <code>configure</code> dengan perintah</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./configure</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Ketik angka <strong>3</strong> untuk GNU atau angka <strong>19</strong> untuk Intel.</p></li>
+<li><p>Setelah selesai, di folder WPS akan muncul file <code>configure.wps</code>. Beberapa baris dari isi file tersebut ada yang perlu ditambahkan dan diganti dengan ketentuan ini.</p>
+<ul>
+<li>Untuk Intel, tambahkan <code>-liomp5</code> setelah <code>-lnetcdf</code> pada bagian variabel <code>WRF_LIB = ...</code>. Kemudian, ubah pula DM_FC dan DM_CC seperti pada <a href="#tbl-dm">Tabel&nbsp;<span>1.1</span></a>.</li>
+<li>Untuk GNU, tambahkan <code>-fopenmp</code> setelah <code>-lnetcdf</code> pada bagian variabel <code>WRF_LIB = ...</code>.</li>
+</ul></li>
+<li><p>Setelah diganti, lakukan kompilasi dengan mengetik perintah</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./compile</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+</ol>
+<p>Proses instalasi berhasil apabila terdapat 3 file <code>.exe</code>: <code>geogrid.exe</code>, <code>ungrib.exe</code>, dan <code>metgrid.exe</code> di folder <code>WPS</code> yang berupa shortcut. Anda dapat menggunakan perintah</p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="pp">*</span>.exe</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb43"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="ex">geogrid.exe</span>  metgrid.exe  ungrib.exe</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+<section id="prosedur-praktikum-menjalankan-simulasi-wrf-arw" class="level2" data-number="1.4">
+<h2 data-number="1.4" class="anchored" data-anchor-id="prosedur-praktikum-menjalankan-simulasi-wrf-arw"><span class="header-section-number">1.4</span> Prosedur Praktikum: Menjalankan Simulasi WRF-ARW</h2>
+<p>Anda dapat melanjutkan ke tahapan ini apabila seluruh program telah berhasil terpasang. Bagi Anda yang belum berhasil, sabar :D dan ulangi kembali langkah-langkah di atas. Secara umum, diagram pada <a href="#fig-wrfdiagram">Gambar&nbsp;<span>1.9</span></a> menunjukkan proses menjalankan WRF dari tahapan memasukkan data hingga plot dan analisis akhir. Seperti yang telah dijelaskan pada subbab sebelumnya bahwa langkah awal dalam menjalankan WRF adalah menjalankan WPS terlebih dahulu. Anda perlu menyiapkan data masukan atmosfer maupun permukaan (data statik). Program <code>geogrid.exe</code> dijalankan pertama, kemudian diikuti dengan <code>ungrib.exe</code> dan terakhir <code>metgrid.exe</code>. Selanjutnya, Anda dapat melangkah ke program WRF, yaitu <code>real.exe</code> dan <code>wrf.exe</code>. Program <code>real.exe</code> digunakan sebagai pendefinisian kondisi awal dan kondisi batas berdasarkan informasi dari <code>namelist.input</code> yang berada dalam folder <code>test/em_real/</code>. Kemudian, Anda dapat menggunakan perangkat lunak apapun (mis. NCAR Comman Language (NCL), GrADS, R, Python, Matlab, ArcMAP, QGIS, …) untuk menganalisis serta visualisasi luaran WRF.</p>
+<p>Untuk data masukan, Anda juga dapat menggunakan data observasi, tetapi harus berupa grid. Namun, ini merupakan program yang berbeda dari WRF-ARW, yaitu WRFDA (WRF Data Assimilation). Selain itu, terdapat pula data masukan dari emisi kimia, seperti emisi biogenik dan atropogenik. Ini juga merupakan program yang berbeda dari WRF-ARW, yaitu WRF-Chem. Penjelasan mengenai WRFDA dan WRF-Chem tidak disampaikan di dalam praktikum ini.</p>
+<div id="fig-wrfdiagram" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="Pictures/WRFDiagram.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Gambar&nbsp;1.9: Diagram WRF</figcaption><p></p>
+</figure>
+</div>
+<p>Untuk lebih mudah dalam menjalankan WRF, lokasi yang akan dipilih untuk menjalankan WRF adalah Kota Surabaya dengan periode 1 - 3 Januari 2022.</p>
+
+
+<div id="refs" class="references csl-bib-body" role="doc-bibliography">
+<div id="ref-glotter2014" class="csl-entry" role="doc-biblioentry">
+Glotter M, Elliott J, McInerney D, Best N, Foster I, Moyer EJ. 2014. Evaluating the utility of dynamical downscaling in agricultural impacts projections. <em>Proceedings of the National Academy of Sciences</em>. 111(24):8776–8781.
+</div>
+<div id="ref-goly2014" class="csl-entry" role="doc-biblioentry">
+Goly A, Teegavarapu RS, Mondal A. 2014. Development and evaluation of statistical downscaling models for monthly precipitation. <em>Earth Interactions</em>. 18(18):1–28.
+</div>
+<div id="ref-huth2000" class="csl-entry" role="doc-biblioentry">
+Huth R, Kyselỳ J. 2000. Constructing site-specific climate change scenarios on a monthly scale using statistical downscaling. <em>Theoretical and Applied Climatology</em>. 66(1):13–27.
+</div>
+<div id="ref-kim1984" class="csl-entry" role="doc-biblioentry">
+Kim J, Chang J, Baker N, Wilks D, Gates W. 1984. The statistical problem of climate inversion: Determination of the relationship between local and large-scale climate. <em>Monthly weather review</em>. 112(10):2069–2077.
+</div>
+<div id="ref-pahlavan2018" class="csl-entry" role="doc-biblioentry">
+Pahlavan H, Zahraie B, Nasseri M, Mahdipour Varnousfaderani A. 2018. Improvement of multiple linear regression method for statistical downscaling of monthly precipitation. <em>International journal of environmental science and technology</em>. 15(9):1897–1912.
+</div>
+<div id="ref-piani2010pr" class="csl-entry" role="doc-biblioentry">
+Piani C, Haerter J, Coppola E. 2010. Statistical bias correction for daily precipitation in regional climate models over europe. <em>Theoretical and Applied Climatology</em>. 99(1-2):187–192.
+</div>
+<div id="ref-piani2010suhu" class="csl-entry" role="doc-biblioentry">
+Piani C, Weedon G, Best M, Gomes S, Viterbo P, Hagemann S, Haerter J. 2010. Statistical bias correction of global simulated daily precipitation and temperature for the application of hydrological models. <em>Journal of Hydrology</em>. 395(3-4):199–215.
+</div>
+<div id="ref-powers2017" class="csl-entry" role="doc-biblioentry">
+Powers JG, Klemp JB, Skamarock WC, Davis CA, Dudhia J, Gill DO, Coen JL, Gochis DJ, Ahmadov R, Peckham SE, <em>et al.</em> 2017. The weather research and forecasting model: Overview, system efforts, and future directions. <em>Bulletin of the American Meteorological Society</em>. 98(8):1717–1737.doi:<a href="https://doi.org/10.1175/BAMS-D-15-00308.1">10.1175/BAMS-D-15-00308.1</a>.
+</div>
+<div id="ref-richardson1981" class="csl-entry" role="doc-biblioentry">
+Richardson CW. 1981. Stochastic simulation of daily precipitation, temperature, and solar radiation. <em>Water resources research</em>. 17(1):182–190.
+</div>
+<div id="ref-sachindra2014" class="csl-entry" role="doc-biblioentry">
+Sachindra D, Huang F, Barton A, Perera B. 2014. Statistical downscaling of general circulation model outputs to precipitation—part 1: Calibration and validation. <em>International Journal of Climatology</em>. 34(11):3264–3281.
+</div>
+<div id="ref-skamarock2019" class="csl-entry" role="doc-biblioentry">
+Skamarock WC, Klemp JB, Dudhia J, Gill DO, Barker DM, Wang W, Powers JG. 2019. A description of the advanced research WRF version 4. National Center For Atmospheric Research Boulder Co Mesoscale; Microscale&nbsp;….
+</div>
+<div id="ref-smid2018" class="csl-entry" role="doc-biblioentry">
+Smid M, Costa AC. 2018. Climate projections and downscaling techniques: A discussion for impact studies in urban systems. <em>International Journal of Urban Sciences</em>. 22(3):277–307.doi:<a href="https://doi.org/10.1080/12265934.2017.1409132">10.1080/12265934.2017.1409132</a>.
+</div>
+<div id="ref-sonkaew" class="csl-entry" role="doc-biblioentry">
+Sonkaew T, Cumwan S, Kanta W, Macatangay R. Finding the optimum microphysics and convective parameterization schemes for the WRF model for LPRU, thailand.
+</div>
+<div id="ref-wilby1997" class="csl-entry" role="doc-biblioentry">
+Wilby RL, Wigley TM. 1997. Downscaling general circulation model output: A review of methods and limitations. <em>Progress in physical geography</em>. 21(4):530–548.
+</div>
+</div>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./index.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Pendahuluan</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>
