@@ -37,9 +37,9 @@ format:
     toc-title: "Daftar Isi"
     cite-method: biblatex
     biblio-title: "Daftar Pustaka"
+    include-in-header: 
+      text: |
+        \usepackage{fvextra}
+        \DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,commandchars=\\\{\}}
 
 highlight-style: github
-include-in-header: 
-  text: |
-    \usepackage{fvextra}
-    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,commandchars=\\\{\}}
