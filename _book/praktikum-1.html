@@ -141,14 +141,12 @@ div.csl-indent {
     "search-submit-button-title": "Submit"
   }
 }</script>
-</head><body class="nav-sidebar floating">\usepackage{fvextra}
-\DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,commandchars=\\\{\}}
 
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
+</head>
 
-
-
+<body class="nav-sidebar floating">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -211,6 +209,7 @@ div.csl-indent {
   <li><a href="#prosedur-praktikum-menjalankan-simulasi-wrf-arw" id="toc-prosedur-praktikum-menjalankan-simulasi-wrf-arw" class="nav-link" data-scroll-target="#prosedur-praktikum-menjalankan-simulasi-wrf-arw"><span class="toc-section-number">1.4</span>  Prosedur Praktikum: Menjalankan Simulasi WRF-ARW</a>
   <ul class="collapse">
   <li><a href="#program-wps" id="toc-program-wps" class="nav-link" data-scroll-target="#program-wps"><span class="toc-section-number">1.4.1</span>  Program WPS</a></li>
+  <li><a href="#program-wrf" id="toc-program-wrf" class="nav-link" data-scroll-target="#program-wrf"><span class="toc-section-number">1.4.2</span>  Program WRF</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -750,8 +749,9 @@ Note
 <span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">PATH</span><span class="op">=</span><span class="va">$ODIR</span>/bin:<span class="va">$PATH</span></span>
 <span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">LD_LIBRARY_PATH</span><span class="op">=</span><span class="va">$ODIR</span>/lib:<span class="va">$LD_LIBRARY_PATH</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Langkah-langkah menjalankan program WPS adalah sebagai berikut.</p>
-<ol type="1">
-<li><p>Buka file <code>namelist.wps</code>. Isi dari file tersebut pada saat awal kurang lebih seperti ini.</p>
+<section id="penentuan-lokasi-dan-waktu-simulasi" class="level4" data-number="1.4.1.1">
+<h4 data-number="1.4.1.1" class="anchored" data-anchor-id="penentuan-lokasi-dan-waktu-simulasi"><span class="header-section-number">1.4.1.1</span> Penentuan Lokasi dan Waktu Simulasi</h4>
+<p>Isi dari file tersebut pada saat awal kurang lebih seperti ini.</p>
 <pre><code>&amp;share
  wrf_core = 'ARW',
  max_dom = 2,
@@ -787,8 +787,7 @@ Note
 &amp;metgrid
  fg_name = 'FILE'
 /</code></pre>
-<p>Terdapat berbagai macam parameter di dalam <code>&amp;share</code>, <code>&amp;geogrid</code>, <code>&amp;ungrib</code>, dan <code>&amp;metgrid</code>. Anda perlu mengubah beberapa parameter tersebut yang dapat disesuaikan dengan simulasi. Tapi, Anda harus memperhatikan aturan atau template yang telah diberikan di dalam panduan pengguna. Untuk lebih rincinya, Anda bisa lihat di <a href="https://www2.mmm.ucar.edu/wrf/users/docs/user_guide_v4/v4.4/users_guide_chap3.html">Panduan Pengguna WRF-ARW Bab 3</a>.</p>
-<p>Di dalam tahapan ini, Anda perlu mengubah parameter-parameter yang ada di dalam <code>&amp;geogrid</code>. Pada contoh yang telah kami berikan, Anda perlu mengganti parameter <code>&amp;geogrid</code> dan <code>&amp;share</code>. File namelist.wps di atas berubah menjadi seperti ini. Penjelasan setiap variabel dapat dilihat pada <a href="#tbl-namelistwps">Tabel&nbsp;<span>1.2</span></a></p>
+<p>Terdapat berbagai macam parameter di dalam <code>&amp;share</code>, <code>&amp;geogrid</code>, <code>&amp;ungrib</code>, dan <code>&amp;metgrid</code>. Anda perlu mengubah beberapa parameter tersebut yang dapat disesuaikan dengan simulasi. Tapi, Anda harus memperhatikan aturan atau template yang telah diberikan di dalam panduan pengguna. Untuk lebih rincinya, Anda bisa lihat di <a href="https://www2.mmm.ucar.edu/wrf/users/docs/user_guide_v4/v4.4/users_guide_chap3.html">Panduan Pengguna WRF-ARW Bab 3</a>. Di dalam tahapan ini, Anda perlu mengubah parameter-parameter yang ada di dalam <code>&amp;geogrid</code>. Anda dapat mengubah file ini dengan membukanya menggunakan software apa saja (mis. Notepad, VS Code, Notepad++) atau dapat langsung dengan terminal dengan mengetik <code>nano namelist.wps</code>. Pada contoh yang telah kami berikan, Anda perlu mengganti parameter pada seksi <code>&amp;share</code> dan <code>&amp;geogrid</code>. Penjelasan setiap variabel dapat dilihat pada <a href="#tbl-namelistwps">Tabel&nbsp;<span>1.2</span></a>. File yang telah berubah menjadi seperti di bawan ini.</p>
 <pre><code>&amp;share
  wrf_core = 'ARW',                                                                 
  max_dom = 3,                                                                      
@@ -920,10 +919,48 @@ Note
 </tr>
 </tbody>
 </table>
-</div></li>
-<li><p><code>ungrib.exe</code></p></li>
-<li><p><code>metgrid.exe</code></p></li>
-</ol>
+</div>
+<p>Pada bagian <code>&amp;geogrid</code>, penentuan lokasi kajian ini cukup rumit. Anda bisa menggunakan halaman github <a href="https://jiririchter.github.io/WRFDomainWizard">https://jiririchter.github.io/WRFDomainWizard</a> untuk membuat file <code>namelist.wps</code> sesuai dengan lokasi yang Anda inginkan, setidaknya Anda dapat menyalin teks pada bagian <code>&amp;geogrid</code> <a href="#fig-wrfdomainwizard">Gambar&nbsp;<span>1.10</span></a>.</p>
+<div id="fig-wrfdomainwizard" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="Pictures/WRFDomainWizard.png" class="img-fluid figure-img" style="width:40.0%"></p>
+<p></p><figcaption class="figure-caption">Gambar&nbsp;1.10: WRF Domain Wizard oleh <a href="https://jiririchter.github.io/WRFDomainWizard">Jiririchter</a></figcaption><p></p>
+</figure>
+</div>
+</section>
+<section id="menjalankan-program-geogrid.exe" class="level4" data-number="1.4.1.2">
+<h4 data-number="1.4.1.2" class="anchored" data-anchor-id="menjalankan-program-geogrid.exe"><span class="header-section-number">1.4.1.2</span> Menjalankan Program <code>geogrid.exe</code></h4>
+<p>Selanjutnya, Anda dapat menjalankan program <code>geogrid.exe</code> dengan perintah di bawah ini. Hasilnya, terdapat 3 file dengan nama geo_em.d0x.nc (x = nomor domain; 1, 2, 3) karena pengaturan <code>max_dom = 3</code>.</p>
+<div class="sourceCode" id="cb48"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./geogrid.exe</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb49"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> geo_em<span class="pp">*</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb50"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="ex">geo_em.d01.nc</span>  geo_em.d02.nc  geo_em.d03.nc</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="menyambungkan-file-data-masukan-dan-tabel-variabel" class="level4" data-number="1.4.1.3">
+<h4 data-number="1.4.1.3" class="anchored" data-anchor-id="menyambungkan-file-data-masukan-dan-tabel-variabel"><span class="header-section-number">1.4.1.3</span> Menyambungkan File Data Masukan dan Tabel Variabel</h4>
+<p>WPS menyediakan program <code>link_grib.csh</code> untuk menyambungkan file data masukan ke dalam folder <code>WPS/</code> dengan membuat shortcut yang bernama <code>GRIBFILE.*</code> (<code>GRIBFILE.AAA</code>, <code>GRIBFILE.AAB</code>, …). Perintahnya sebagai berikut.</p>
+<div class="sourceCode" id="cb51"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./link_grib.csh</span> <span class="va">$ODIR</span>/data/GFS/<span class="pp">*</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Kemudian, buatlah shortcut dengan nama Vtable di dalam folder <code>WPS/</code> dari file yang berada di dalam folder <code>ungrib/Variable_Tables</code>. Untuk data GFS, nama file tersebut adalah <code>Vtable.GFS</code>, sedangkan ERA5 adalah <code>Vtable.ERA-Interim.pl</code>. Perintahnya sebagai berikut.</p>
+<div class="sourceCode" id="cb52"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ln</span> <span class="at">-sf</span> ungrib/Variable_Tables/Vtable.GFS Vtable <span class="co"># GFS</span></span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ln</span> <span class="at">-sf</span> ungrib/Variable_Tables/Vtable.ERA-Interim.pl Vtable <span class="co"># ERA5</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="menjalankan-program-ungrib.exe" class="level4" data-number="1.4.1.4">
+<h4 data-number="1.4.1.4" class="anchored" data-anchor-id="menjalankan-program-ungrib.exe"><span class="header-section-number">1.4.1.4</span> Menjalankan Program <code>ungrib.exe</code></h4>
+<p>Setelah menyambungkan data masukan serta tabel variabel, jalankan program <code>ungrib.exe</code> dengan perintah berikut.</p>
+<div class="sourceCode" id="cb53"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./ungrib.exe</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Luaran dari program ini adalah file dengan nama <code>FILE:*</code> yang memiliki format <code>.nc</code> (netcdf).</p>
+</section>
+<section id="menjalankan-program-metgrid.exe" class="level4" data-number="1.4.1.5">
+<h4 data-number="1.4.1.5" class="anchored" data-anchor-id="menjalankan-program-metgrid.exe"><span class="header-section-number">1.4.1.5</span> Menjalankan Program <code>metgrid.exe</code></h4>
+<p>Jalankan program <code>metgrid.exe</code> dengan perintah berikut.</p>
+<div class="sourceCode" id="cb54"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./metgrid.exe</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Luaran dari program ini adalah file dengan nama <code>met_em*</code> yang memiliki format <code>.nc</code>. File-file ini nanti yang akan dipindahkan menuju folder <code>WRF/test/em_real</code> atau Anda dapat juga membuat shortcut. Perintahnya sebagai berikut.</p>
+<div class="sourceCode" id="cb55"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mv</span> met_em<span class="pp">*</span> <span class="va">$ODIR</span>/WRF/test/em_real</span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a><span class="co"># atau</span></span>
+<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ln</span> <span class="at">-sf</span> met_em<span class="pp">*</span> <span class="va">$ODIR</span>/WRF/test/em_real</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+<section id="program-wrf" class="level3" data-number="1.4.2">
+<h3 data-number="1.4.2" class="anchored" data-anchor-id="program-wrf"><span class="header-section-number">1.4.2</span> Program WRF</h3>
 
 
 <div id="refs" class="references csl-bib-body" role="doc-bibliography">
