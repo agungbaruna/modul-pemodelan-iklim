@@ -212,6 +212,11 @@ div.csl-indent {
   <li><a href="#program-wps" id="toc-program-wps" class="nav-link" data-scroll-target="#program-wps"><span class="toc-section-number">1.4.1</span>  Program WPS</a></li>
   <li><a href="#program-wrf" id="toc-program-wrf" class="nav-link" data-scroll-target="#program-wrf"><span class="toc-section-number">1.4.2</span>  Program WRF</a></li>
   </ul></li>
+  <li><a href="#prosedur-praktikum-analisis-luaran-wrf" id="toc-prosedur-praktikum-analisis-luaran-wrf" class="nav-link" data-scroll-target="#prosedur-praktikum-analisis-luaran-wrf"><span class="toc-section-number">1.5</span>  Prosedur Praktikum: Analisis Luaran WRF</a>
+  <ul class="collapse">
+  <li><a href="#membuka-jupyter-notebook" id="toc-membuka-jupyter-notebook" class="nav-link" data-scroll-target="#membuka-jupyter-notebook"><span class="toc-section-number">1.5.1</span>  Membuka Jupyter Notebook</a></li>
+  <li><a href="#menggunakan-wrf-python" id="toc-menggunakan-wrf-python" class="nav-link" data-scroll-target="#menggunakan-wrf-python"><span class="toc-section-number">1.5.2</span>  Menggunakan <code>wrf-python</code></a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -237,14 +242,15 @@ div.csl-indent {
 
 <section id="pendahuluan" class="level2" data-number="1.1">
 <h2 data-number="1.1" class="anchored" data-anchor-id="pendahuluan"><span class="header-section-number">1.1</span> Pendahuluan</h2>
-<p>Global Climate Model (GCM) adalah alat utama dan paling komprehensif yang digunakan dalam mensimulasikan kondisi iklim pada masa lalu maupun masa depan. GCM memiliki kemampuan dalam melakukan simulasi variabilitas iklim, sifat-sifat fisis, serta kimia di bumi dengan perhitungan secara matematis yang menggambarkan proses, interaksi, dan timbal balik pada atmosfer, lautan, dan biotik. Kelemahan dalam GCM adalah ketidakmampuan menangkap kejadian-kejadian iklim pada skala regional maupun lokal karena memiliki resolusi spasial yang terlalu kasar, yaitu sekitar &gt;100 km. Metode <em>downscaling</em> di dalam ilmu iklim umum digunakan pada kajian hidrologi <span class="citation" data-cites="piani2010suhu">(<a href="#ref-piani2010suhu" role="doc-biblioref">Piani, Weedon, <em>et al.</em> 2010</a>)</span>, pertanian <span class="citation" data-cites="glotter2014">(<a href="#ref-glotter2014" role="doc-biblioref">Glotter <em>et al.</em> 2014</a>)</span>, dan sistem perkotaan <span class="citation" data-cites="smid2018">(<a href="#ref-smid2018" role="doc-biblioref">Smid and Costa 2018</a>)</span>. Sebagai contoh pada kajian hidrologi, teknik <em>downscaling</em> digunakan untuk pemodelan debit sungai dan banjir <span class="citation" data-cites="piani2010pr">(<a href="#ref-piani2010pr" role="doc-biblioref">Piani, Haerter, <em>et al.</em> 2010</a>)</span>. Metode <em>downscaling</em> adalah cara mendapatkan informasi lebih spesifik dengan resolusi tinggi. Kata <em>downscaling</em> biasanya merujuk pada peningkatan resolusi spasial maupun temporal. Terdapat dua cara dalam melakukan metode ini, yaitu statistik dan dinamik. Di dalam ilmu iklim, metode ini umum digunakan pada GCM. Wilby dan Wigley <span class="citation" data-cites="wilby1997">(<a href="#ref-wilby1997" role="doc-biblioref">Wilby and Wigley 1997</a>)</span> mengelompokkan teknik <em>downscaling</em> menjadi 4 kategori, yaitu</p>
+<p>Global Climate Model (GCM) adalah alat utama dan paling komprehensif yang digunakan dalam mensimulasikan keadaan iklim pada masa lalu, masa sekarang, maupun masa depan. GCM memiliki kemampuan dalam melakukan simulasi variabilitas iklim, sifat-sifat fisis, serta kimia di bumi dengan perhitungan secara matematis yang menggambarkan proses, interaksi, dan timbal balik pada atmosfer, lautan, dan biotik. Kelemahan dalam GCM adalah ketidakmampuan menangkap kejadian-kejadian iklim pada skala regional maupun lokal karena memiliki resolusi spasial yang kasar, sekitar &gt;100 km. Ketidakmampuan GCM dalam menjelaskan keadaan iklim secara regional maupun lokal karena keterbatasan sumber daya komputer. Akan tetapi pada saat ini, teknologi komputasi semakin berkembang dan beberapa instansi yang bergerak dalam bidang cuaca dan iklim, seperti Met Office Hadley Center, National Center for Atmospheric Research (NCAR), dan European Centre for Medium-Range Weather Forecasts (ECMWF) telah mengembangkan GCM dalam menjelaskan fenomena-fenomena cuaca dalam skala regional dengan sumber daya komputer yang sangat tinggi.</p>
+<p>Metode <em>downscaling</em> di dalam ilmu iklim umum digunakan pada kajian hidrologi <span class="citation" data-cites="piani2010suhu">(<a href="#ref-piani2010suhu" role="doc-biblioref">Piani, Weedon, <em>et al.</em> 2010</a>)</span>, pertanian <span class="citation" data-cites="glotter2014">(<a href="#ref-glotter2014" role="doc-biblioref">Glotter <em>et al.</em> 2014</a>)</span>, dan sistem perkotaan <span class="citation" data-cites="smid2018">(<a href="#ref-smid2018" role="doc-biblioref">Smid and Costa 2018</a>)</span>. Sebagai contoh pada kajian hidrologi, teknik <em>downscaling</em> digunakan untuk pemodelan debit sungai dan banjir <span class="citation" data-cites="piani2010pr">(<a href="#ref-piani2010pr" role="doc-biblioref">Piani, Haerter, <em>et al.</em> 2010</a>)</span>. Metode <em>downscaling</em> adalah cara mendapatkan informasi lebih spesifik dengan resolusi tinggi. Kata <em>downscaling</em> biasanya merujuk pada peningkatan resolusi spasial maupun temporal. Terdapat dua cara dalam melakukan metode ini, yaitu statistik dan dinamik. Di dalam ilmu iklim, metode ini umum digunakan pada GCM. Wilby dan Wigley <span class="citation" data-cites="wilby1997">(<a href="#ref-wilby1997" role="doc-biblioref">Wilby and Wigley 1997</a>)</span> mengelompokkan teknik <em>downscaling</em> menjadi 4 kategori, yaitu</p>
 <ol type="1">
 <li><p>Regresi</p>
 <p>Metode regresi merupakan metode downscaling paling awal yang telah digunakan pada kajian perubahan iklim. Hal ini dapat dibuktikan dari penelitian oleh Kim pada tahun 1984 <span class="citation" data-cites="kim1984">(<a href="#ref-kim1984" role="doc-biblioref">Kim <em>et al.</em> 1984</a>)</span>. Pendekatan ini secara umum membangun hubungan linier atau non-linier antara parameter titik lokasi dengan prediktor variabel dari resolusi kasar. Contoh dari metode ini adalah regresi linier sederhana, regresi linier berganda, Artificial Neural Network (ANN), regresi komponen utama (Principle Component Regression/PCR), dan lain sebagainya. Sudah banyak penelitian yang menerapkan metode ini untuk kajian perubahan iklim <span class="citation" data-cites="pahlavan2018 huth2000 goly2014 sachindra2014">(<a href="#ref-huth2000" role="doc-biblioref">Huth and Kyselỳ 2000</a>; <a href="#ref-goly2014" role="doc-biblioref">Goly <em>et al.</em> 2014</a>; <a href="#ref-sachindra2014" role="doc-biblioref">Sachindra <em>et al.</em> 2014</a>; <a href="#ref-pahlavan2018" role="doc-biblioref">Pahlavan <em>et al.</em> 2018</a>)</span>.</p></li>
 <li><p>Pola cuaca</p>
 <p>Metode ini dibangun dari hubungan statistik dari variabel cuaca di stasiun observasi atau rata-rata area dengan klasifikasi cuaca tertentu yang dapat diturunkan secara obyektif maupun subyektif. Metode ini secara obyektif dapat meliputi komponen utama, Canonical Correlation Analyses (CCA), aturan Fuzzy, dan Neural Networks. Contoh prosedur pengelompokkan pola cuaca, yaitu European Grosswetterlagen dan British Isles Lamb Weather Types.</p></li>
 <li><p>Stokastik</p>
-<p>Model WGEN <span class="citation" data-cites="richardson1981">(<a href="#ref-richardson1981" role="doc-biblioref">Richardson 1981</a>)</span> merupakan contoh dari pendekatan ini. Model WGEN dapat membangkitkan data curah hujan harian yang diperoleh dari peluang kejadian hujan (hujan dan tidak hujan) dengan menggunakan rantai Markov order satu. Model ini telah digunakan dalam kajian perubahan iklim dan analisis dampak. Model stokastik yang telah diperoleh dari data observasi deret waktu dapat divalidasi dengan GCM dan perlu dikalibrasi terlebih dahulu.</p></li>
+<p>Model WGEN <span class="citation" data-cites="richardson1981">(<a href="#ref-richardson1981" role="doc-biblioref">Richardson 1981</a>)</span> merupakan contoh dari pendekatan ini. Model ini memiliki kemampuan dalam membangkitkan data curah hujan harian berdasarkan peluang kejadian hujan (hujan dan tidak hujan) dengan rantai Markov order satu. Model ini telah digunakan dalam kajian perubahan iklim dan analisis dampak. Model stokastik yang telah diperoleh dari data observasi deret waktu dapat divalidasi dengan GCM dan perlu dikalibrasi terlebih dahulu.</p></li>
 <li><p><em>Limited-area climate models</em> (LAM)</p>
 <p>Metode terakhir untuk melakukan <em>downscaling</em> terhadap GCM adalah dengan menyematkan model iklim dengan area terbatas. Sebenarnya, LAM pada saat ini dapat diistilahkan sebagai <em>Regional Climate Model</em> (RCM). RCM memiliki resolusi spasial kurang dari 100 km. RCM memerlukan sumber daya komputer yang hampir sama dengan menjalankan GCM. RCM memiliki kemampuan dalam mensimulasikan proses-proses atmosfer pada skala menengah, seperti curah hujan orografis dan konveksi awan atau skala tinggi, seperti turbulensi. Contoh dari RCM adalah Weather Research Forecasting (WRF) <span class="citation" data-cites="skamarock2019">(<a href="#ref-skamarock2019" role="doc-biblioref">Skamarock <em>et al.</em> 2019</a>)</span>.</p></li>
 </ol>
@@ -252,21 +258,21 @@ div.csl-indent {
 <p>WRF merupakan salah satu teknik <em>dynamical downscaling</em>. Penggunaan model WRF semakin berkembang saat ini dengan tujuan riset dan operasional. WRF memiliki spesifikasi dalam berbagai aplikasi prediksi di dalam sistem bumi, seperti kimia atmosfer, hidrologi, kebakaran hutan, siklon, dan iklim regional. Sebanyak lebih dari 36.000 pengguna WRF tersebar di 162 negara, termasuk Indonesia yang telah menggunakan WRF untuk kebutuhan operasional <span class="citation" data-cites="powers2017">(<a href="#ref-powers2017" role="doc-biblioref">Powers <em>et al.</em> 2017</a>)</span>. Ada dua jenis model WRF berdasarkan penyelesaian persamaan aliran fluida atmosfer, yaitu <em>Advanced Research WRF</em> (ARW) dan <em>Nonhydrostatic Mesoscale Model</em> (NMM). WRF-ARW dikembangkan oleh National Centre of Atmosphere Research (NCAR), sedangkan WRF-NMM dikembangkan oleh National Centre of Environmental Prediction (NCEP) <span class="citation" data-cites="skamarock2019">(<a href="#ref-skamarock2019" role="doc-biblioref">Skamarock <em>et al.</em> 2019</a>)</span>. Secara umum, WRF mampu melakukan simulasi beberapa komponen <em>Numerical Weather Prediction</em> (NWP) <a href="#fig-nwpkomponen">Gambar&nbsp;<span>1.1</span></a>. Berdasarkan aplikasi tertentu, WRF memiliki beberapa turunan model, seperti WRF-Chem (kimia atmosfer), WRF-Hydro (hidrologi), dan WRF-Fire (kebakaran hutan dan lahan). Di dalam praktikum ini, Anda hanya perlu memahami cara instalasi dan simulasi WRF-ARW.</p>
 <div id="fig-nwpkomponen" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="Pictures/param_nwp.png" class="img-fluid figure-img" style="width:40.0%"></p>
+<p><img src="Pictures/param_nwp.png" class="img-fluid figure-img" style="width:60.0%"></p>
 <p></p><figcaption class="figure-caption">Gambar&nbsp;1.1: Beberapa parameter dalam <em>Numerical Weather Prediction</em> <span class="citation" data-cites="sonkaew">(<a href="#ref-sonkaew" role="doc-biblioref">Sonkaew <em>et al.</em></a>)</span></figcaption><p></p>
 </figure>
 </div>
 <p>WRF diimplementasikan ke dalam bahasa pemrograman komputer. Jika Anda melihat repositori github <a href="https://github.com/wrf-model/WRF">WRF</a>, Jenis bahasa pemrograman yang paling banyak digunakan adalah Fortran. Untuk perhitungan fisik, kimia, dan matematis diketik dalam bahasa Fortran. Model WRF dapat dijalankan pada personal komputer hingga super komputer. Sebenarnya, Anda dapat menjalankan WRF dengan 1 prosesor saja. Akan tetapi, waktu proses simulasi mungkin akan lama akibat dari resolusi spasial dan temporal yang tinggi, juga cakupan pemilihan wilayah simulasi. Proses perhitungan model dinamik maupun fisik akan lebih cepat jika menggunakan banyak prosesor atau yang bisa disebut dengan <strong>komputasi paralel</strong>. Kerangka kerja perangkat lunak WRF mendukung komputasi paralel yang efisien pada berbagai platform komputasi. Model atmosfer membawa kumpulan komputasi yang sama di setiap grid vertikal maupun horizontal <a href="#fig-modeliklim">Gambar&nbsp;<span>1.2</span></a>. Komputer melakukan perhitungan fisik atmosfer untuk setiap grid secara paralel. Kita mungkin telah mengenal jenis prosesor yang tersedia saat ini, seperti Intel dan AMD. Jenis prosesor yang mereka buat dapat mempengaruhi kecepatan proses perhitungan. Untuk perhitungan paralel, Anda dapat menggunakan tipe prosesor desktop, mobile (prosesor di laptop), maupun server, tetapi juga perlu memperhatikan banyaknya <em>core</em> maupun frekuensi yang digunakan.</p>
 <div id="fig-modeliklim" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="Pictures/AtmosphericModelSchematic.png" class="img-fluid figure-img" style="width:40.0%"></p>
+<p><img src="Pictures/AtmosphericModelSchematic.png" class="img-fluid figure-img" style="width:60.0%"></p>
 <p></p><figcaption class="figure-caption">Gambar&nbsp;1.2: Ilustrasi Model Iklim</figcaption><p></p>
 </figure>
 </div>
-<p>Terkait dengan bahasa pemrograman yang digunakan di dalam WRF, yaitu bahasa Fortran dan C, kode skrip terlebih dahulu harus dikompilasi dengan program Compiler. Compiler ini bertujuan mengubah bahasa dari kode yang diketik menjadi bahasa mesin. Ada berbagai macam program Compiler yang tersedia secara gratis, salah satunya adalah <a href="https://gcc.gnu.org/">GNU Compiler Collection (gcc)</a>. Selain GNU, perusahaan seperti Intel (icc, ifort, …), AMD (aocc), maupun NVIDIA (pgi) juga memiliki program Compiler yang dapat digunakan secara gratis serta mendukung komputasi paralel. Di dalam modul praktikum ini, Anda dapat memilih salah satu dari dua Compiler yang akan dijelaskan, yaitu GCC atau Intel. Perbedaan terhadap jenis Compiler ini dapat mempengaruhi waktu simulasi pada satu jenis prosesor yang sama <a href="#fig-wrfbenchmark">Gambar&nbsp;<span>1.3</span></a>.</p>
+<p>Terkait dengan bahasa pemrograman yang digunakan di dalam WRF, yaitu bahasa Fortran dan C, kode skrip terlebih dahulu harus dikompilasi dengan program Compiler. Compiler ini bertujuan mengubah bahasa dari kode yang diketik menjadi bahasa mesin. Ada berbagai macam program Compiler yang tersedia secara gratis, salah satunya adalah <a href="https://gcc.gnu.org/">GNU Compiler Collection (gcc)</a>. Selain GNU, perusahaan seperti Intel, AMD, maupun NVIDIA juga memiliki program Compiler yang dapat digunakan secara gratis serta mendukung komputasi paralel. Di dalam modul praktikum ini, Anda dapat memilih salah satu dari dua Compiler yang akan dijelaskan, yaitu GNU atau Intel. Perbedaan terhadap jenis Compiler ini dapat mempengaruhi waktu simulasi pada satu jenis prosesor yang sama <a href="#fig-wrfbenchmark">Gambar&nbsp;<span>1.3</span></a>.</p>
 <div id="fig-wrfbenchmark" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="Pictures/WRFBenchmark.png" class="img-fluid figure-img" style="width:40.0%"></p>
+<p><img src="Pictures/WRFBenchmark.png" class="img-fluid figure-img" style="width:60.0%"></p>
 <p></p><figcaption class="figure-caption">Gambar&nbsp;1.3: Perbedaan waktu simulasi WRF pada tipe Compiler, Distro, dan Prosesor yang digunakan</figcaption><p></p>
 </figure>
 </div>
@@ -274,10 +280,10 @@ div.csl-indent {
 <section id="dasar-dasar-pemrograman-bash" class="level2" data-number="1.2">
 <h2 data-number="1.2" class="anchored" data-anchor-id="dasar-dasar-pemrograman-bash"><span class="header-section-number">1.2</span> Dasar-dasar Pemrograman Bash</h2>
 <p>Sebagai salah satu tool scripting populer pada UNIX, Bash sangatlah berguna bagi para user Linux atau SysAdmin. Nama Bash merupakan akronim dari <em>Bourne Again Shell</em>. Sebagian besar model iklim, Bash digunakan untuk menjalankan instalasi dan simulasi. Pengguna model-model iklim disarankan mempelajari dasar-dasar pemrograman ini agar memahami berbagai perintah dari cara kerja instalasi dan simulasi model tersebut, biasanya terdapat file bernama <strong>README</strong>. File ini berisi mengenai cara instalasi, simulasi, informasi file, dan berbagai aplikasi tambahan untuk menjalankan model iklim tersebut.</p>
-<p>Bash merupakan shell default dari sistem operasi Linux. Anda bisa menjalankan shell lain, seperti ksh (Korn Shell), zsh, dan csh (C shell). Untuk menjalankan Bash, Anda bisa menekan Ctrl+Alt+T atau carilah aplikasi Terminal. Khusus Windows 10, Anda dapat mencari aplikasi “Ubuntu” atau “wsl.exe”. Tampilan Bash seperti pada Gambar 2. Tulisan menunjukkan nama user dan tanda berarti lokasi folder saat ini.</p>
+<p>Bash merupakan shell default dari sistem operasi Linux. Anda bisa menjalankan shell lain, seperti ksh (Korn Shell), zsh, dan csh (C shell). Untuk menjalankan Bash, Anda bisa menekan Ctrl+Alt+T atau carilah aplikasi Terminal. Khusus Windows 10, Anda dapat mencari aplikasi “Ubuntu” atau “wsl.exe”. Tampilan Bash seperti pada <a href="#fig-bashubuntu">Gambar&nbsp;<span>1.4</span></a>. Tulisan menunjukkan nama user dan tanda berarti lokasi folder saat ini.</p>
 <div id="fig-bashubuntu" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="./Pictures/bash_shell.png" class="img-fluid figure-img" style="width:40.0%"></p>
+<p><img src="./Pictures/bash_shell.png" class="img-fluid figure-img" style="width:60.0%"></p>
 <p></p><figcaption class="figure-caption">Gambar&nbsp;1.4: Bash pada Ubuntu</figcaption><p></p>
 </figure>
 </div>
@@ -383,7 +389,8 @@ Note
 <li>Terakhir, lakukan proses pembuatan <em>environment</em> dengan nama <code>ncl</code> dan pemasangan NCL dengan perintah.</li>
 </ol>
 <div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> create <span class="at">-n</span> ncl</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="ex">mamba</span> install <span class="at">-n</span> ncl <span class="at">-c</span> conda-forge xarray netcdf4 scipy pyngl pynio wrf-python ncl</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> activate ncl</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="ex">mamba</span> install <span class="at">-c</span> conda-forge xarray netcdf4 scipy pyngl pynio matplotlib cartopy wrf-python ncl</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ol start="8" type="1">
 <li>Saat Anda ingin memulai menggunakan program NCL, aktifkan terlebih dahulu <em>environment</em> <code>ncl</code> dengan perintah di bawah ini. Kemudian, tulisan <code>(base)</code> menjadi <code>(ncl)</code> yang menandakan bahwa <em>environment</em> telah berhasil diaktifkan.</li>
 </ol>
@@ -524,8 +531,8 @@ Note
 <span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> l_fortran-compiler_p_2023.0.0.25394_offline.sh <span class="at">-a</span> <span class="at">-s</span> <span class="at">--eula</span> accept</span>
 <span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. MPI</span></span>
 <span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> l_mpi_oneapi_p_2021.8.0.25329_offline.sh <span class="at">-a</span> <span class="at">-s</span> <span class="at">--eula</span> accept</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Lokasi folder hasil instalasi terdapat di <code>~/intel</code>. Secara default, perintah untuk memanggil program Compiler belum diatur. Untungnya, Intel menyediakan skrip untuk memanggil semua program Compiler secara default, yaitu terdapat di dalam <code>~/intel/oneapi/setvars.sh</code>. Perintah untuk memanggil skrip <code>setvars.sh</code> adalah sebagai berikut.</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> ~/intel/oneapi/setvars.sh</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Lokasi folder hasil instalasi terdapat di <code>$HOME/intel</code>. Perintah untuk memanggil program Compiler Intel belum menjadi <strong>ENVIRONMENT VARIABLE</strong>. Untungnya, Intel menyediakan skrip untuk memanggil semua program Compiler secara default, yaitu terdapat di dalam <code>$HOME/intel/oneapi/setvars.sh</code>. Ketika memanggil skrip tersebut, <strong>ENVINRONMENT VARIABLE</strong> milik Miniconda secara otomatis dinonaktifkan (tulisan <code>&lt;base&gt;</code> hilang). Perintah untuk memanggil skrip <code>setvars.sh</code> adalah sebagai berikut.</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> <span class="va">$HOME</span>/intel/oneapi/setvars.sh</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 </section>
 <section id="instalasi-package" class="level3" data-number="1.3.6">
@@ -716,13 +723,13 @@ Note
 <p>Anda akan disajikan beberapa teks di dalamnya. Anda disuruh untuk memilih opsi Compiler. Tipe Compiler tersebut selain GNU dan Intel, ada pula IBM, PGI, Fujitsu, Pathscale, dan CRAY. Jika Anda menggunakan Compiler tipe GNU, ketikkan angka <strong>35</strong>. Untuk Intel, ketik angka <strong>16</strong>. Setelah itu, tekan Enter.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="Pictures/wrf-configure-gnu.png" class="img-fluid figure-img" style="width:30.0%"></p>
+<p><img src="Pictures/wrf-configure-gnu.png" class="img-fluid figure-img" style="width:50.0%"></p>
 <p></p><figcaption class="figure-caption">Konfigurasi WRF dengan Compiler GNU</figcaption><p></p>
 </figure>
 </div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="Pictures/wrf-configure-intel.png" class="img-fluid figure-img" style="width:30.0%"></p>
+<p><img src="Pictures/wrf-configure-intel.png" class="img-fluid figure-img" style="width:50.0%"></p>
 <p></p><figcaption class="figure-caption">Konfigurasi WRF dengan Compiler GNU</figcaption><p></p>
 </figure>
 </div></li>
@@ -998,7 +1005,7 @@ Note
 <div class="sourceCode" id="cb54"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="ex">ncl</span> util/plotgrids_new.ncl</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div id="fig-wpsconfigpic" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="Pictures/wps_show_dom.png" class="img-fluid figure-img"></p>
+<p><img src="Pictures/wps_show_dom.png" class="img-fluid figure-img" style="width:50.0%"></p>
 <p></p><figcaption class="figure-caption">Gambar&nbsp;1.11: Konfigurasi domain WRF</figcaption><p></p>
 </figure>
 </div>
@@ -1159,7 +1166,7 @@ Note
 <p>Kemudian untuk bagian <code>&amp;domains</code>, digunakan untuk mengatur kondisi dari domain agar dapat sesuai dengan data masukan (banyak grid horizontal dan vertikal, posisi, rasio grid, tipe interpolasi). Pada parameter <code>feedback</code>, Anda dapat mengatur tipe <em>nesting</em> dua arah (<code>1</code>) atau satu arah (<code>0</code>). Parameter <code>num_metgrid_levels</code> dan <code>num_metgrid_soil_levels</code> harus diatur sesuai dengan yang ada di dalam salah satu file <code>met_em*</code>. Untuk melihatnya, gunakan perintah di bawah ini. Nilai kedua parameter <code>num_metgrid_levels</code> dapat berbeda sesuai dengan data masukan yang digunakan. Sebagai contoh, GFS memiliki <code>num_metgrid_levels = 34</code>, sedangkan ERA5 <code>num_metgrid_levels = 38</code>.</p>
 <div class="sourceCode" id="cb65"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="ex">ncdump</span> <span class="at">-h</span> met_em.d01.2022-01-01_00:00:00.nc <span class="kw">|</span> <span class="fu">grep</span> num_metgrid_levels      <span class="co"># = 34</span></span>
 <span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a><span class="ex">ncdump</span> <span class="at">-h</span> met_em.d01.2022-01-01_00:00:00.nc <span class="kw">|</span> <span class="fu">grep</span> NUM_METGRID_SOIL_LEVELS <span class="co"># = 4</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Di dalam bagian <code>&amp;physics</code>, terdapat berbagai skema parameterisasi dalam penyelesaian perhitungan pembentukan awan, skemar radiasi, lapisan perbatas, serta proses-proses di permukaan tanah. Pada parameter <code>physics_suite</code>, Anda bisa mengaturnya ke <code>TROPICAL</code> karena wilayah yang ingin disimulasikan berada di daerah tropis. Ketika Anda mendefinisikan <code>physics_suite = 'TROPICAL'</code>, berarti parameter di bawah ini diatur secara default dan sesuai dengan contoh <code>namelist.input</code>.</p>
+<p>Di dalam bagian <code>&amp;physics</code>, terdapat berbagai skema parameterisasi dalam penyelesaian perhitungan pembentukan awan, skemar radiasi, lapisan perbatas, serta proses-proses di permukaan tanah. Pada parameter <code>physics_suite</code>, Anda bisa mengaturnya ke <code>TROPICAL</code> karena wilayah yang ingin disimulasikan berada di daerah tropis. Ketika Anda mendefinisikan <code>physics_suite = 'TROPICAL'</code>, Anda tidak perlu lagi menambahkan angka pada parameter di bawah ini.</p>
 <ul>
 <li><code>mp_physics         =  6</code>: WSM6</li>
 <li><code>cu_physics         = 16</code>: New-Tiedke</li>
@@ -1290,9 +1297,9 @@ Note
  end_day                             = 03,   03,  03,
  end_hour                            = 18,   18,  18,
  interval_seconds                    = 21600,
- input_from_file                     = .true.,.true.,
- history_interval                    = 60,  60,
- frames_per_outfile                  = 1000, 1000,
+ input_from_file                     = .true.,.true.,.true.,
+ history_interval                    = 60,  60, 60,
+ frames_per_outfile                  = 1000, 1000, 1000,
  restart                             = .false.,
  restart_interval                    = 7200,
  io_form_history                     = 2
@@ -1308,7 +1315,7 @@ Note
  max_dom                             = 3,
  e_we                                = 33,    40,  46,
  e_sn                                = 33,    40,  46,
- e_vert                              = 33,     33, 33,
+ e_vert                              = 44,    44,  44,
  dzstretch_s                         = 1.1
  p_top_requested                     = 5000,
  use_surface                         = .false.,
@@ -1321,8 +1328,8 @@ Note
  parent_id                           = 1,     1,   1,
  i_parent_start                      = 1,     11, 15,
  j_parent_start                      = 1,     11, 15,
- parent_grid_ratio                   = 1,     3,  9,
- parent_time_step_ratio              = 1,     3,  9,
+ parent_grid_ratio                   = 1,     3,   9,
+ parent_time_step_ratio              = 1,     3,   9,
  feedback                            = 1,
  smooth_option                       = 0
  /
@@ -1386,9 +1393,61 @@ Note
 <div class="sourceCode" id="cb67"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./real.exe</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Untuk melihat respon dari program ini, Anda dapat melihat file <code>rsl.errror.0000</code> dengan perintah</p>
 <div class="sourceCode" id="cb68"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span> rsl.error.0000 <span class="at">-n</span> 1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Jika respon yang diberikan terdapat kalimat <code>d01 2022-01-03_18:00:00 real_em: SUCCESS COMPLETE REAL_EM INIT</code>, Anda bisa melanjutkan ke tahapan <code>wrf.exe</code>.</p>
+<p>Jika respon yang diberikan terdapat kalimat <code>real_em: SUCCESS COMPLETE REAL_EM INIT</code>, Anda bisa melanjutkan ke tahapan <code>wrf.exe</code>.</p>
 <div class="sourceCode" id="cb69"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./wrf.exe</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>File simulasi WRF bernama <code>wrfout_&lt;domain&gt;_&lt;yyyy&gt;-&lt;mm&gt;-&lt;dd&gt;_&lt;HH&gt;:&lt;MM&gt;:&lt;SS&gt;</code>. Untuk simulasi ini, terdapat 3 file <code>wrfout_d0*</code>. Sejatinya, file-file tersebut berformat <code>*.nc</code>, tetapi tidak tertera di dalam nama file. Program <code>wrf.exe</code> dikatakan berhasil apabila terdapat kalimat <code>d01 2022-01-03_18:00:00 wrf: SUCCESS COMPLETE WRF</code> seperti mengecek <code>rsl.error.0000</code> pada <code>real.exe</code>. Langkah selanjutnya, Anda dapat menganalisis luaran WRF dengan aplikasi apapun yang Anda bisa, selama mendukung format <code>*.nc</code>.</p>
+<p>Program <code>wrf.exe</code> dikatakan berhasil apabila terdapat kalimat <code>wrf: SUCCESS COMPLETE WRF</code> pada baris terakhir <code>rsl.error.0000</code>. Langkah selanjutnya, Anda dapat menganalisis luaran WRF dengan aplikasi apapun yang Anda bisa, selama mendukung format <code>*.nc</code>. File simulasi luaran WRF bernama <code>wrfout_&lt;domain&gt;_&lt;yyyy&gt;-&lt;mm&gt;-&lt;dd&gt;_&lt;HH&gt;:&lt;MM&gt;:&lt;SS&gt;</code>. Untuk simulasi ini, terdapat 3 file <code>wrfout_d0*</code>. Sejatinya, file-file tersebut berformat <code>*.nc</code> walaupun tidak tertera pada nama file. File <code>wrfout_d0*</code> memiliki interval waktu per 1 jam, dari pukul 00:00 UTC 1 Januari - 18:00 UTC 3 Januari 2022.</p>
+</section>
+<section id="tutup-terminal-bash-anda" class="level4" data-number="1.4.2.3">
+<h4 data-number="1.4.2.3" class="anchored" data-anchor-id="tutup-terminal-bash-anda"><span class="header-section-number">1.4.2.3</span> Tutup terminal Bash Anda</h4>
+</section>
+</section>
+</section>
+<section id="prosedur-praktikum-analisis-luaran-wrf" class="level2" data-number="1.5">
+<h2 data-number="1.5" class="anchored" data-anchor-id="prosedur-praktikum-analisis-luaran-wrf"><span class="header-section-number">1.5</span> Prosedur Praktikum: Analisis Luaran WRF</h2>
+<p>Terdapat 3 file luaran WRF yang telah Anda jalankan dengan masing-masing memiliki resolusi spasial yang berbeda, yaitu 18 km, 6 km, dan 2 km dengan pemilihan lokasi titik tengah longitude dan latitude di Kota Surabaya. Selanjutnya, Anda dapat melihat hasil dari simulasi tersebut dengan berbagai macam perangkat lunak, seperti ArcMap, Matlab, NCL, R, atau Python. Untuk praktikum ini, kami memberikan contoh dengan menggunakan Python di dalam <em>Environment</em> <code>ncl</code> yang telah Anda pasang sebelumnya.</p>
+<section id="membuka-jupyter-notebook" class="level3" data-number="1.5.1">
+<h3 data-number="1.5.1" class="anchored" data-anchor-id="membuka-jupyter-notebook"><span class="header-section-number">1.5.1</span> Membuka Jupyter Notebook</h3>
+<p>Anda bisa menggunakan kode editor ini atau aplikasi lainnya, seperti Visual Studio Code, Notepad++, atau Atom. Untuk langkah-langkah di bawah ini, kami lebih menjelaskan pada <strong>Jupyter Notebook</strong>. Kode editor ini diketik melalui aplikasi Browser default Anda, misalnya Google Chrome, Mozilla Firefox, atau Microsoft Edge. Ikuti langkah-langkah berikut ini.</p>
+<ol type="1">
+<li><p>Bukalah terminal Bash Anda. Saat ini, Anda berada di direktori <code>$HOME</code> atau <code>~</code>.</p></li>
+<li><p>Bukalah direktori <code>WRF-Model</code> dengan mengetik perintah</p>
+<div class="sourceCode" id="cb70"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> WRF-Model</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>Untuk memulai pengetikan kode Python, aktifkan terlebih dahulu <em>Environment</em> <code>ncl</code> dengan perintah <code>conda activate ncl</code>.</p></li>
+<li><p>Pengetikan kode Python dapat Anda langsung terapkan pada mode interaktif dengan mengetik perintah <code>python</code> pada terminal. Kami menyarankan Anda untuk menggunakan <strong>Jupyter Notebook</strong> agar hasil kode langsung bisa ditampilkan di bawahnya. Pasang <strong>Jupyter Notebook</strong> pada terminal dengan mengetik perintah</p>
+<div class="sourceCode" id="cb71"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="ex">mamba</span> install <span class="at">-c</span> conda-forge jupyter notebook</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>Ketikkan perintah berikut ini untuk memulai pengetikan kode Python. Browser default Anda akan terbuka dengan menampilkan kode editor <strong>Jupyter Notebook</strong> (<a href="#fig-jupyter">Gambar&nbsp;<span>1.12</span></a>)</p>
+<div class="sourceCode" id="cb72"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="ex">jupyter</span> notebook</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-jupyter" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="Pictures/jupyter-notebook.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<p></p><figcaption class="figure-caption">Gambar&nbsp;1.12: Tampilan Jupyter Notebook</figcaption><p></p>
+</figure>
+</div></li>
+<li><p>Klik <strong>New</strong> dan pilih <strong>Python 3 (ipykernel)</strong>. Tampilan awal <strong>Jupyter Notebook</strong> seperti pada <a href="#fig-jupyter2">Gambar&nbsp;<span>1.13</span></a></p>
+<div id="fig-jupyter2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="Pictures/jupyter-blank.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<p></p><figcaption class="figure-caption">Gambar&nbsp;1.13: Tampilan awal Jupyter Notebook</figcaption><p></p>
+</figure>
+</div></li>
+<li><p>Anda dapat langsung mendapatkan hasil dari kode yang ditulis pada sel (lihat tulisan <code>In [1]</code>) (<a href="#fig-jupyter3">Gambar&nbsp;<span>1.14</span></a>)</p>
+<div id="fig-jupyter3" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="Pictures/jupyter-hello.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<p></p><figcaption class="figure-caption">Gambar&nbsp;1.14: Tampilan interaktif Jupyter Notebook</figcaption><p></p>
+</figure>
+</div></li>
+</ol>
+</section>
+<section id="menggunakan-wrf-python" class="level3" data-number="1.5.2">
+<h3 data-number="1.5.2" class="anchored" data-anchor-id="menggunakan-wrf-python"><span class="header-section-number">1.5.2</span> Menggunakan <code>wrf-python</code></h3>
+<p>Package <code>wrf-python</code> <span class="citation" data-cites="wrfpython">(<a href="#ref-wrfpython" role="doc-biblioref">Ladwig 2017</a>)</span> dikembangkan oleh NCAR yang dikhususkan untuk <em>Post-Processing</em> luaran WRF. Package ini mendukung pembacaan file, perhitungan interpolasi, serta visualisasi WRF. Perhatikan langkah-langkah berikut cara penggunaan <code>wrf-python</code> mulai dari pembacaan file hingga visualisasi WRF.</p>
+<ol type="1">
+<li>Saat ini, Anda berada di direktori <code>~/WRF-Model</code>. File WRF Anda berada di folder <code>~/WRF-Model/WRF/test/em_real</code>. Buat variabel yang berisi lokasi WRF Anda.</li>
+<li>Impor beberapa package yang dibutuhkan</li>
+<li>Buka salah satu file <code>wrfout_d0*</code>, misalnya <code>wrfout_d03_2022-01-01_00:00:00</code> dan cetak variabel tersebut. Isinya adalah beberapa metadata. Anda dapat mengetahui variabel-variabel di dalamnya dengan menambahkan metode <code>.variables</code>. Oleh karena banyak variabelnya, di dalam modul ini kami hanya menjelaskan cara memvisualisasikan variabel suhu udara 2 meter dari permukaan tanah (<code>T2</code>)</li>
+<li>Anda dapat mengambil variabel dengan fungsi <code>wrf.getvar()</code> dengan menyertakan argumen dari nama variabel WRF. Untuk mengambil <code>T2</code>, gunakan perintah di bawah ini. Perhatikan hasil yang diperoleh merupakan tipe <code>xarray.DataArray</code>.</li>
+</ol>
 
 
 <div id="refs" class="references csl-bib-body" role="doc-bibliography">
@@ -1403,6 +1462,9 @@ Huth R, Kyselỳ J. 2000. Constructing site-specific climate change scenarios on
 </div>
 <div id="ref-kim1984" class="csl-entry" role="doc-biblioentry">
 Kim J, Chang J, Baker N, Wilks D, Gates W. 1984. The statistical problem of climate inversion: Determination of the relationship between local and large-scale climate. <em>Monthly weather review</em>. 112(10):2069–2077.
+</div>
+<div id="ref-wrfpython" class="csl-entry" role="doc-biblioentry">
+Ladwig W. 2017. <em><a href="https://doi.org/10.5065/D6W094P1">Wrf-Python Version 1.3.4</a></em>. UCAR/NCAR - Earth Observing Laboratory.
 </div>
 <div id="ref-pahlavan2018" class="csl-entry" role="doc-biblioentry">
 Pahlavan H, Zahraie B, Nasseri M, Mahdipour Varnousfaderani A. 2018. Improvement of multiple linear regression method for statistical downscaling of monthly precipitation. <em>International journal of environmental science and technology</em>. 15(9):1897–1912.
@@ -1435,7 +1497,6 @@ Sonkaew T, Cumwan S, Kanta W, Macatangay R. Finding the optimum microphysics and
 Wilby RL, Wigley TM. 1997. Downscaling general circulation model output: A review of methods and limitations. <em>Progress in physical geography</em>. 21(4):530–548.
 </div>
 </div>
-</section>
 </section>
 </section>
 
