@@ -2,9 +2,13 @@ project:
   type: book
 
 book:
-  title: "Module Praktikum Pemodelan Iklim"
-  author: "Agung Baruna Setiawan Noor"
-  date: "1/10/2023"
+  title: "Modul Praktikum Pemodelan Iklim"
+  author: |
+    | Dr. Akhmad Faqih, S.Si.
+    | Perdinan, S.Si., M.Nat.Res.Econ., Ph.D.
+    | Agung Baruna Setiawan Noor, S.Si., M.Si.
+  date: "2023"
+  date-format: "YYYY"
   chapters:
     - index.qmd
     - praktikum-1.ipynb

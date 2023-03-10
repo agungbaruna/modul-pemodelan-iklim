@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Module Praktikum Pemodelan Iklim - 1&nbsp; Dynamical Downscaling: Model Weather Research Forecasting (WRF)</title>
+<title>Modul Praktikum Pemodelan Iklim - 1&nbsp; Dynamical Downscaling: Model Weather Research Forecasting (WRF)</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -165,7 +165,7 @@ div.csl-indent {
   <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">Module Praktikum Pemodelan Iklim</a> 
+      <a href="./">Modul Praktikum Pemodelan Iklim</a> 
     </div>
       </div>
       <div class="mt-2 flex-shrink-0 align-items-center">
@@ -177,7 +177,7 @@ div.csl-indent {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link">Pendahuluan</a>
+  <a href="./index.html" class="sidebar-item-text sidebar-link">Pemodelan Iklim</a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -207,7 +207,7 @@ div.csl-indent {
   <li><a href="#instalasi-wrf" id="toc-instalasi-wrf" class="nav-link" data-scroll-target="#instalasi-wrf"><span class="toc-section-number">1.3.7</span>  Instalasi WRF</a></li>
   <li><a href="#instalasi-wrf-pre-processing-wps" id="toc-instalasi-wrf-pre-processing-wps" class="nav-link" data-scroll-target="#instalasi-wrf-pre-processing-wps"><span class="toc-section-number">1.3.8</span>  Instalasi WRF Pre-Processing (WPS)</a></li>
   </ul></li>
-  <li><a href="#prosedur-praktikum-menjalankan-simulasi-wrf-arw" id="toc-prosedur-praktikum-menjalankan-simulasi-wrf-arw" class="nav-link" data-scroll-target="#prosedur-praktikum-menjalankan-simulasi-wrf-arw"><span class="toc-section-number">1.4</span>  Prosedur Praktikum: Menjalankan Simulasi WRF-ARW</a>
+  <li><a href="#menjalankan-simulasi-wrf-arw" id="toc-menjalankan-simulasi-wrf-arw" class="nav-link" data-scroll-target="#menjalankan-simulasi-wrf-arw"><span class="toc-section-number">1.4</span>  Menjalankan Simulasi WRF-ARW</a>
   <ul class="collapse">
   <li><a href="#program-wps" id="toc-program-wps" class="nav-link" data-scroll-target="#program-wps"><span class="toc-section-number">1.4.1</span>  Program WPS</a></li>
   <li><a href="#program-wrf" id="toc-program-wrf" class="nav-link" data-scroll-target="#program-wrf"><span class="toc-section-number">1.4.2</span>  Program WRF</a></li>
@@ -215,6 +215,9 @@ div.csl-indent {
   <li><a href="#analisis-dan-visualisasi-luaran-wrf" id="toc-analisis-dan-visualisasi-luaran-wrf" class="nav-link" data-scroll-target="#analisis-dan-visualisasi-luaran-wrf"><span class="toc-section-number">1.5</span>  Analisis dan Visualisasi Luaran WRF</a>
   <ul class="collapse">
   <li><a href="#python" id="toc-python" class="nav-link" data-scroll-target="#python"><span class="toc-section-number">1.5.1</span>  Python</a></li>
+  <li><a href="#r" id="toc-r" class="nav-link" data-scroll-target="#r"><span class="toc-section-number">1.5.2</span>  R</a></li>
+  <li><a href="#ncar-command-language" id="toc-ncar-command-language" class="nav-link" data-scroll-target="#ncar-command-language"><span class="toc-section-number">1.5.3</span>  NCAR Command Language</a></li>
+  <li><a href="#qgis" id="toc-qgis" class="nav-link" data-scroll-target="#qgis"><span class="toc-section-number">1.5.4</span>  QGIS</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -257,8 +260,8 @@ div.csl-indent {
 <p>WRF merupakan salah satu teknik <em>dynamical downscaling</em>. Penggunaan model WRF semakin berkembang saat ini dengan tujuan riset dan operasional. WRF memiliki spesifikasi dalam berbagai aplikasi prediksi di dalam sistem bumi, seperti kimia atmosfer, hidrologi, kebakaran hutan, siklon, dan iklim regional. Selain pada skala regional, WRF telah mampu menjalankan simulasi fenomena cuaca mikro cukup akurat, seperti turbulensi <span class="citation" data-cites="talbot2012">(<a href="#ref-talbot2012" role="doc-biblioref">Talbot <em>et al.</em> 2012</a>)</span> <span class="citation" data-cites="xu2018performance">(<a href="#ref-xu2018performance" role="doc-biblioref">Xu <em>et al.</em> 2018</a>)</span> <span class="citation" data-cites="bao2018large">(<a href="#ref-bao2018large" role="doc-biblioref">Bao <em>et al.</em> 2018</a>)</span>. Sebanyak lebih dari 36.000 pengguna WRF tersebar di 162 negara, termasuk Indonesia yang telah menggunakan WRF untuk kebutuhan operasional <span class="citation" data-cites="powers2017">(<a href="#ref-powers2017" role="doc-biblioref">Powers <em>et al.</em> 2017</a>)</span>. Ada dua jenis model WRF berdasarkan penyelesaian persamaan aliran fluida atmosfer, yaitu <em>Advanced Research WRF</em> (ARW) dan <em>Nonhydrostatic Mesoscale Model</em> (NMM). WRF-ARW dikembangkan oleh National Centre of Atmosphere Research (NCAR), sedangkan WRF-NMM dikembangkan oleh National Centre of Environmental Prediction (NCEP) <span class="citation" data-cites="skamarock2019">(<a href="#ref-skamarock2019" role="doc-biblioref">Skamarock <em>et al.</em> 2019</a>)</span>. Secara umum, WRF mampu melakukan simulasi beberapa komponen <em>Numerical Weather Prediction</em> (NWP) <a href="#fig-nwpkomponen">Gambar&nbsp;<span>1.1</span></a>. Berdasarkan aplikasi tertentu, WRF memiliki beberapa turunan model, seperti WRF-Chem (kimia atmosfer), WRF-Hydro (hidrologi), dan WRF-Fire (kebakaran hutan dan lahan).</p>
 <div id="fig-nwpkomponen" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="Pictures/param_nwp.png" class="img-fluid figure-img" style="width:60.0%"></p>
-<p></p><figcaption class="figure-caption">Gambar&nbsp;1.1: Beberapa parameter dalam <em>Numerical Weather Prediction</em> <span class="citation" data-cites="sonkaew">(<a href="#ref-sonkaew" role="doc-biblioref">Sonkaew <em>et al.</em></a>)</span></figcaption><p></p>
+<p><img src="Pictures/param_nwp.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<p></p><figcaption class="figure-caption">Gambar&nbsp;1.1: Proses secara umum perlu diparameterisasi di dalam model iklim <span class="citation" data-cites="sonkaew">(<a href="#ref-sonkaew" role="doc-biblioref">Sonkaew <em>et al.</em></a>)</span></figcaption><p></p>
 </figure>
 </div>
 <p>WRF diimplementasikan dalam bahasa pemrograman komputer. Jika Anda melihat repositori github <a href="https://github.com/wrf-model/WRF">WRF</a>, jenis bahasa pemrograman yang paling banyak digunakan adalah Fortran yang berisikan perhitungan fisik dan kimia. Model WRF dapat dijalankan pada personal komputer hingga super komputer. Sebenarnya, Anda dapat menjalankan WRF dengan 1 prosesor saja. Akan tetapi, waktu proses simulasi mungkin lama akibat dari resolusi spasial dan temporal yang tinggi, juga cakupan pemilihan wilayah simulasi. Proses perhitungan model dinamik maupun fisik akan lebih cepat apabila memakai banyak prosesor atau yang bisa disebut dengan <strong>komputasi paralel</strong>. Kerangka kerja perangkat lunak WRF mendukung komputasi paralel yang efisien pada berbagai platform komputasi. Model atmosfer membawa kumpulan komputasi yang sama di setiap piksel vertikal maupun horizontal <a href="#fig-modeliklim">Gambar&nbsp;<span>1.2</span></a>. Kita mungkin telah mengenal jenis prosesor yang tersedia saat ini, seperti Intel dan AMD. Jenis prosesor yang mereka buat dapat mempengaruhi kecepatan proses perhitungan. Untuk perhitungan paralel, Anda dapat menggunakan tipe prosesor desktop, mobile (prosesor di laptop), maupun server, tetapi juga perlu memperhatikan banyaknya <em>core</em> maupun frekuensi yang tertera pada setiap tipe prosesor.</p>
@@ -809,10 +812,10 @@ Note
 <div class="sourceCode" id="cb49"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="ex">geogrid.exe</span>  metgrid.exe  ungrib.exe</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 </section>
-<section id="prosedur-praktikum-menjalankan-simulasi-wrf-arw" class="level2" data-number="1.4">
-<h2 data-number="1.4" class="anchored" data-anchor-id="prosedur-praktikum-menjalankan-simulasi-wrf-arw"><span class="header-section-number">1.4</span> Prosedur Praktikum: Menjalankan Simulasi WRF-ARW</h2>
+<section id="menjalankan-simulasi-wrf-arw" class="level2" data-number="1.4">
+<h2 data-number="1.4" class="anchored" data-anchor-id="menjalankan-simulasi-wrf-arw"><span class="header-section-number">1.4</span> Menjalankan Simulasi WRF-ARW</h2>
 <p>Anda dapat melanjutkan ke tahapan ini apabila seluruh program telah berhasil terpasang. Bagi Anda yang belum berhasil, sabar :D dan ulangi kembali langkah-langkah di atas. Secara umum, diagram pada <a href="#fig-wrfdiagram">Gambar&nbsp;<span>1.9</span></a> menunjukkan proses menjalankan WRF dari tahapan memasukkan data hingga plot dan analisis akhir. Seperti yang telah dijelaskan pada subbab sebelumnya bahwa langkah awal dalam menjalankan WRF adalah menjalankan WPS terlebih dahulu. Anda perlu menyiapkan data masukan atmosfer maupun permukaan (data statik). Program <code>geogrid.exe</code> dijalankan pertama, kemudian diikuti dengan <code>ungrib.exe</code> dan terakhir <code>metgrid.exe</code>. Selanjutnya, Anda dapat melangkah ke program WRF, yaitu <code>real.exe</code> dan <code>wrf.exe</code>. Program <code>real.exe</code> digunakan sebagai pendefinisian kondisi awal dan kondisi batas berdasarkan informasi dari <code>namelist.input</code> yang berada dalam folder <code>test/em_real/</code>. Kemudian, Anda dapat menggunakan perangkat lunak apapun (mis. NCAR Command Language (NCL), GrADS, R, Python, Matlab, ArcMAP, QGIS, …) untuk menganalisis serta visualisasi luaran WRF. NCL yang telah Anda pasang sebelumnya dapat digunakan untuk analisis, tetapi kami hanya memberikan panduan analisis luaran WRF menggunakan Python.</p>
-<p>Untuk data masukan, Anda juga dapat menggunakan data observasi, tetapi harus berupa grid. Namun, ini merupakan program yang berbeda dari WRF-ARW, yaitu WRFDA (WRF Data Assimilation). Selain itu, terdapat pula data masukan dari emisi kimia, seperti emisi biogenik dan atropogenik. Ini juga merupakan program yang berbeda dari WRF-ARW, yaitu WRF-Chem. Penjelasan mengenai WRFDA dan WRF-Chem tidak disampaikan di dalam praktikum ini.</p>
+<p>Untuk data masukan, Anda juga dapat menggunakan data observasi, tetapi harus berupa grid. Namun, ini merupakan program yang berbeda dari WRF-ARW, yaitu WRFDA (WRF Data Assimilation). Selain itu, terdapat pula data masukan dari emisi kimia, seperti emisi biogenik dan atropogenik. Akan tetapi, program ini merupakan turunan WRF-ARW, yaitu WRF-Chem. Penjelasan mengenai WRFDA dan WRF-Chem tidak disampaikan di dalam praktikum ini.</p>
 <div id="fig-wrfdiagram" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="Pictures/WRFDiagram.png" class="img-fluid figure-img"></p>
@@ -822,7 +825,7 @@ Note
 <section id="program-wps" class="level3" data-number="1.4.1">
 <h3 data-number="1.4.1" class="anchored" data-anchor-id="program-wps"><span class="header-section-number">1.4.1</span> Program WPS</h3>
 <p>Untuk lebih mudah dalam memahami alur proses simulasi WRF pada modul ini, lokasi/domain yang dipilih untuk adalah Kota Surabaya dengan periode 1 - 3 Januari 2022 dengan data GFS dan ERA5. Interval waktu dari kedua data tersebut adalah 6 jam, yaitu pukul 00:00, 06:00, 12:00, dan 18:00 waktu Zulu (GMT+0). Langkah awal sebelum menjalankan WRF adalah menentukan lokasi dan waktu terlebih dahulu di dalam program WPS. Seperti yang telah dijelaskan sebelumnya, WPS memiliki 3 program utama, yaitu <code>geogrid.exe</code>, <code>ungrib.exe</code>, dan <code>metgrid.exe</code>.</p>
-<p>Sesuai dengan kelanjutan dari subbab sebelumnya mengenai instalasi WRF, Anda saat ini berada di dalam folder <code>WPS/</code>. Jika lupa, Anda bisa mengetikkan perintah ini.</p>
+<p>Sesuai dengan kelanjutan dari subbab sebelumnya mengenai instalasi WRF, Anda saat ini berada di dalam folder <code>WPS/</code>. Jika lupa, Anda bisa mengetikkan kembali perintah ini.</p>
 <div class="sourceCode" id="cb50"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> <span class="va">$HOME</span>/WRF-Model/WPS</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Kemudian, Jika Anda menutup terminal bash atau mematikan laptop/komputer, definisikan kembali ENVIRONMENT VARIABLE seperti pada saat proses memasang WRF dan WPS, hanya <code>LD_LIBRARY_PATH</code> dan <code>PATH</code>.</p>
 <div class="sourceCode" id="cb51"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">ODIR</span><span class="op">=</span><span class="va">$HOME</span>/WRF-Model</span>
@@ -894,9 +897,9 @@ Note
  dx = 18000,                                                                        
  dy = 18000,                                                                        
  map_proj = 'mercator',                                                             
- ref_lat   =  -7.328457529144323,                                                   
- ref_lon   = 112.7412453984603,                                                     
- truelat1  =  -7.328457529144323,                                                   
+ ref_lat   =  -7.328,                                                   
+ ref_lon   = 112.741,                                                     
+ truelat1  =  -7.328,                                                   
  geog_data_path = '/home/absen/WRF-Model/data/WPS_GEOG/'                                 
 /
 
@@ -1006,7 +1009,7 @@ Note
 </tbody>
 </table>
 </div>
-<p>Pada parameter <code>start_date</code> dan <code>end_date</code>, Anda bisa menggunakan parameter lain dengan membagi masing-masing format tahun (<code>*_year</code>), bulan (<code>*_month</code>), tanggal (<code>*_day</code>), dan jam (<code>*_hour</code>).</p>
+<p>Pada parameter <code>start_date</code> dan <code>end_date</code>, Anda bisa menggunakan parameter lain dengan membagi masing-masing format tahun (<code>start_year</code>; <code>end_year</code>), bulan (<code>start_month</code>; <code>end_month</code>), tanggal (<code>start_day</code>; <code>end_day</code>), dan jam (<code>start_hour</code>; <code>end_hour</code>).</p>
 <p>Berkaitan dengan skala resolusi spasial pada simulasi yang akan dijalankan dengan pemilihan lokasi di Kota Surabaya, skala tertingginya adalah 2 km. Anda perhatikan parameter <code>parent_grid_ratio</code>. Nilai 1, 3, dan 9 secara berturut-turut merupakan rasio terhadap <code>dx</code> atau <code>dy</code> untuk setiap domain. Nilai 1 berarti untuk domain terluar dengan skala <span class="math inline">\(1 / 1 * 18000 = 18000\)</span> meter, sedangkan nilai 3 untuk domain ke-2 dengan skala <span class="math inline">\(1 / 3 * 18000 = 6000\)</span> meter.</p>
 <p>Pada bagian <code>&amp;geogrid</code>, penentuan lokasi kajian ini cukup rumit. Anda bisa menggunakan halaman Github <a href="https://jiririchter.github.io/WRFDomainWizard">https://jiririchter.github.io/WRFDomainWizard</a> untuk membuat file <code>namelist.wps</code> sesuai dengan lokasi yang Anda inginkan, setidaknya Anda dapat menyalin teks pada bagian <code>&amp;geogrid</code> <a href="#fig-wrfdomainwizard">Gambar&nbsp;<span>1.10</span></a>.</p>
 <div id="fig-wrfdomainwizard" class="quarto-figure quarto-figure-center anchored">
@@ -1016,7 +1019,8 @@ Note
 </figure>
 </div>
 <p>Untuk memverifikasi kesesuaian pemilihan lokasi yang telah dibuat, Anda dapat menggunakan skrip <code>plotgrids_new.ncl</code> di dalam folder <code>util/</code>. Bukalah file tersebut. Cari dan ubahlah variabel <code>type = x11</code> menjadi <code>type = png</code> untuk mengatur luaran file dalam bentuk gambar (format <code>.png</code>). Untuk menjalankan skrip ini, aktifkan terlebih dahulu <em>environment</em> <code>ncl</code> dengan perintah <code>source activate ncl</code> atau <code>conda activate ncl</code>. Kemudian, jalankan perintah berikut ini. File <code>.png</code> akan muncul di dalam folder <code>WPS/</code> dengan nama <strong>wps_show_dom.png</strong>. Hasilnya seperti <a href="#fig-wpsconfigpic">Gambar&nbsp;<span>1.11</span></a></p>
-<div class="sourceCode" id="cb54"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="ex">ncl</span> util/plotgrids_new.ncl</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb54"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> <span class="va">$HOME</span>/WRF-Model/WPS</span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a><span class="ex">ncl</span> util/plotgrids_new.ncl</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div id="fig-wpsconfigpic" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="Pictures/wps_show_dom.png" class="img-fluid figure-img" style="width:50.0%"></p>
@@ -1421,15 +1425,12 @@ Note
 <p>Terdapat 3 file luaran WRF yang telah Anda jalankan dengan masing-masing memiliki resolusi spasial yang berbeda, yaitu 18 km, 6 km, dan 2 km dengan pemilihan lokasi titik tengah longitude dan latitude di Kota Surabaya. Selanjutnya, Anda dapat melihat hasil dari simulasi tersebut dengan berbagai macam perangkat lunak, seperti ArcMap, Matlab, NCL, R, atau Python.</p>
 <section id="python" class="level3" data-number="1.5.1">
 <h3 data-number="1.5.1" class="anchored" data-anchor-id="python"><span class="header-section-number">1.5.1</span> Python</h3>
-<section id="membuka-jupyter-notebook" class="level4" data-number="1.5.1.1">
-<h4 data-number="1.5.1.1" class="anchored" data-anchor-id="membuka-jupyter-notebook"><span class="header-section-number">1.5.1.1</span> Membuka Jupyter Notebook</h4>
-<p>Anda bisa menggunakan kode editor ini atau aplikasi lainnya, seperti Visual Studio Code, Notepad++, atau Atom. Untuk langkah-langkah di bawah ini, kami lebih menjelaskan pada <strong>Jupyter Notebook</strong>. Kode editor ini diketik melalui aplikasi Browser default Anda, misalnya Google Chrome, Mozilla Firefox, atau Microsoft Edge. Ikuti langkah-langkah berikut ini.</p>
+<p>Untuk mengetikkan kode Python. Anda dapat menggunakan kode editor <strong>Jupyter Notebook</strong> atau aplikasi lainnya, seperti Visual Studio Code, Notepad++, atau Atom. Untuk langkah-langkah di bawah ini, kami lebih menjelaskan cara penulisan kode Python pada <strong>Jupyter Notebook</strong>. Kode editor ini dapat digunakan pada aplikasi Browser default Anda, misalnya Google Chrome, Mozilla Firefox, atau Microsoft Edge. Kami menyarankan Anda untuk menggunakan <strong>Jupyter Notebook</strong> agar hasil kode langsung bisa ditampilkan sehingga respons dari setiap sel yang berisikan kode-kode dapat diketahui langsung. Ikuti langkah-langkah berikut ini untuk membuka <strong>Jupyter Notebook</strong>.</p>
 <ol type="1">
 <li><p>Bukalah terminal Bash Anda. Saat ini, Anda berada di direktori <code>$HOME</code> atau <code>~</code>.</p></li>
 <li><p>Bukalah direktori <code>WRF-Model</code> dengan mengetik perintah</p>
 <div class="sourceCode" id="cb70"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> WRF-Model</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
-<li><p>Untuk memulai pengetikan kode Python, aktifkan terlebih dahulu <em>Environment</em> <code>ncl</code> dengan perintah <code>conda activate ncl</code>.</p></li>
-<li><p>Pengetikan kode Python dapat Anda langsung terapkan pada mode interaktif dengan mengetik perintah <code>python</code> pada terminal. Kami menyarankan Anda untuk menggunakan <strong>Jupyter Notebook</strong> agar hasil kode langsung bisa ditampilkan di bawahnya.</p></li>
+<li><p>Aktifkan terlebih dahulu <em>Environment</em> <code>ncl</code> dengan perintah <code>conda activate ncl</code>.</p></li>
 <li><p>Ketikkan perintah berikut ini untuk memulai pengetikan kode Python. Browser default Anda akan terbuka dengan menampilkan kode editor <strong>Jupyter Notebook</strong> (<a href="#fig-jupyter">Gambar&nbsp;<span>1.12</span></a>)</p>
 <div class="sourceCode" id="cb71"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="ex">jupyter</span> notebook</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div id="fig-jupyter" class="quarto-figure quarto-figure-center anchored">
@@ -1453,10 +1454,7 @@ Note
 </figure>
 </div></li>
 </ol>
-</section>
-<section id="menggunakan-wrf-python" class="level4" data-number="1.5.1.2">
-<h4 data-number="1.5.1.2" class="anchored" data-anchor-id="menggunakan-wrf-python"><span class="header-section-number">1.5.1.2</span> Menggunakan <code>wrf-python</code></h4>
-<p>Package <code>wrf-python</code> <span class="citation" data-cites="wrfpython">(<a href="#ref-wrfpython" role="doc-biblioref">Ladwig 2017</a>)</span> dikembangkan oleh NCAR yang dikhususkan untuk <em>Post-Processing</em> luaran WRF. Package ini mendukung pembacaan file, perhitungan interpolasi, serta visualisasi WRF. Perhatikan langkah-langkah berikut cara penggunaannya mulai dari pembacaan file hingga pembuatan grafik. Package berikut ini dibutuhkan untuk melakukan langkah-langkah tersebut.</p>
+<p>Untuk pengolahan data WRF di Python, kami menggunakan package <code>wrf-python</code> <span class="citation" data-cites="wrfpython">(<a href="#ref-wrfpython" role="doc-biblioref">Ladwig 2017</a>)</span>. Package ini dikembangkan oleh NCAR yang dikhususkan untuk <em>Post-Processing</em> luaran WRF. Package ini mendukung pembacaan file, perhitungan interpolasi, serta visualisasi WRF. Perhatikan langkah-langkah berikut cara penggunaannya mulai dari pembacaan file hingga pembuatan grafik. Package berikut ini dibutuhkan untuk melakukan langkah-langkah tersebut.</p>
 <div class="sourceCode" id="cb72"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> netCDF4 <span class="im">import</span> Dataset</span>
 <span id="cb72-2"><a href="#cb72-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> wrf</span>
 <span id="cb72-3"><a href="#cb72-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -1464,85 +1462,81 @@ Note
 <span id="cb72-5"><a href="#cb72-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> matplotlib.cm <span class="im">import</span> get_cmap</span>
 <span id="cb72-6"><a href="#cb72-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> cartopy.crs <span class="im">as</span> crs</span>
 <span id="cb72-7"><a href="#cb72-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> cartopy.feature <span class="im">import</span> NaturalEarthFeature</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="mengekstrak-variabel-wrf" class="level4" data-number="1.5.1.3">
-<h4 data-number="1.5.1.3" class="anchored" data-anchor-id="mengekstrak-variabel-wrf"><span class="header-section-number">1.5.1.3</span> Mengekstrak Variabel WRF</h4>
 <ol type="1">
-<li><p>Saat ini, Anda berada di direktori <code>~/WRF-Model</code>. File luaran WRF berada di folder <code>~/WRF-Model/WRF/test/em_real</code>. Buat variabel yang berisi lokasi WRF Anda</p>
-<div class="sourceCode" id="cb73"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a>wrf_path <span class="op">=</span> <span class="st">'/home/absen/WRF-Model/WRF/test/em_real'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
 <li><p>Buka salah satu file <code>wrfout_d0*</code>, misalnya <code>wrfout_d03_2022-01-01_00:00:00</code> dan cetak variabel tersebut, misalkan variabel <code>T2</code> (<em>Air Temperature at 2m</em>: suhu udara 2 meter dari permukaan tanah). Isinya adalah beberapa metadata. Anda dapat mengetahui variabel-variabel di dalamnya dengan menambahkan metode <code>.variables</code>. Anda dapat melihat penjelasan variabel-variabel pada panduan pengguna WRF-ARW.</p>
-<div class="sourceCode" id="cb74"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a>wrf_d03 <span class="op">=</span> Dataset(<span class="ss">f"</span><span class="sc">{</span>wrf_path<span class="sc">}</span><span class="ss">/wrfout_d03_2022-01-01_00:00:00"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
-<li><p>Anda dapat mengambil variabel dengan fungsi <code>wrf.getvar()</code> dengan menyertakan argumen dari nama variabel WRF. Untuk mengambil <code>T2</code>, gunakan perintah di bawah ini. Perhatikan hasil yang diperoleh merupakan tipe <code>xarray.DataArray</code> dan metode <code>wrf.ALL_TIMES</code> pada argumen <code>timeidx</code> berguna untuk mengambil variabel dengan seluruh waktu, mulai dari awal hingga akhir simulasi.</p>
-<div class="sourceCode" id="cb75"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a>wrf_t2 <span class="op">=</span> wrf.getvar(wrf_d03, <span class="st">"T2"</span>, timeidx<span class="op">=</span>wrf.ALL_TIMES)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<div class="sourceCode" id="cb73"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Lokasi folder luaran WRF</span></span>
+<span id="cb73-2"><a href="#cb73-2" aria-hidden="true" tabindex="-1"></a>wrf_path <span class="op">=</span> <span class="st">'/home/absen/WRF-Model/WRF/test/em_real'</span></span>
+<span id="cb73-3"><a href="#cb73-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Membuka file wrfout</span></span>
+<span id="cb73-4"><a href="#cb73-4" aria-hidden="true" tabindex="-1"></a>wrf_d03 <span class="op">=</span> Dataset(<span class="ss">f"</span><span class="sc">{</span>wrf_path<span class="sc">}</span><span class="ss">/wrfout_d03_2022-01-01_00:00:00"</span>)</span>
+<span id="cb73-5"><a href="#cb73-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Melihat variabel</span></span>
+<span id="cb73-6"><a href="#cb73-6" aria-hidden="true" tabindex="-1"></a>wrf_d03.variables</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>Anda dapat mengambil variabel dengan fungsi <code>wrf.getvar()</code> dengan menyertakan argumen dari nama variabel WRF. Untuk mengambil <code>T2</code>, gunakan perintah di bawah ini. Perhatikan hasil yang diperoleh merupakan tipe <code>xarray.DataArray</code> dan metode <code>wrf.ALL_TIMES</code> pada argumen <code>timeidx</code> berguna untuk mengambil seluruh waktu, mulai dari awal hingga akhir simulasi. Anda dapat mengambil salah satu waktu dengan mencantumkan angka bulat (mis. 0, 1, 2, …).</p>
+<div class="sourceCode" id="cb74"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a>wrf_t2 <span class="op">=</span> wrf.getvar(wrf_d03, <span class="st">"T2"</span>, timeidx<span class="op">=</span>wrf.ALL_TIMES)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
 <li><p>Untuk mendapatkan nilai koordinat latitude dan longitude dari variabel <code>T2</code>, Anda dapat memakai fungsi <code>wrf.latlon_coords()</code>. Pastikan dalam satu baris terdapat 2 variabel.</p>
-<div class="sourceCode" id="cb76"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a>lats, lons <span class="op">=</span> wrf.latlon_coords(wrf_t2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<div class="sourceCode" id="cb75"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a>lats, lons <span class="op">=</span> wrf.latlon_coords(wrf_t2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
 <li><p>Untuk mendapatkan waktu, Anda dapat memanggil <em>Coordinates</em> <code>Time</code> yang telah tersedia di dalam <code>wrf_t2</code>.</p>
-<div class="sourceCode" id="cb77"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a>wrf_time <span class="op">=</span> wrf_t2.Time</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
-<li><p>Sebagai tambahan, Anda juga dapat mengekstrak beberapa variabel yang tidak tersedia di dalam WRF, tentunya terbatas, seperti resultan kecepatan angin (<code>wspd</code>), arah angin (<code>wdir</code>), <em>Convective Available Potential Energy</em> (CAPE; <code>cape3d_only</code>/<code>mcape</code>), atau suhu titik embun (<code>td</code>/<code>td2</code>). Anda dapat membaca lebih lanjut di <a href="https://wrf-python.readthedocs.io/en/latest/diagnostics.html">https://wrf-python.readthedocs.io/en/latest/diagnostics.html</a>.</p></li>
-<li><p>Variabel curah hujan tidak ada di dalam WRF. Anda harus mengekstrak dan menjumlahkan variabel <code>RAINC</code> (<em>Accumulated Total Cumulus Precipitation</em>) dan <code>RAINNC</code> (<em>Accumulated Total Grid Scale Cumulus Precipitation</em>), maka diperoleh akumulasi curah hujan dari awal sampai akhir waktu simulasi. Oleh karena akumulasi, Anda perlu mengurangi curah hujan dari waktu ke <span class="math inline">\(t\)</span> dengan <span class="math inline">\(t-1\)</span>. Pada Python, gunakan algoritma perulangan.</p>
-<div class="sourceCode" id="cb78"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ekstrak RAINC dan RAINNC</span></span>
-<span id="cb78-2"><a href="#cb78-2" aria-hidden="true" tabindex="-1"></a>rainc  <span class="op">=</span> wrf.getvar(wrf_d03, <span class="st">"RAINC"</span> , timeidx <span class="op">=</span> wrf.ALL_TIMES)</span>
-<span id="cb78-3"><a href="#cb78-3" aria-hidden="true" tabindex="-1"></a>rainnc <span class="op">=</span> wrf.getvar(wrf_d03, <span class="st">"RAINNC"</span>, timeidx <span class="op">=</span> wrf.ALL_TIMES)</span>
-<span id="cb78-4"><a href="#cb78-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb78-5"><a href="#cb78-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Menghitung Curah hujan akumulasi</span></span>
-<span id="cb78-6"><a href="#cb78-6" aria-hidden="true" tabindex="-1"></a>rain <span class="op">=</span> rainc <span class="op">+</span> rainnc</span>
-<span id="cb78-7"><a href="#cb78-7" aria-hidden="true" tabindex="-1"></a>rain_diff <span class="op">=</span> rain.copy() <span class="co"># Metode .copy() agar var rain tidak ikut terubah</span></span>
-<span id="cb78-8"><a href="#cb78-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb78-9"><a href="#cb78-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Lakukan perulangan</span></span>
-<span id="cb78-10"><a href="#cb78-10" aria-hidden="true" tabindex="-1"></a>length <span class="op">=</span> <span class="bu">len</span>(wrf_time.values)</span>
-<span id="cb78-11"><a href="#cb78-11" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, length):</span>
-<span id="cb78-12"><a href="#cb78-12" aria-hidden="true" tabindex="-1"></a>   rain_diff[i, :, :] <span class="op">=</span> rain[i, :, :] <span class="op">-</span> rain[i<span class="op">-</span><span class="dv">1</span>, :, :]</span>
-<span id="cb78-13"><a href="#cb78-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb78-14"><a href="#cb78-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Copy Attribute (dari RAINC atau RAINNC)</span></span>
-<span id="cb78-15"><a href="#cb78-15" aria-hidden="true" tabindex="-1"></a>rain_diff.attrs <span class="op">=</span> rainc.attrs</span>
-<span id="cb78-16"><a href="#cb78-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Tambahkan deskripsi</span></span>
-<span id="cb78-17"><a href="#cb78-17" aria-hidden="true" tabindex="-1"></a>rain_diff.attrs[<span class="st">"description"</span>] <span class="op">=</span> <span class="st">"Total Rainfall"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<div class="sourceCode" id="cb76"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a>wrf_time <span class="op">=</span> wrf_t2.Time</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>Anda juga dapat mengekstrak beberapa variabel yang tidak tersedia di dalam WRF, tentunya terbatas, seperti resultan kecepatan angin (<code>wspd</code>), arah angin (<code>wdir</code>), <em>Convective Available Potential Energy</em> (CAPE; <code>cape3d_only</code>/<code>mcape</code>), atau kelembapan relatif (<code>rh2</code>). Anda dapat membaca lebih lanjut di <a href="https://wrf-python.readthedocs.io/en/latest/diagnostics.html">https://wrf-python.readthedocs.io/en/latest/diagnostics.html</a>.</p></li>
+<li><p>Variabel curah hujan tidak ada di dalam WRF. Anda harus mengekstrak dan menjumlahkan variabel <code>RAINC</code> (<em>Accumulated Total Cumulus Precipitation</em>) dan <code>RAINNC</code> (<em>Accumulated Total Grid Scale Cumulus Precipitation</em>), maka diperoleh akumulasi curah hujan dari awal sampai akhir waktu simulasi. Anda perlu mengurangi curah hujan dari waktu ke <span class="math inline">\(t\)</span> dengan <span class="math inline">\(t-1\)</span> dengan memanfaatkan program perulangan (<em>looping</em>).</p>
+<div class="sourceCode" id="cb77"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ekstrak RAINC dan RAINNC</span></span>
+<span id="cb77-2"><a href="#cb77-2" aria-hidden="true" tabindex="-1"></a>rainc  <span class="op">=</span> wrf.getvar(wrf_d03, <span class="st">"RAINC"</span> , timeidx <span class="op">=</span> wrf.ALL_TIMES)</span>
+<span id="cb77-3"><a href="#cb77-3" aria-hidden="true" tabindex="-1"></a>rainnc <span class="op">=</span> wrf.getvar(wrf_d03, <span class="st">"RAINNC"</span>, timeidx <span class="op">=</span> wrf.ALL_TIMES)</span>
+<span id="cb77-4"><a href="#cb77-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-5"><a href="#cb77-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Menghitung Curah hujan akumulasi</span></span>
+<span id="cb77-6"><a href="#cb77-6" aria-hidden="true" tabindex="-1"></a>rain <span class="op">=</span> rainc <span class="op">+</span> rainnc</span>
+<span id="cb77-7"><a href="#cb77-7" aria-hidden="true" tabindex="-1"></a>rain_diff <span class="op">=</span> rain.copy() <span class="co"># Metode .copy() agar var rain tidak ikut terubah</span></span>
+<span id="cb77-8"><a href="#cb77-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-9"><a href="#cb77-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Lakukan perulangan</span></span>
+<span id="cb77-10"><a href="#cb77-10" aria-hidden="true" tabindex="-1"></a>length <span class="op">=</span> <span class="bu">len</span>(wrf_time.values)</span>
+<span id="cb77-11"><a href="#cb77-11" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, length):</span>
+<span id="cb77-12"><a href="#cb77-12" aria-hidden="true" tabindex="-1"></a>   rain_diff[i, :, :] <span class="op">=</span> rain[i, :, :] <span class="op">-</span> rain[i<span class="op">-</span><span class="dv">1</span>, :, :]</span>
+<span id="cb77-13"><a href="#cb77-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-14"><a href="#cb77-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Copy Attribute (dari RAINC atau RAINNC)</span></span>
+<span id="cb77-15"><a href="#cb77-15" aria-hidden="true" tabindex="-1"></a>rain_diff.attrs <span class="op">=</span> rainc.attrs</span>
+<span id="cb77-16"><a href="#cb77-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Tambahkan deskripsi</span></span>
+<span id="cb77-17"><a href="#cb77-17" aria-hidden="true" tabindex="-1"></a>rain_diff.attrs[<span class="st">"description"</span>] <span class="op">=</span> <span class="st">"Total Rainfall"</span></span>
+<span id="cb77-18"><a href="#cb77-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Menghapus variabel rain untuk mengoptimalkan memori</span></span>
+<span id="cb77-19"><a href="#cb77-19" aria-hidden="true" tabindex="-1"></a><span class="kw">del</span> rain</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
 </ol>
-</section>
-<section id="membuat-grafik-wrf" class="level4" data-number="1.5.1.4">
-<h4 data-number="1.5.1.4" class="anchored" data-anchor-id="membuat-grafik-wrf"><span class="header-section-number">1.5.1.4</span> Membuat Grafik WRF</h4>
-<p>Contoh pembuatan grafik di bawah ini adalah grafik secara spasial maupun seri waktu.</p>
-<section id="spasial" class="level5" data-number="1.5.1.4.1">
-<h5 data-number="1.5.1.4.1" class="anchored" data-anchor-id="spasial"><span class="header-section-number">1.5.1.4.1</span> Spasial</h5>
 <p>Setelah berhasil mengekstrak variabel dari langkah sebelumnya, langkah-langkah berikut ini adalah pembuatan grafik spasial dari variabel <code>T2</code>. Untuk membuatnya, Anda membutuhkan tambahan package <code>matplotlib</code> dan <code>cartopy</code>.</p>
 <ol type="1">
 <li><p>Anda telah mendefinisikan lokasi (variabel <code>lats</code> dan <code>lons</code>) pada langkah sebelumnya. Kedua variabel tersebut digunakan dalam membuat grafik spasial.</p></li>
 <li><p>Variabel suhu udara yang telah diekstrak pada langkah sebelumnya memiliki waktu dari awal hingga akhir simulasi. Anda hanya dapat memilih salah satu waktu dalam 1 grafik. Anda juga dapat membuat grafik untuk masing-masing waktu dalam satu grafik dalam bentuk <em>panel plot</em>. Untuk membuat grafik pada waktu tertentu, Anda perlu memilih waktu dan mengetahui letak indeksnya.</p>
-<div class="sourceCode" id="cb79"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a>time     <span class="op">=</span> <span class="st">"2022-01-02 13:00:00"</span></span>
-<span id="cb79-2"><a href="#cb79-2" aria-hidden="true" tabindex="-1"></a>time     <span class="op">=</span> np.array([time], dtype<span class="op">=</span><span class="st">'datetime64[ns]'</span>)</span>
-<span id="cb79-3"><a href="#cb79-3" aria-hidden="true" tabindex="-1"></a>time_idx <span class="op">=</span> np.where(wrf_time.values <span class="op">==</span> time)[<span class="dv">0</span>]</span>
-<span id="cb79-4"><a href="#cb79-4" aria-hidden="true" tabindex="-1"></a>time_idx <span class="op">=</span> <span class="bu">int</span>(time_idx)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<div class="sourceCode" id="cb78"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a>time     <span class="op">=</span> <span class="st">"2022-01-02 13:00:00"</span></span>
+<span id="cb78-2"><a href="#cb78-2" aria-hidden="true" tabindex="-1"></a>time     <span class="op">=</span> np.array([time], dtype<span class="op">=</span><span class="st">'datetime64[ns]'</span>)</span>
+<span id="cb78-3"><a href="#cb78-3" aria-hidden="true" tabindex="-1"></a>time_idx <span class="op">=</span> np.where(wrf_time.values <span class="op">==</span> time)[<span class="dv">0</span>]</span>
+<span id="cb78-4"><a href="#cb78-4" aria-hidden="true" tabindex="-1"></a>time_idx <span class="op">=</span> <span class="bu">int</span>(time_idx)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
 <li><p>Sebagai contoh skrip di bawah ini untuk membuat grafik spasial hanya satu waktu.</p>
-<div class="sourceCode" id="cb80"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get cartopy mapping</span></span>
-<span id="cb80-2"><a href="#cb80-2" aria-hidden="true" tabindex="-1"></a>cart_proj <span class="op">=</span> wrf.get_cartopy(wrf_t2, timeidx<span class="op">=</span>time_idx)</span>
-<span id="cb80-3"><a href="#cb80-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb80-4"><a href="#cb80-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Membuat dan mengatur ukuran grafik</span></span>
-<span id="cb80-5"><a href="#cb80-5" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> plt.figure(figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">10</span>))</span>
-<span id="cb80-6"><a href="#cb80-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Mengatur sistem proyeksi sesuai metadata WRF</span></span>
-<span id="cb80-7"><a href="#cb80-7" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> plt.axes(projection<span class="op">=</span>cart_proj)</span>
-<span id="cb80-8"><a href="#cb80-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb80-9"><a href="#cb80-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Menambahkan garis pantai. Sumber data: www.naturalearthdata.com</span></span>
-<span id="cb80-10"><a href="#cb80-10" aria-hidden="true" tabindex="-1"></a>ax.coastlines(linewidth<span class="op">=</span><span class="fl">0.8</span>)</span>
-<span id="cb80-11"><a href="#cb80-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb80-12"><a href="#cb80-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Menambahkan garis lintang dan bujur</span></span>
-<span id="cb80-13"><a href="#cb80-13" aria-hidden="true" tabindex="-1"></a>gl <span class="op">=</span> ax.gridlines(draw_labels<span class="op">=</span><span class="va">True</span>, linewidth<span class="op">=</span><span class="dv">1</span>, color<span class="op">=</span><span class="st">'gray'</span>, alpha<span class="op">=</span><span class="fl">0.5</span>, linestyle<span class="op">=</span><span class="st">'--'</span>)</span>
-<span id="cb80-14"><a href="#cb80-14" aria-hidden="true" tabindex="-1"></a>gl.top_labels <span class="op">=</span> <span class="va">False</span>   <span class="co"># Menghilangkan label bujur di atas</span></span>
-<span id="cb80-15"><a href="#cb80-15" aria-hidden="true" tabindex="-1"></a>gl.right_labels <span class="op">=</span> <span class="va">False</span> <span class="co"># Menghilangkan label lintang di kanan</span></span>
-<span id="cb80-16"><a href="#cb80-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb80-17"><a href="#cb80-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Mengatur nilai untuk skala legenda  </span></span>
-<span id="cb80-18"><a href="#cb80-18" aria-hidden="true" tabindex="-1"></a>lvl <span class="op">=</span> np.arange(<span class="dv">290</span>, <span class="dv">304</span>, <span class="dv">2</span>)</span>
-<span id="cb80-19"><a href="#cb80-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb80-20"><a href="#cb80-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Menambahkan garis kontur terisi</span></span>
-<span id="cb80-21"><a href="#cb80-21" aria-hidden="true" tabindex="-1"></a>plt.contourf(lons, lats, smooth_t2[time_idx, :, :],</span>
-<span id="cb80-22"><a href="#cb80-22" aria-hidden="true" tabindex="-1"></a>            levels<span class="op">=</span>lvl,</span>
-<span id="cb80-23"><a href="#cb80-23" aria-hidden="true" tabindex="-1"></a>            transform<span class="op">=</span>crs.PlateCarree(),</span>
-<span id="cb80-24"><a href="#cb80-24" aria-hidden="true" tabindex="-1"></a>            cmap<span class="op">=</span><span class="st">'viridis'</span>)</span>
-<span id="cb80-25"><a href="#cb80-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb80-26"><a href="#cb80-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Menambahkan legenda warna</span></span>
-<span id="cb80-27"><a href="#cb80-27" aria-hidden="true" tabindex="-1"></a>plt.colorbar(ax<span class="op">=</span>ax, shrink<span class="op">=</span><span class="fl">0.7</span>)</span>
-<span id="cb80-28"><a href="#cb80-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb80-29"><a href="#cb80-29" aria-hidden="true" tabindex="-1"></a><span class="co"># Menampilkan grafik</span></span>
-<span id="cb80-30"><a href="#cb80-30" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<div class="sourceCode" id="cb79"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Mengambil informasi sistem proyeksi peta (dalam data ini adalah mercator)</span></span>
+<span id="cb79-2"><a href="#cb79-2" aria-hidden="true" tabindex="-1"></a>cart_proj <span class="op">=</span> wrf.get_cartopy(wrf_t2, timeidx<span class="op">=</span>time_idx)</span>
+<span id="cb79-3"><a href="#cb79-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb79-4"><a href="#cb79-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Membuat dan mengatur ukuran grafik</span></span>
+<span id="cb79-5"><a href="#cb79-5" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> plt.figure(figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">10</span>))</span>
+<span id="cb79-6"><a href="#cb79-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Mengatur sistem proyeksi sesuai metadata WRF</span></span>
+<span id="cb79-7"><a href="#cb79-7" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> plt.axes(projection<span class="op">=</span>cart_proj)</span>
+<span id="cb79-8"><a href="#cb79-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb79-9"><a href="#cb79-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Menambahkan garis pantai. Sumber data: www.naturalearthdata.com</span></span>
+<span id="cb79-10"><a href="#cb79-10" aria-hidden="true" tabindex="-1"></a>ax.coastlines(linewidth<span class="op">=</span><span class="fl">0.8</span>)</span>
+<span id="cb79-11"><a href="#cb79-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb79-12"><a href="#cb79-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Menambahkan garis lintang dan bujur</span></span>
+<span id="cb79-13"><a href="#cb79-13" aria-hidden="true" tabindex="-1"></a>gl <span class="op">=</span> ax.gridlines(draw_labels<span class="op">=</span><span class="va">True</span>, linewidth<span class="op">=</span><span class="dv">1</span>, color<span class="op">=</span><span class="st">'gray'</span>, alpha<span class="op">=</span><span class="fl">0.5</span>, linestyle<span class="op">=</span><span class="st">'--'</span>)</span>
+<span id="cb79-14"><a href="#cb79-14" aria-hidden="true" tabindex="-1"></a>gl.top_labels <span class="op">=</span> <span class="va">False</span>   <span class="co"># Menghilangkan label bujur di atas</span></span>
+<span id="cb79-15"><a href="#cb79-15" aria-hidden="true" tabindex="-1"></a>gl.right_labels <span class="op">=</span> <span class="va">False</span> <span class="co"># Menghilangkan label lintang di kanan</span></span>
+<span id="cb79-16"><a href="#cb79-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb79-17"><a href="#cb79-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Mengatur nilai untuk skala legenda  </span></span>
+<span id="cb79-18"><a href="#cb79-18" aria-hidden="true" tabindex="-1"></a>lvl <span class="op">=</span> np.arange(<span class="dv">290</span>, <span class="dv">304</span>, <span class="dv">2</span>)</span>
+<span id="cb79-19"><a href="#cb79-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb79-20"><a href="#cb79-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Menambahkan garis kontur terisi</span></span>
+<span id="cb79-21"><a href="#cb79-21" aria-hidden="true" tabindex="-1"></a>plt.contourf(lons, lats, smooth_t2[time_idx, :, :],</span>
+<span id="cb79-22"><a href="#cb79-22" aria-hidden="true" tabindex="-1"></a>            levels<span class="op">=</span>lvl,</span>
+<span id="cb79-23"><a href="#cb79-23" aria-hidden="true" tabindex="-1"></a>            transform<span class="op">=</span>crs.PlateCarree(),</span>
+<span id="cb79-24"><a href="#cb79-24" aria-hidden="true" tabindex="-1"></a>            cmap<span class="op">=</span><span class="st">'viridis'</span>)</span>
+<span id="cb79-25"><a href="#cb79-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb79-26"><a href="#cb79-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Menambahkan legenda warna</span></span>
+<span id="cb79-27"><a href="#cb79-27" aria-hidden="true" tabindex="-1"></a>plt.colorbar(ax<span class="op">=</span>ax, shrink<span class="op">=</span><span class="fl">0.7</span>)</span>
+<span id="cb79-28"><a href="#cb79-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb79-29"><a href="#cb79-29" aria-hidden="true" tabindex="-1"></a><span class="co"># Menampilkan grafik</span></span>
+<span id="cb79-30"><a href="#cb79-30" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
 </ol>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -1550,32 +1544,29 @@ Note
 <p></p><figcaption class="figure-caption">Grafik suhu udara 2-meter di atas permukaan tanah pada 2022-01-02 13:00:00 UTC</figcaption><p></p>
 </figure>
 </div>
-</section>
-<section id="seri-waktu" class="level5" data-number="1.5.1.4.2">
-<h5 data-number="1.5.1.4.2" class="anchored" data-anchor-id="seri-waktu"><span class="header-section-number">1.5.1.4.2</span> Seri Waktu</h5>
 <p>Selain spasial, Anda dapat pula menampilkan grafik seri waktu untuk titik koordinat atau rata-rata grid tertentu.</p>
 <ol type="1">
 <li><p>Tentukan titik koordinat yang akan dibuat grafik seri waktu</p>
-<div class="sourceCode" id="cb81"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a>lats_sel <span class="op">=</span> <span class="op">-</span><span class="fl">7.271372797667375</span></span>
-<span id="cb81-2"><a href="#cb81-2" aria-hidden="true" tabindex="-1"></a>lons_sel <span class="op">=</span> <span class="fl">112.73417496409039</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<div class="sourceCode" id="cb80"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a>lats_sel <span class="op">=</span> <span class="op">-</span><span class="fl">7.271372797667375</span></span>
+<span id="cb80-2"><a href="#cb80-2" aria-hidden="true" tabindex="-1"></a>lons_sel <span class="op">=</span> <span class="fl">112.73417496409039</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
 <li><p>Untuk menentukan indeks dari titik koordinat yang telah didefinisikan tersebut, gunakan fungsi <code>wrf.ll_to_xy()</code>. Nilai yang dikeluarkan adalah indeks dari lokasi terdekat.</p>
-<div class="sourceCode" id="cb82"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a>latlon_idx <span class="op">=</span> wrf.ll_to_xy(wrf_d03, lats_sel, lons_sel)</span>
-<span id="cb82-2"><a href="#cb82-2" aria-hidden="true" tabindex="-1"></a>wrf_t2_sel <span class="op">=</span> wrf_t2[:, latlon_idx[<span class="dv">1</span>], latlon_idx[<span class="dv">0</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<div class="sourceCode" id="cb81"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a>latlon_idx <span class="op">=</span> wrf.ll_to_xy(wrf_d03, lats_sel, lons_sel)</span>
+<span id="cb81-2"><a href="#cb81-2" aria-hidden="true" tabindex="-1"></a>wrf_t2_sel <span class="op">=</span> wrf_t2[:, latlon_idx[<span class="dv">1</span>], latlon_idx[<span class="dv">0</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
 <li><p>Lakukan plot seri waktu</p>
-<div class="sourceCode" id="cb83"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Mengatur ukuran grafik</span></span>
-<span id="cb83-2"><a href="#cb83-2" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> plt.figure(figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">5</span>))</span>
-<span id="cb83-3"><a href="#cb83-3" aria-hidden="true" tabindex="-1"></a>ax  <span class="op">=</span> plt.axes()</span>
-<span id="cb83-4"><a href="#cb83-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb83-5"><a href="#cb83-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot -&gt; x: waktu, y: suhu udara (K)</span></span>
-<span id="cb83-6"><a href="#cb83-6" aria-hidden="true" tabindex="-1"></a>ax.plot(wrf_time, wrf_t2_sel.values)</span>
-<span id="cb83-7"><a href="#cb83-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb83-8"><a href="#cb83-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Mengatur label dan judul </span></span>
-<span id="cb83-9"><a href="#cb83-9" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">'Waktu'</span>)</span>
-<span id="cb83-10"><a href="#cb83-10" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">'Suhu udara 2m (K)'</span>)</span>
-<span id="cb83-11"><a href="#cb83-11" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="ss">f'Suhu udara di </span><span class="sc">{</span>lats_sel<span class="sc">}</span><span class="ss">$^\circ$, </span><span class="sc">{</span>lons_sel<span class="sc">}</span><span class="ss">$^\circ$'</span>)</span>
-<span id="cb83-12"><a href="#cb83-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb83-13"><a href="#cb83-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Tampilkan grafik</span></span>
-<span id="cb83-14"><a href="#cb83-14" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<div class="sourceCode" id="cb82"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Mengatur ukuran grafik</span></span>
+<span id="cb82-2"><a href="#cb82-2" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> plt.figure(figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">5</span>))</span>
+<span id="cb82-3"><a href="#cb82-3" aria-hidden="true" tabindex="-1"></a>ax  <span class="op">=</span> plt.axes()</span>
+<span id="cb82-4"><a href="#cb82-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb82-5"><a href="#cb82-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot -&gt; x: waktu, y: suhu udara (K)</span></span>
+<span id="cb82-6"><a href="#cb82-6" aria-hidden="true" tabindex="-1"></a>ax.plot(wrf_time, wrf_t2_sel.values)</span>
+<span id="cb82-7"><a href="#cb82-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb82-8"><a href="#cb82-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Mengatur label dan judul </span></span>
+<span id="cb82-9"><a href="#cb82-9" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">'Waktu'</span>)</span>
+<span id="cb82-10"><a href="#cb82-10" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">'Suhu udara 2m (K)'</span>)</span>
+<span id="cb82-11"><a href="#cb82-11" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="ss">f'Suhu udara di </span><span class="sc">{</span>lats_sel<span class="sc">}</span><span class="ss">$^\circ$, </span><span class="sc">{</span>lons_sel<span class="sc">}</span><span class="ss">$^\circ$'</span>)</span>
+<span id="cb82-12"><a href="#cb82-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb82-13"><a href="#cb82-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Tampilkan grafik</span></span>
+<span id="cb82-14"><a href="#cb82-14" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
 </ol>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -1583,6 +1574,169 @@ Note
 <p></p><figcaption class="figure-caption">Grafik seri waktu suhu udara 2-meter di atas permukaan tanah</figcaption><p></p>
 </figure>
 </div>
+</section>
+<section id="r" class="level3" data-number="1.5.2">
+<h3 data-number="1.5.2" class="anchored" data-anchor-id="r"><span class="header-section-number">1.5.2</span> R</h3>
+<p>Anda dapat menggunakan RStudio untuk menuliskan skrip R. RStudio mendukung penulisan skrip R maupun bahasa lainnya, seperti Markdown, C++, dan Python. Sebenarnya, Anda dapat menuliskan skrip Python pada RStudio dengan bantuan package <a href="https://rstudio.github.io/reticulate/"><code>reticulate</code></a>. Untuk mengolah data WRF di R, Anda perlu memasang package <code>ncdf4</code> dan <code>raster</code> terlebih dahulu. Untuk kebutuhan plot seri waktu, kami menggunakan package <code>tidyverse</code>.</p>
+<ol type="1">
+<li><p>Sebelum memulai pengetikan kode R, buatlah file skrip R dengan memilih menu <strong>File &gt; New File &gt; R Script</strong>.</p></li>
+<li><p>Di console R pada RStudio, gunakan perintah berikut untuk memasang <code>ncdf4</code> dan <code>raster</code>.</p>
+<div class="sourceCode" id="cb83"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(<span class="st">'ncdf4'</span>, <span class="st">'raster'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Anda juga dapat menggunakan menu pada RStudio: <strong>Tools &gt; Install Packaages</strong>. Kemudian, ketik “<code>ncdf4</code>, <code>raster</code>” (tanpa tanda petik) pada bagian <em>Packages (separate multiple with space or comma)</em>. Setelah itu, klik <em>Install</em>.</p></li>
+<li><p>Kami telah menyediakan fungsi skrip R untuk membuka file luaran WRF. Pada teks editor di RStudio, masukkan perintah berikut untuk mengimpor package <code>ncdf4</code> dan <code>raster</code> beserta skrip <code>wrf-raster.R</code>.</p>
+<div class="sourceCode" id="cb84"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ncdf4)</span>
+<span id="cb84-2"><a href="#cb84-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(raster)</span>
+<span id="cb84-3"><a href="#cb84-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb84-4"><a href="#cb84-4" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">'wrf-raster.R'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Anda dapat menjalankan ketiga baris kode tersebut dengan memblok seluruh baris atau arahkan kursor pada akhir kode kemudian tekan tombol <strong>CTRL + ENTER</strong>.</p></li>
+<li><p>Saat Anda menjalankan <code>source('wrf-raster.R')</code>, muncul Functions dengan nama <code>wrf.raster</code> pada jendela <strong>Environment</strong> di RStudio (letak jendela di sebelah kanan atas).</p></li>
+<li><p>Untuk menggunakan fungsi <code>wrf.raster()</code>, Anda hanya membutuhkan argumen <code>wrf.file</code> (nama folder <code>wrfout_*</code>) dan <code>var.name</code> (nama variabel di dalam <code>wrfout_*</code>). Nilai kembalian setelah menjalankan fungsi ini berbentuk <code>RasterBrick</code>. Argumen <code>nlev</code> dapat dicantumkan dengan angka bilangan bulat (1, 2, 3, …) khusus untuk variabel yang memiliki variasi terhadap ketinggian dan kedalaman, seperti suhu udara atau suhu tanah. Variabel lain yang tidak tercantum seperti curah hujan, sudah tersedia di dalam fungsi ini (<code>var.name = rain</code>).</p></li>
+<li><p>Sebagai contoh mengambil variabel curah hujan.</p>
+<div class="sourceCode" id="cb85"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a>rain <span class="ot">&lt;-</span> <span class="fu">wrf.raster</span>(<span class="at">wrf.file =</span> <span class="st">'/home/absen/WRF-Model/WRF/test/em_real/wrfout_d01_2022-01-01_00:00:00'</span>, <span class="at">var.name =</span> <span class="st">'rain'</span>)</span>
+<span id="cb85-2"><a href="#cb85-2" aria-hidden="true" tabindex="-1"></a>rain</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<pre><code>class      : RasterBrick
+dimensions : 32, 32, 1024, 67  (nrow, ncol, ncell, nlayers)
+resolution : 0.1581326, 0.1567945  (x, y)
+extent     : 110.2099, 115.2701, -9.821663, -4.804237  (xmin, xmax, ymin, ymax)
+crs        : +proj=longlat +datum=WGS84 +no_defs
+source     : memory
+names      :   layer.1,   layer.2,   layer.3,   layer.4,   layer.5,   layer.6,  ...
+min values :         0,         0,         0,         0,         0,         0,  ...
+max values :  0.000000,  2.944275,  2.439148,  6.013021, 14.848666, 47.531946,  ...
+time       : 2022-01-01 00:00:00, 2022-01-03 18:00:00 (min, max)</code></pre>
+<p>Pada respons melalui console R, terdapat berbagai informasi seperti <code>dimensions</code>, <code>resolution</code>, <code>crs</code>, serta <code>time</code>. Anda dapat mudah memahami isi dari file <code>wrfout_d01*</code> tersebut.</p></li>
+<li><p>Anda bisa langsung membuat grafik spasial dengan perintah 1 baris ini dan ditampilkan pada <a href="#fig-wrfraster">Gambar&nbsp;<span>1.15</span></a>. Cukup sederhana.</p>
+<div class="sourceCode" id="cb87"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(rain)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-wrfraster" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="Pictures/wrf-raster-plot.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Gambar&nbsp;1.15: Plot curah hujan per 1 jam dari <code>wrfout_d01*</code></figcaption><p></p>
+</figure>
+</div></li>
+<li><p>Untuk membuat grafik seri waktu pada lokasi tertentu, Anda dapat menggunakan fungsi <code>extract()</code> dan <code>plot()</code></p>
+<div class="sourceCode" id="cb88"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a href="#cb88-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Waktu</span></span>
+<span id="cb88-2"><a href="#cb88-2" aria-hidden="true" tabindex="-1"></a>time_sel <span class="ot">&lt;-</span> <span class="fu">getZ</span>(rain)</span>
+<span id="cb88-3"><a href="#cb88-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb88-4"><a href="#cb88-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Lokasi</span></span>
+<span id="cb88-5"><a href="#cb88-5" aria-hidden="true" tabindex="-1"></a>lats_sel <span class="ot">&lt;-</span> <span class="sc">-</span><span class="fl">7.271372797667375</span></span>
+<span id="cb88-6"><a href="#cb88-6" aria-hidden="true" tabindex="-1"></a>lons_sel <span class="ot">&lt;-</span> <span class="fl">112.73417496409039</span></span>
+<span id="cb88-7"><a href="#cb88-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb88-8"><a href="#cb88-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Ekstrak nilai curah hujan berdasarkan lokasi</span></span>
+<span id="cb88-9"><a href="#cb88-9" aria-hidden="true" tabindex="-1"></a>rain_sel <span class="ot">&lt;-</span> <span class="fu">extract</span>(rain, <span class="fu">data.frame</span>(<span class="at">x =</span> lons_sel, <span class="at">y =</span> lats_sel))</span>
+<span id="cb88-10"><a href="#cb88-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb88-11"><a href="#cb88-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot grafik seri waktu</span></span>
+<span id="cb88-12"><a href="#cb88-12" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb88-13"><a href="#cb88-13" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> time_sel, <span class="at">y =</span> rain_sel[<span class="dv">1</span>,])) <span class="sc">+</span></span>
+<span id="cb88-14"><a href="#cb88-14" aria-hidden="true" tabindex="-1"></a>   <span class="fu">scale_x_datetime</span>(<span class="st">"Waktu (UTC)"</span>, <span class="at">date_labels =</span> <span class="st">"%Y-%m-%d %H:%M"</span>) <span class="sc">+</span></span>
+<span id="cb88-15"><a href="#cb88-15" aria-hidden="true" tabindex="-1"></a>   <span class="fu">scale_y_continuous</span>(<span class="st">"Curah Hujan (mm/jam)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Pictures/wrfout-timeseries-r.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Grafik seri waktu curah hujan per 1 jam</figcaption><p></p>
+</figure>
+</div></li>
+</ol>
+</section>
+<section id="ncar-command-language" class="level3" data-number="1.5.3">
+<h3 data-number="1.5.3" class="anchored" data-anchor-id="ncar-command-language"><span class="header-section-number">1.5.3</span> NCAR Command Language</h3>
+<p>NCAR telah menyediakan contoh skrip pengolahan data WRF dengan NCL. Anda dapat mengakses lebih banyak di <a href="https://www.ncl.ucar.edu/Applications/wrf.shtml">https://www.ncl.ucar.edu/Applications/wrf.shtml</a>. File netcdf luaran WRF pada dasarnya berbeda dengan file netcdf pada umumnya karena tidak mengikuti pedoman <a href="http://cf-pcmdi.llnl.gov/"><em>Climate and Forecast Convention</em></a>. Alhasil, mengolah data WRF menggunakan aplikasi lain seperti ArcMap atau Matlab cukup rumit. Jika Anda ingin cukup mudah mengolahnya dengan aplikasi lainnya, skrip NCL untuk mengubah WRF menjadi CF-Convention dibuat oleh Mark Seefeldt dan telah tersedia di <a href="https://sundowner.colorado.edu/wrfout_to_cf/wrfout_to_cf.ncl">https://sundowner.colorado.edu/wrfout_to_cf/wrfout_to_cf.ncl</a>. Berikut ini adalah cara penggunakan skrip <code>wrfout_to_cf.ncl</code>.</p>
+<ol type="1">
+<li><p>Aktifkan terlebih dahulu <em>environment</em> <code>ncl</code> pada terminal. Tulisan <code>(base)</code> menjadi <code>(ncl)</code> setelah perintah berhasil dipanggil.</p>
+<div class="sourceCode" id="cb89"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> activate ncl</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>Anda hanya perlu memasukkan variabel <code>dir_in</code> (lokasi folder wrfout), <code>dir_out</code> (lokasi folder wrfout setelah dikonversi), <code>file_in</code> (nama file wrfout), dan <code>file_out</code> (nama file wrfout setelah dikonversi).</p></li>
+<li><p>Masukkan perintah berikut.</p>
+<div class="sourceCode" id="cb90"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb90-1"><a href="#cb90-1" aria-hidden="true" tabindex="-1"></a><span class="ex">ncl</span> <span class="st">'dir_in="/home/absen/WRF-Model/WRF/test/em_real/"'</span> <span class="st">'file_in="wrfout_d01_2022-01-01_00:00:00"'</span> <span class="st">'file_out="wrfout_cf_d01_2022-01-01_00:00:00.nc"'</span> wrfout_to_cf.ncl</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>Anda dapat mengolah data luaran WRF setelah dikonversi menjadi CF-Convention pada aplikasi apapun dengan mudah. Hanya saja, Anda perlu memperhatikan perubahan nama variabel dan sesuaikan dengan data WRF asli.</p></li>
+</ol>
+<p>Selain mengubah menjadi CF-Convention, Anda dapat langsung menerapkan skrip NCL untuk analisis maupun visualisasi. Sebagai contoh skrip berikut ini untuk menampilkan suhu udara dekat permukaan dari luaran <code>wrfout_d01*</code>. Perlu diperhatikan bahwa simbol <code>;</code> adalah komentar di dalam NCL. Anda dapat mengganti format file dari luaran skrip ini (mis. <code>png</code>, <code>pdf</code>, atau <code>x11</code>).</p>
+<pre class="ncl"><code>;---Read file
+fpath    = "/home/absen/WRF-Model/WRF/test/em_real/"
+filename = "wrfout_d01_2022-01-01_00:00:00"
+a        = addfile(fpath+filename, "r")
+
+;---Get CEN_LAT and CEN_LON from WRF metadata (in global attributes)
+cen_lat = a@CEN_LAT
+cen_lon = a@CEN_LON
+
+;---Select time index
+nt = 30
+
+;---Read temperature at first time step
+tc = wrf_user_getvar(a, "tc", nt)
+
+;---Open worksheet
+wks = gsn_open_wks("png", "wrf_nogsn") ; Format file luaran grafik, contoh png
+
+;---Set up resource list
+res                      = True
+res@gsnDraw              = False
+res@gsnFrame             = False
+res@tfDoNDCOverlay       = True
+
+;---Plotting options for air temperature
+opts_r                      = res
+
+opts_r@cnFillOn             = True
+opts_r@cnLevelSelectionMode = "ExplicitLevels"
+opts_r@cnLevels             = (/ 20, 22, 24, 26, 28, 30, 32 /)
+opts_r@cnSmoothingOn        = True
+opts_r@cnSmoothingDistanceF = .005
+
+;---Option for plt_res
+plt_res = res
+
+;---Option for plt_res
+map_res = res
+map_res@mpDataBaseVersion           = "HighRes"
+map_res@mpCenterLatF                = cen_lat
+map_res@mpCenterLonF                = cen_lon
+map_res@mpDataResolution            = "FinestResolution"
+map_res@mpGeophysicalLineColor      = "black"
+map_res@mpGeophysicalLineThicknessF = 2.0
+map_res@mpGridSpacingF              = 1.0
+map_res@mpGridLineColor             = "black"
+
+;---Plot
+contour_tot = wrf_contour(a, wks, tc(0,:,:), opts_r)
+plot = wrf_map_overlays(a, wks, (/contour_tot/), plt_res, map_res)</code></pre>
+</section>
+<section id="qgis" class="level3" data-number="1.5.4">
+<h3 data-number="1.5.4" class="anchored" data-anchor-id="qgis"><span class="header-section-number">1.5.4</span> QGIS</h3>
+<p>Aplikasi QGIS dapat digunakan untuk mengolah data WRF. Untuk memudahkan pengolahan data WRF, Anda dapat mengubah data WRF menjadi CF-Convention dengan skrip NCL sebelumnya pada terminal Bash Linux. Setelah itu, Anda dapat mengimpor data WRF yang telah terkonversi dalam format NetCDF Classic ke QGIS. Berikut ini adalah langkah-langkahnya.</p>
+<ol type="1">
+<li><p>Pada menu QGIS, pilih <code>Layer</code> &gt; <code>Add Layer</code> &gt; <code>Add Raster Layer</code> (CTRL + SHIFT + R).</p></li>
+<li><p>Pada bagian <strong>Source</strong>, klik ikon <code>...</code> dan pilih file <code>wrfout_*</code> yang telah dikonversi menjadi CF-Convention.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Pictures/qgis-addnetcdf.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<p></p><figcaption class="figure-caption">Import data WRF ke QGIS</figcaption><p></p>
+</figure>
+</div></li>
+<li><p>Pilih variabel yang ingin Anda tampilkan. Misalnya, Anda dapat memilih <code>T_2m</code> untuk menampilkan suhu udara pada ketinggian 2 meter. Klik <code>Add Layers</code>, kemudian klik <code>Add</code>.</p></li>
+<li><p>Klik kanan pada raster yang telah diimpor dan pilih <code>Properties</code>. Pada <strong>Band Rendering</strong> di bagian <em>Render type</em>, pilih Singleband Gray. Pada bagian <em>Gray band</em>, terdapat pilihan nomor <em>Band</em> yang berisikan waktu.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Pictures/qgis-changeproperties.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<p></p><figcaption class="figure-caption">Layer properties</figcaption><p></p>
+</figure>
+</div>
+<p>Nilai maksimum dan minimum suhu udara dapat terlihat di bawah layer.</p></li>
+<li><p>Setelah berhasil mengimpor, data raster dari WRF belum terproyeksi ke koordinat. Default sistem proyeksi pada QGIS kami adalah EPSG:4326 (WGS 84). Untuk mengubah sistem proyeksi, klik menu <code>Raster</code> &gt; <code>Projections</code> &gt; <code>Warp (Reproject)</code>. Bagian <code>Input layer</code> diisi dengan raster yang akan diubah sistem proyeksinya dan <code>Target CRS</code> diisi dengan <strong>EPSG:4326 - WGS 84</strong>. Kemudian, klik <code>Run</code>.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Pictures/qgis-reproject.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<p></p><figcaption class="figure-caption">Reproyeksi raster</figcaption><p></p>
+</figure>
+</div>
+<p>Layer raster baru akan muncul dengan nama <strong>Reprojected</strong>. Klik kanan pada raster tersebut dan pilih <strong>Zoom to Layer(s)</strong></p></li>
+<li><p>Agar lebih meyakinkan, Anda dapat mengimpor file vector dari batas wilayah Indonesia. Untuk data ini, bisa Anda unduh di <a href="https://gadm.org">gadm.org</a>. Pada contoh ini, kami menggunakan file <code>*.json</code>. Untuk mengimpornya, klik menu <code>Layer</code> &gt; <code>Add Layer</code> &gt; <code>Add Vector Layer</code> (CTRL + SHIFT + V). Pada bagian <strong>Source</strong>, klik ikon <code>...</code> dan pilih file <code>gadm41_IDN_1.json</code>. Klik <code>Add Layers</code>, kemudian klik <code>Add</code>.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Pictures/qgis-addvector.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<p></p><figcaption class="figure-caption">Import data vector</figcaption><p></p>
+</figure>
+</div></li>
+</ol>
 
 
 <div id="refs" class="references csl-bib-body" role="doc-bibliography">
@@ -1641,8 +1795,6 @@ Wilby RL, Wigley TM. 1997. Downscaling general circulation model output: A revie
 Xu H, Wang M, Wang Y, Cai W. 2018. Performance of WRF large eddy simulations in modeling the convective boundary layer over the taklimakan desert, china. <em>Journal of Meteorological Research</em>. 32(6):1011–1025.
 </div>
 </div>
-</section>
-</section>
 </section>
 </section>
 
@@ -1783,7 +1935,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="./index.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Pendahuluan</span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Pemodelan Iklim</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
