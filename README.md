@@ -4,11 +4,10 @@ Semua data dapat diunduh di https://drive.google.com/drive/folders/1tEYU2EgnqEEI
 
 Materi:
 
-1.  Instalasi R dan RStudio
-2.  Instalasi dan Simulasi WRF
-3.  Membaca dan mengekstrak data WRF
-4.  Plotting data WRF (seri waktu dan spasial)
-5.  Evaluasi luaran model WRF
-6.  Model radiasi matahari
-7.  Downscaling Statistik
-8.  Koreksi Bias Statistik
+1. Instalasi dan Simulasi WRF
+2. Membaca dan mengekstrak data WRF
+3. Plotting data WRF (seri waktu dan spasial)
+4. Evaluasi luaran model WRF
+5. Model radiasi matahari
+6. Downscaling Statistik
+7. Koreksi Bias Statistik
