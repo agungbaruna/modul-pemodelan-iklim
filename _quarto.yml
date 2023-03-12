@@ -12,6 +12,7 @@ book:
   chapters:
     - index.qmd
     - praktikum-1.ipynb
+    - praktikum-2.ipynb
     # - summary.qmd
 bibliography: references.bib
 crossref:
