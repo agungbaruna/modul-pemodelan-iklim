@@ -20,6 +20,69 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1.6em;
   vertical-align: middle;
 }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
@@ -137,8 +200,12 @@ div.csl-indent {
    
   <ul>
   <li><a href="#pendahuluan" id="toc-pendahuluan" class="nav-link active" data-scroll-target="#pendahuluan"><span class="toc-section-number">3.1</span>  Pendahuluan</a></li>
-  <li><a href="#model-pendugaan-ball-et-al.-2004" id="toc-model-pendugaan-ball-et-al.-2004" class="nav-link" data-scroll-target="#model-pendugaan-ball-et-al.-2004"><span class="toc-section-number">3.2</span>  Model Pendugaan Ball et al.&nbsp;(2004)</a></li>
-  <li><a href="#model-pendugaan-hunt-et-al.-1998" id="toc-model-pendugaan-hunt-et-al.-1998" class="nav-link" data-scroll-target="#model-pendugaan-hunt-et-al.-1998"><span class="toc-section-number">3.3</span>  Model Pendugaan Hunt et al.&nbsp;(1998)</a></li>
+  <li><a href="#sec-modelball" id="toc-sec-modelball" class="nav-link" data-scroll-target="#sec-modelball"><span class="toc-section-number">3.2</span>  Model Pendugaan Ball et al.&nbsp;(2004)</a></li>
+  <li><a href="#sec-modelhunt" id="toc-sec-modelhunt" class="nav-link" data-scroll-target="#sec-modelhunt"><span class="toc-section-number">3.3</span>  Model Pendugaan Hunt et al.&nbsp;(1998)</a></li>
+  <li><a href="#pengolahan-data" id="toc-pengolahan-data" class="nav-link" data-scroll-target="#pengolahan-data"><span class="toc-section-number">3.4</span>  Pengolahan Data</a>
+  <ul class="collapse">
+  <li><a href="#r" id="toc-r" class="nav-link" data-scroll-target="#r"><span class="toc-section-number">3.4.1</span>  1. R</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -164,60 +231,61 @@ div.csl-indent {
 
 <section id="pendahuluan" class="level2" data-number="3.1">
 <h2 data-number="3.1" class="anchored" data-anchor-id="pendahuluan"><span class="header-section-number">3.1</span> Pendahuluan</h2>
-<p>Radiasi matahari merupakan sumber energi utama dan berperan penting dalam siklus iklim di permukaan bumi. Besaran radiasi matahari yang datang kemudian mengalami proses pemantulan, pemancaran, dan penerusan baik secara langsung maupun tidak langsung ke dan dari permukaan bumi. Radiasi matahari yang datang tersebut berpengaruh terhadap pergerakan massa udara dan massa air di bumi, selanjutnya melalui proses evaporasi maupun transpirasi, uap air dilepaskan ke udara dan membentuk awan sehingga terjadi hujan.</p>
+<p>Radiasi matahari merupakan sumber energi utama dan berperan penting dalam siklus iklim bumi. Besaran radiasi matahari yang datang kemudian mengalami proses pemantulan, pemancaran, dan penerusan baik secara langsung maupun tidak langsung ke dan dari permukaan bumi. Radiasi matahari yang datang tersebut berpengaruh terhadap pergerakan massa udara dan massa air di bumi, selanjutnya melalui proses evaporasi maupun transpirasi, uap air dilepaskan ke udara dan membentuk awan sehingga terjadi hujan.</p>
 <p>Pengukuran radiasi matahari secara langsung masih terbilang sedikit dengan periode perekaman data historis yang pendek. Padahal pengamatan radiasi matahari sangat penting dalam menjelaskan variabilitas dan perubahan iklim. Pada pemodelan iklim yang terus berkembang untuk menjelaskan kondisi iklim di masa lalu, saat ini dan masa depan tak lepas dari input data radiasi matahari dan kondisi karbon di atmosfer. Untuk mengetahui besaran nilai penduga radiasi matahari di suatu wilayah dapat dilakukan melalui model berdasarkan data historis parameter iklim lainnya seperti curah hujan dan suhu udara. Pendekatan dapat dilakukan dengan menggunakan model empirik dan model mekanistik.</p>
-<p>Aplikasi pengolahan data yang digunakan dalam praktikum ini adalah R dan Python (pilih salah satu). Data contoh yang digunakan adalah data cuaca di Hancock, Maine, Amerika Serikat</p>
+<p>Aplikasi pengolahan data yang digunakan dalam praktikum ini adalah R dan Python (pilih salah satu). Data contoh yang digunakan adalah data cuaca di Bandara Laguardia, New York, Amerika Serikat.</p>
 </section>
-<section id="model-pendugaan-ball-et-al.-2004" class="level2" data-number="3.2">
-<h2 data-number="3.2" class="anchored" data-anchor-id="model-pendugaan-ball-et-al.-2004"><span class="header-section-number">3.2</span> Model Pendugaan Ball et al.&nbsp;(2004)</h2>
+<section id="sec-modelball" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="sec-modelball"><span class="header-section-number">3.2</span> Model Pendugaan Ball et al.&nbsp;(2004)</h2>
 <p>Ball et al. <span class="citation" data-cites="ball2004">(<a href="#ref-ball2004" role="doc-biblioref">Ball <em>et al.</em> 2004</a>)</span> membangun model empiris untuk menduga radiasi matahari di permukaan bumi dengan masukan suhu udara maksimum, suhu udara minimum, curah hujan, dan <em>julian days</em>. Persamaan yang digunakan berupa regresi linier berganda, yaitu</p>
 <p><span class="math display">\[
 Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \beta_3 X_3 + ... + \beta_{12} X_{12}
 \]</span></p>
 <p>di mana keterangan setiap variabel bebas dapat dilihat pada tabel berikut.</p>
+<div id="tbl-modelball" class="anchored">
 <table class="table">
-<caption>Keterangan variabel bebas dari persamaan empirik <span class="citation" data-cites="ball2004">(<a href="#ref-ball2004" role="doc-biblioref">Ball <em>et al.</em> 2004</a>)</span></caption>
+<caption>Tabel&nbsp;3.1: Keterangan variabel bebas dari persamaan empirik <span class="citation" data-cites="ball2004">(<a href="#ref-ball2004" role="doc-biblioref">Ball <em>et al.</em> 2004</a>)</span></caption>
 <thead>
 <tr class="header">
-<th style="text-align: center;">Variabel</th>
+<th style="text-align: center;">Prediktor</th>
 <th style="text-align: center;">Keterangan</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: center;"><span class="math inline">\(X_1\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(X_{1}\)</span></td>
 <td style="text-align: center;">Curah hujan (mm)</td>
 </tr>
 <tr class="even">
-<td style="text-align: center;"><span class="math inline">\(X_2\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(X_{2}\)</span></td>
 <td style="text-align: center;">Suhu udara maksimum (°C)</td>
 </tr>
 <tr class="odd">
-<td style="text-align: center;"><span class="math inline">\(X_3\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(X_{3}\)</span></td>
 <td style="text-align: center;">Suhu udara minimum (°C)</td>
 </tr>
 <tr class="even">
-<td style="text-align: center;"><span class="math inline">\(X_4\)</span></td>
-<td style="text-align: center;">Julian days</td>
+<td style="text-align: center;"><span class="math inline">\(X_{4}\)</span></td>
+<td style="text-align: center;">Day of Year</td>
 </tr>
 <tr class="odd">
-<td style="text-align: center;"><span class="math inline">\(X_5\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(X_{5}\)</span></td>
 <td style="text-align: center;">(Curah hujan)²</td>
 </tr>
 <tr class="even">
-<td style="text-align: center;"><span class="math inline">\(X_6\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(X_{6}\)</span></td>
 <td style="text-align: center;">(Suhu udara maksimum)²</td>
 </tr>
 <tr class="odd">
-<td style="text-align: center;"><span class="math inline">\(X_7\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(X_{7}\)</span></td>
 <td style="text-align: center;">(Suhu udara minimum)²</td>
 </tr>
 <tr class="even">
-<td style="text-align: center;"><span class="math inline">\(X_8\)</span></td>
-<td style="text-align: center;">(Julian days)²</td>
+<td style="text-align: center;"><span class="math inline">\(X_{8}\)</span></td>
+<td style="text-align: center;">(Day of Year)²</td>
 </tr>
 <tr class="odd">
-<td style="text-align: center;"><span class="math inline">\(X_9\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(X_{9}\)</span></td>
 <td style="text-align: center;">Curah hujan * Suhu udara minimum</td>
 </tr>
 <tr class="even">
@@ -230,37 +298,181 @@ Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \beta_3 X_3 + ... + \beta_{12} X_{12}
 </tr>
 <tr class="even">
 <td style="text-align: center;"><span class="math inline">\(X_{12}\)</span></td>
-<td style="text-align: center;">Suhu udara maksimum * Julian days</td>
+<td style="text-align: center;">Suhu udara maksimum * Day of Year</td>
 </tr>
 </tbody>
 </table>
+</div>
 </section>
-<section id="model-pendugaan-hunt-et-al.-1998" class="level2" data-number="3.3">
-<h2 data-number="3.3" class="anchored" data-anchor-id="model-pendugaan-hunt-et-al.-1998"><span class="header-section-number">3.3</span> Model Pendugaan Hunt et al.&nbsp;(1998)</h2>
-<p>Model pendugaan radiasi matahari lain adalah oleh Hunt et al. <span class="citation" data-cites="hunt1998">(<a href="#ref-hunt1998" role="doc-biblioref">Hunt <em>et al.</em> 1998</a>)</span>, yaitu gabungan model mekanistik dan empirik dengan masukan suhu udara maksimum, suhu udara minimum, dan curah hujan. Model mekanistik digunakan untuk menduga radiasi matahari yang berada di permukaan atmosfer (radiasi ekstraterestrial, <span class="math inline">\(S_0\)</span>). Model pendugaan Hunt et al.&nbsp;adalah sebagai berikut.</p>
+<section id="sec-modelhunt" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="sec-modelhunt"><span class="header-section-number">3.3</span> Model Pendugaan Hunt et al.&nbsp;(1998)</h2>
+<p>Model pendugaan radiasi matahari lain adalah oleh Hunt <span class="citation" data-cites="hunt1998">(<a href="#ref-hunt1998" role="doc-biblioref">Hunt <em>et al.</em> 1998</a>)</span>, yaitu gabungan model mekanistik dan empirik dengan masukan suhu udara maksimum, suhu udara minimum, dan curah hujan. Model mekanistik digunakan untuk menduga radiasi matahari yang berada di permukaan atmosfer (radiasi ekstraterestrial, <span class="math inline">\(S_0\)</span>). Model pendugaan Hunt (1998) adalah sebagai berikut.</p>
 <p><span class="math display">\[
 R_s = a_0 S_0 (T_{max} - T_{min})^{0.5} + a_1 T_{max} + a_2 P + a_3 P^2 + a_4
 \]</span></p>
-<p>dimana <span class="math inline">\(R_s\)</span> adalah radiasi matahari harian (<span class="math inline">\(MJ~m^{−2}~hari^{−1}\)</span>), <span class="math inline">\(S_0\)</span> adalah radiasi matahari di puncak atmosfer (<span class="math inline">\(MJ~m^{−2}~hari^{−1}\)</span>), <span class="math inline">\(P\)</span> adalah curah hujan (mm), <span class="math inline">\(Tmax\)</span> adalah suhu udara maksimum (<span class="math inline">\(^o C\)</span>), dan <span class="math inline">\(Tmin\)</span> adalah suhu udara minimum (<span class="math inline">\(^o C\)</span>). Untuk mengestimasi nilai <span class="math inline">\(S_0\)</span>, persamaan yang digunakan adalah sebagai berikut</p>
+<p>dimana <span class="math inline">\(R_s\)</span> adalah radiasi matahari harian (<span class="math inline">\(MJ~m^{−2}~hari^{−1}\)</span>), <span class="math inline">\(S_0\)</span> adalah radiasi matahari di puncak atmosfer (<span class="math inline">\(MJ~m^{−2}~hari^{−1}\)</span>), <span class="math inline">\(P\)</span> adalah curah hujan (mm), <span class="math inline">\(T_{max}\)</span> adalah suhu udara maksimum (<span class="math inline">\(^o C\)</span>), dan <span class="math inline">\(T_{min}\)</span> adalah suhu udara minimum (<span class="math inline">\(^o C\)</span>). Untuk mengestimasi nilai <span class="math inline">\(S_0\)</span>, Hunt menggunakan persamaan mekanistik dalam Spitters <span class="citation" data-cites="spitters1986">(<a href="#ref-spitters1986" role="doc-biblioref">Spitters <em>et al.</em> 1986</a>)</span>, yaitu:</p>
 <p><span class="math display">\[
-S_0 = S_{sc} \left[ 1 + 0.033 \cos \left( \frac{360 t_d}{365} \right) \right] sin(β)
+S_0 = S_{sc} \left[ 1 + 0.033 \cos \left( \frac{360~t_d}{365} \right) \right] sin(β)
 \]</span></p>
-<p>dimana, S0 adalah irradiasi ekstra terestrial (<span class="math inline">\(J m^{−2} s^{−1}\)</span>), <span class="math inline">\(S_{sc}\)</span> konstanta matahari (<span class="math inline">\(1370 ~J m^{−2} s^{−1}\)</span>), suku <span class="math inline">\(cos\)</span> adalah jarak tahunan antara bumi dan matahari yang dinyatakan dalam derajat, <span class="math inline">\(t_d\)</span> adalah julian day, dan sin β adalah sinus sudut elevasi matahari yang didefinisikan pada persamaan:</p>
+<p>dimana, <span class="math inline">\(S_0\)</span> adalah irradiasi ekstra terestrial (<span class="math inline">\(J~m^{−2} s^{−1}\)</span>), <span class="math inline">\(S_{sc}\)</span> konstanta matahari (<span class="math inline">\(1370~J~m^{−2} s^{−1}\)</span>), suku <span class="math inline">\(cos\)</span> adalah jarak tahunan antara bumi dan matahari yang dinyatakan dalam derajat, <span class="math inline">\(t_d\)</span> adalah julian day, dan <span class="math inline">\(sin(β)\)</span> adalah sinus sudut elevasi matahari (satuan detik) yang didefinisikan pada persamaan:</p>
 <p><span class="math display">\[
-sin(β) = sin(λ) ~ sin(δ) + cos(λ) ~ cos(δ) ~ cos [15(t_h − 12)]
+sin(β) = 3600 \left[ D ~ sin(λ) ~ sin(δ) + \frac{24}{\pi} ~ cos(λ) ~ cos(δ) ~ \sqrt{(1 - tan^2(λ) ~ tan^2(δ))} \right]
 \]</span></p>
-<p>dimana, <span class="math inline">\(λ\)</span> adalah letak lintang dari lokasi stasiun, <span class="math inline">\(t_h\)</span> adalah jumlah jam dalam sehari, dan δ adalah sudut deklinasi matahari pada saat julian day dan dinyatakan dalam derajat dengan estimasi pada persamaan:</p>
+<p>dimana, <span class="math inline">\(λ\)</span> adalah letak lintang dari lokasi stasiun dan δ adalah sudut deklinasi matahari pada saat julian day dan dinyatakan dalam derajat dengan estimasi pada persamaan:</p>
 <p><span class="math display">\[
-sin(δ) = -sin(23.45) ~ cos \left( \frac{360(t_d + 10)}{365} \right)
+sin(δ) = -sin(23.45) ~ cos \left( \frac{360~(t_d + 10)}{365} \right)
 \]</span></p>
-<p>Nilai harian dari <span class="math inline">\(S_0\)</span> dihitung dengan mengintegrasikan irradiasi ekstraterestrial dari matahari terbit hingga terbenam (<span class="math inline">\(D\)</span> adalah panjang hari, dalam jam):</p>
+<p>dan <span class="math inline">\(D\)</span> adalah panjang hari (jam) dengan persamaan:</p>
 <p><span class="math display">\[
-D = 12 + \frac{24}{180} arcsin(tan(λ) − tan(δ))
+D = 12 + \frac{24}{180} arcsin(tan(λ) ~ tan(δ))
 \]</span></p>
-<p>Persamaan dari <span class="math inline">\(sin β\)</span> diintegralkan terhadap <span class="math inline">\(t_h\)</span> sehingga menjadi:</p>
-<p><span class="math display">\[
-\int sin(β) \,dt_h = 3600 \left[ D ~ sin(λ) ~ sin(δ) + \frac{24}{\pi} ~ cos(λ) ~ cos(δ) ~ \sqrt{(1 - tan^2(λ) ~ tan^2(δ))} \right]
-\]</span></p>
+</section>
+<section id="pengolahan-data" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="pengolahan-data"><span class="header-section-number">3.4</span> Pengolahan Data</h2>
+<p>Data yang akan diolah bernama <code>LaguardiaAirport-NYC.xlsx</code> yang terdiri dari tiga <em>worksheet</em>. <em>Worksheet</em> ke-3 (<code>RawData</code>) adalah data yang akan diolah dengan berisikan 7 kolom: <code>DOY</code> (<em>Day of Year</em>, 1 - 365/366), <code>YEAR</code> (tahun), <code>PRCP</code> (curah hujan, mm), <code>TAVG</code> (suhu udara rata-rata, °C), <code>TMAX</code> (suhu udara maksimum, °C), <code>TMIN</code> (suhu udara minimum, °C), dan <code>SRAD</code> (radiasi matahari langsung, W/m²). Data pada <em>worksheet</em> tersebut sudah dirapikan sehingga Anda dapat langsung mengolahnya. Periode data yang digunakan dibagi menjadi 2, yaitu untuk pembuatan dan validasi model dengan pemilihan tahun 1998-2018 dan 2019-2020, secara berturut-turut.</p>
+<section id="r" class="level3" data-number="3.4.1">
+<h3 data-number="3.4.1" class="anchored" data-anchor-id="r"><span class="header-section-number">3.4.1</span> 1. R</h3>
+<p>Package yang digunakan dalam pengolahan data di R adalah <code>tidyverse</code> dan <code>readxl</code>. Jika Anda belum memasang package ini, gunakan perintah berikut.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(<span class="st">"tidyverse"</span>, <span class="st">"readxl"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Pengetikan kode R dapat dilakukan di aplikasi RStudio atau teks editor lainnya yang Anda kuasai.</p>
+<section id="model-ball-et-al.-2004" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="model-ball-et-al.-2004">Model Ball et al.&nbsp;(2004)</h4>
+<p>Langkah-langkah pengolahan data untuk model Ball et al.&nbsp;(2004) adalah sebagai berikut.</p>
+<ol type="1">
+<li><p>Impor data excel (<code>LaguardiaAirport-NYC.xlsx</code>) pada sheet <code>RawData</code> dengan perintah berikut.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>dpath <span class="ot">&lt;-</span> <span class="st">"data/"</span> <span class="co"># Lokasi folder data</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="fu">paste0</span>(dpath, <span class="st">"LaguardiaAirport-NYC.xlsx"</span>), <span class="at">sheet =</span> <span class="st">"RawData"</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<pre><code>   # A tibble: 8,401 × 7
+    YEAR   DOY  PRCP  TAVG  TMAX  TMIN  SRAD
+   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+ 1  1998     1   0    -5    -1.1  -8.9 253.
+ 2  1998     2   0     4.7  10    -0.6 136.
+ 3  1998     3   0    12    15.6   8.3  97.8
+ 4  1998     4   0    11.7  17.2   6.1 122.
+ 5  1998     5   0     5.9   6.7   5   129.
+ 6  1998     6   1    10.3  15     5.6  14.4
+ 7  1998     7  28.7   9.5  13.9   5     2.6
+ 8  1998     8   0.8  10.3  16.1   4.4  10.2
+ 9  1998     9   0    12    15     8.9  24.7
+10  1998    10   0     7.8  10     5.6 199.
+# … with 8,391 more rows
+# ℹ Use `print(n = ...)` to see more rows</code></pre></li>
+<li><p>Pilih periode tahun untuk pembuatan dan validasi model dengan perintah berikut.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Pembuatan model</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>data_train <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span> <span class="fu">filter</span>(YEAR <span class="sc">&lt;=</span> <span class="dv">2018</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Validasi model</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>data_test <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span> <span class="fu">filter</span>(YEAR <span class="sc">&gt;=</span> <span class="dv">2019</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>Lakukan perhitungan prediktor ke-5 sampai ke-12 sesuai dengan <a href="#tbl-modelball">Tabel&nbsp;<span>3.1</span></a></p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>data_train <span class="ot">&lt;-</span> data_train <span class="sc">%&gt;%</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">mutate</span>(</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>      <span class="at">PRCP_sq =</span> PRCP<span class="sc">^</span><span class="dv">2</span>, <span class="at">TMAX_sq =</span> TMAX<span class="sc">^</span><span class="dv">2</span>,</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>      <span class="at">TMIN_sq =</span> TMIN<span class="sc">^</span><span class="dv">2</span>, <span class="at">DOY_sq  =</span> DOY<span class="sc">^</span><span class="dv">2</span>,</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>      <span class="at">PRCP_TMAX =</span> PRCP <span class="sc">*</span> TMAX,</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>      <span class="at">PRCP_TMIN =</span> PRCP <span class="sc">*</span> TMIN,</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>      <span class="at">TMAX_TMIN =</span> TMAX <span class="sc">*</span> TMIN,</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>      <span class="at">TMAX_DOY  =</span> TMAX <span class="sc">*</span> DOY</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>   )</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>data_test <span class="ot">&lt;-</span> data_test <span class="sc">%&gt;%</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>   <span class="fu">mutate</span>(</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>      <span class="at">PRCP_sq =</span> PRCP<span class="sc">^</span><span class="dv">2</span>, <span class="at">TMAX_sq =</span> TMAX<span class="sc">^</span><span class="dv">2</span>,</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>      <span class="at">TMIN_sq =</span> TMIN<span class="sc">^</span><span class="dv">2</span>, <span class="at">DOY_sq  =</span> DOY<span class="sc">^</span><span class="dv">2</span>,</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>      <span class="at">PRCP_TMAX =</span> PRCP <span class="sc">*</span> TMAX,</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>      <span class="at">PRCP_TMIN =</span> PRCP <span class="sc">*</span> TMIN,</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>      <span class="at">TMAX_TMIN =</span> TMAX <span class="sc">*</span> TMIN,</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>      <span class="at">TMAX_DOY  =</span> TMAX <span class="sc">*</span> DOY</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>   )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>Lakukan pembuatan model regresi linier berganda pada data <code>data_train</code> sesuai dengan model Ball et al.&nbsp;(2004).</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(SRAD <span class="sc">~</span> PRCP <span class="sc">+</span> TMAX <span class="sc">+</span> TMIN <span class="sc">+</span> DOY <span class="sc">+</span> </span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>                   PRCP_sq <span class="sc">+</span> TMAX_sq <span class="sc">+</span> TMIN_sq <span class="sc">+</span> DOY_sq <span class="sc">+</span> </span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>                   PRCP_TMAX <span class="sc">+</span> PRCP_TMIN <span class="sc">+</span> TMAX_TMIN <span class="sc">+</span> TMAX_DOY, </span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">data =</span> data_train)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<pre><code>   Call:
+lm(formula = SRAD ~ PRCP + TMAX + TMIN + DOY + PRCP_sq + TMAX_sq +
+    TMIN_sq + DOY_sq + PRCP_TMAX + PRCP_TMIN + TMAX_TMIN + TMAX_DOY,
+    data = data_train)
+
+Residuals:
+    Min      1Q  Median      3Q     Max
+-528.48  -76.07    0.39   76.62  405.14
+
+Coefficients:
+              Estimate Std. Error t value Pr(&gt;|t|)
+(Intercept) -4.466e+01  8.446e+00  -5.287 1.28e-07 ***
+PRCP        -5.623e+00  4.012e-01 -14.016  &lt; 2e-16 ***
+TMAX         3.937e+01  1.790e+00  21.996  &lt; 2e-16 ***
+TMIN        -5.211e+01  1.705e+00 -30.566  &lt; 2e-16 ***
+DOY          1.421e+00  8.335e-02  17.048  &lt; 2e-16 ***
+PRCP_sq      4.851e-02  2.749e-03  17.648  &lt; 2e-16 ***
+TMAX_sq     -1.842e+00  9.502e-02 -19.383  &lt; 2e-16 ***
+TMIN_sq     -2.657e+00  1.083e-01 -24.535  &lt; 2e-16 ***
+DOY_sq      -3.800e-03  2.136e-04 -17.788  &lt; 2e-16 ***
+PRCP_TMAX   -3.527e-01  4.081e-02  -8.643  &lt; 2e-16 ***
+PRCP_TMIN    4.344e-01  4.295e-02  10.116  &lt; 2e-16 ***
+TMAX_TMIN    4.606e+00  1.962e-01  23.478  &lt; 2e-16 ***
+TMAX_DOY     5.286e-03  1.583e-03   3.340 0.000843 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 98.17 on 7657 degrees of freedom
+Multiple R-squared:  0.4214,    Adjusted R-squared:  0.4205
+F-statistic: 464.8 on 12 and 7657 DF,  p-value: &lt; 2.2e-16</code></pre>
+<p>Bisa Anda lihat pada bagian <code>Multiple R-squared</code> untuk mengetahui nilai dari koefisien determinasi (R²). Walaupun masih di bawah 50%, namun semua prediktor yang digunakan untuk mengestimasi radiasi matahari sudah signifikan (p-value <span class="math inline">\(&lt; 0.05\)</span>).</p></li>
+<li><p>Anda dapat melakukan estimasi nilai radiasi matahari pada model yang sudah dibangun dengan menggunakan data validasi (<code>data_test</code>) dengan perintah berikut.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>data_test <span class="ot">&lt;-</span> data_test <span class="sc">%&gt;%</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">mutate</span>(</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>      <span class="at">SRAD_pred =</span> <span class="fu">predict</span>(model, data_test)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>   )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>Kemudian, lakukan perhitungan koefisien determinasi (R²) dan korelasi Pearson (r) pada <code>data_test</code> dengan perintah berikut.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># korelasi Pearson (r)</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>r <span class="ot">&lt;-</span> <span class="fu">cor</span>(data_test<span class="sc">$</span>SRAD, data_test<span class="sc">$</span>SRAD_pred)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co"># koefisien determinasi (R²)</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>R2 <span class="ot">&lt;-</span> R<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Print</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(r); <span class="fu">print</span>(R2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<pre><code>[1] 0.6713033
+[1] 0.4506481</code></pre></li>
+</ol>
+</section>
+<section id="model-hunt-et-al.-1998" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="model-hunt-et-al.-1998">Model Hunt et al.&nbsp;(1998)</h4>
+<p>Langkah-langkah pembuatan model radiasi matahari dengan menggunakan model Hunt et al.&nbsp;(1998) adalah sebagai berikut.</p>
+<ol type="1">
+<li><p>Impor data Excel. Caranya sama seperti pada subbab sebelumnya.</p></li>
+<li><p>Sebelum Anda melakukan pembuatan model regresi linier berganda, Anda harus melakukan perhitungan <span class="math inline">\(S_0\)</span> terlebih dahulu. Kami menyediakan fungsi untuk menghitung nilai <span class="math inline">\(S_0\)</span> seperti pada <a href="#sec-modelhunt"><span>Section&nbsp;3.3</span></a>.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>  S0 <span class="ot">&lt;-</span> <span class="cf">function</span>(lat, doy){</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>      <span class="co"># Fungsi untuk menghitung sin (delta)</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>      sin_delta <span class="ot">&lt;-</span> <span class="sc">-</span><span class="fu">sinpi</span>(<span class="fl">23.45</span> <span class="sc">/</span> <span class="dv">180</span>) <span class="sc">*</span> <span class="fu">cospi</span>((<span class="dv">360</span> <span class="sc">*</span> (doy <span class="sc">+</span> <span class="dv">10</span>) <span class="sc">/</span> <span class="dv">365</span>) <span class="sc">/</span> <span class="dv">180</span>)</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>      asin_delt <span class="ot">&lt;-</span> <span class="fu">asin</span>(sin_delta) <span class="sc">*</span> <span class="dv">180</span> <span class="sc">/</span> pi</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>      <span class="co"># sin(lat) * sin(delta)</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>      s_lat_delt <span class="ot">&lt;-</span> <span class="fu">sinpi</span>(lat <span class="sc">/</span> <span class="dv">180</span>) <span class="sc">*</span> <span class="fu">sinpi</span>(asin_delt <span class="sc">/</span> <span class="dv">180</span>)</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>      <span class="co"># cos(lat) * cos(delta)</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>      c_lat_delt <span class="ot">&lt;-</span> <span class="fu">cospi</span>(lat <span class="sc">/</span> <span class="dv">180</span>) <span class="sc">*</span> <span class="fu">cospi</span>(asin_delt <span class="sc">/</span> <span class="dv">180</span>)</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>      <span class="co"># (sin(lat) * sin(delta)) / (cos(lat) * cos(delta))</span></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>      t_lat_delt <span class="ot">&lt;-</span> s_lat_delt <span class="sc">/</span> c_lat_delt</span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>      <span class="co"># Fungi perhitungan panjang hari (D)</span></span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>      D <span class="ot">&lt;-</span> <span class="dv">12</span> <span class="sc">+</span> <span class="dv">24</span><span class="sc">/</span><span class="dv">180</span> <span class="sc">*</span> <span class="fu">asin</span>(t_lat_delt) <span class="sc">*</span> <span class="dv">180</span> <span class="sc">/</span> pi</span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>      <span class="co"># Fungsi perhitungan sudut elevasi matahari</span></span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>      sin_beta <span class="ot">&lt;-</span> <span class="dv">3600</span> <span class="sc">*</span> (D <span class="sc">*</span> s_lat_delt <span class="sc">+</span> <span class="dv">24</span><span class="sc">/</span>pi <span class="sc">*</span> c_lat_delt <span class="sc">*</span> <span class="fu">sqrt</span>(<span class="dv">1</span> <span class="sc">-</span> t_lat_delt<span class="sc">^</span><span class="dv">2</span>))</span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>      <span class="co"># Fungsi radiasi matahari ekstra terestrial</span></span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>      S_0 <span class="ot">&lt;-</span> <span class="dv">1370</span> <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">+</span> <span class="fl">0.033</span> <span class="sc">*</span> <span class="fu">cospi</span>(<span class="dv">360</span> <span class="sc">/</span> <span class="dv">180</span> <span class="sc">*</span> doy <span class="sc">/</span> <span class="dv">365</span>)) <span class="sc">*</span> sin_beta</span>
+<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a>      <span class="co"># Konversi J m-2 ke MJ m-2</span></span>
+<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a>      <span class="fu">return</span>(S_0 <span class="sc">/</span> <span class="dv">1000000</span>)</span>
+<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a>  }</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>aaa</p></li>
+</ol>
 
 
 <div id="refs" class="references csl-bib-body" role="doc-bibliography">
@@ -270,7 +482,12 @@ Ball RA, Purcell LC, Carey SK. 2004. Evaluation of solar radiation prediction mo
 <div id="ref-hunt1998" class="csl-entry" role="doc-biblioentry">
 Hunt L, Kuchar L, Swanton C. 1998. Estimation of solar radiation for use in crop modelling. <em>Agricultural and Forest Meteorology</em>. 91(3-4):293–300.
 </div>
+<div id="ref-spitters1986" class="csl-entry" role="doc-biblioentry">
+Spitters C, Toussaint H, Goudriaan J. 1986. Separating the diffuse and direct component of global radiation and its implications for modeling canopy photosynthesis part i. Components of incoming radiation. <em>Agricultural and Forest Meteorology</em>. 38(1-3):217–229.
 </div>
+</div>
+</section>
+</section>
 </section>
 
 </main> <!-- /main -->
