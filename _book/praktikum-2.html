@@ -204,7 +204,8 @@ div.csl-indent {
   <li><a href="#sec-modelhunt" id="toc-sec-modelhunt" class="nav-link" data-scroll-target="#sec-modelhunt"><span class="toc-section-number">3.3</span>  Model Pendugaan Hunt et al.&nbsp;(1998)</a></li>
   <li><a href="#pengolahan-data" id="toc-pengolahan-data" class="nav-link" data-scroll-target="#pengolahan-data"><span class="toc-section-number">3.4</span>  Pengolahan Data</a>
   <ul class="collapse">
-  <li><a href="#r" id="toc-r" class="nav-link" data-scroll-target="#r"><span class="toc-section-number">3.4.1</span>  1. R</a></li>
+  <li><a href="#r" id="toc-r" class="nav-link" data-scroll-target="#r"><span class="toc-section-number">3.4.1</span>  R</a></li>
+  <li><a href="#python" id="toc-python" class="nav-link" data-scroll-target="#python"><span class="toc-section-number">3.4.2</span>  Python</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -329,33 +330,32 @@ D = 12 + \frac{24}{180} arcsin(tan(λ) ~ tan(δ))
 </section>
 <section id="pengolahan-data" class="level2" data-number="3.4">
 <h2 data-number="3.4" class="anchored" data-anchor-id="pengolahan-data"><span class="header-section-number">3.4</span> Pengolahan Data</h2>
-<p>Data yang akan diolah bernama <code>LaguardiaAirport-NYC.xlsx</code> yang terdiri dari tiga <em>worksheet</em>. <em>Worksheet</em> ke-3 (<code>RawData</code>) adalah data yang akan diolah dengan berisikan 7 kolom: <code>DOY</code> (<em>Day of Year</em>, 1 - 365/366), <code>YEAR</code> (tahun), <code>PRCP</code> (curah hujan, mm), <code>TAVG</code> (suhu udara rata-rata, °C), <code>TMAX</code> (suhu udara maksimum, °C), <code>TMIN</code> (suhu udara minimum, °C), dan <code>SRAD</code> (radiasi matahari langsung, W/m²). Data pada <em>worksheet</em> tersebut sudah dirapikan sehingga Anda dapat langsung mengolahnya. Periode data yang digunakan dibagi menjadi 2, yaitu untuk pembuatan dan validasi model dengan pemilihan tahun 1998-2018 dan 2019-2020, secara berturut-turut.</p>
+<p>Data yang akan diolah bernama <code>LaguardiaAirport-NYC.xlsx</code> yang terdiri dari tiga <em>worksheet</em>. <em>Worksheet</em> ke-3 (<code>RawData</code>) adalah data yang akan diolah dengan berisikan 7 kolom: <code>DOY</code> (<em>Day of Year</em>, 1 sampai 365 atau 366), <code>YEAR</code> (tahun), <code>PRCP</code> (curah hujan, mm), <code>TAVG</code> (suhu udara rata-rata, °C), <code>TMAX</code> (suhu udara maksimum, °C), <code>TMIN</code> (suhu udara minimum, °C), dan <code>SRAD</code> (radiasi matahari langsung, W/m²). Data pada <em>worksheet</em> tersebut sudah dirapikan sehingga Anda dapat langsung mengolahnya. Periode data yang digunakan dibagi menjadi 2, yaitu untuk pembuatan dan validasi model dengan pemilihan tahun 1998-2018 dan 2019-2020, secara berturut-turut.</p>
 <section id="r" class="level3" data-number="3.4.1">
-<h3 data-number="3.4.1" class="anchored" data-anchor-id="r"><span class="header-section-number">3.4.1</span> 1. R</h3>
+<h3 data-number="3.4.1" class="anchored" data-anchor-id="r"><span class="header-section-number">3.4.1</span> R</h3>
 <p>Package yang digunakan dalam pengolahan data di R adalah <code>tidyverse</code> dan <code>readxl</code>. Jika Anda belum memasang package ini, gunakan perintah berikut.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(<span class="st">"tidyverse"</span>, <span class="st">"readxl"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Pengetikan kode R dapat dilakukan di aplikasi RStudio atau teks editor lainnya yang Anda kuasai.</p>
 <section id="model-ball-et-al.-2004" class="level4 unnumbered">
 <h4 class="unnumbered anchored" data-anchor-id="model-ball-et-al.-2004">Model Ball et al.&nbsp;(2004)</h4>
-<p>Langkah-langkah pengolahan data untuk model Ball et al.&nbsp;(2004) adalah sebagai berikut.</p>
 <ol type="1">
 <li><p>Impor data excel (<code>LaguardiaAirport-NYC.xlsx</code>) pada sheet <code>RawData</code> dengan perintah berikut.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>dpath <span class="ot">&lt;-</span> <span class="st">"data/"</span> <span class="co"># Lokasi folder data</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="fu">paste0</span>(dpath, <span class="st">"LaguardiaAirport-NYC.xlsx"</span>), <span class="at">sheet =</span> <span class="st">"RawData"</span>)</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<pre><code>   # A tibble: 8,401 × 7
+<pre><code># A tibble: 8,401 × 7
     YEAR   DOY  PRCP  TAVG  TMAX  TMIN  SRAD
    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
- 1  1998     1   0    -5    -1.1  -8.9 253.
- 2  1998     2   0     4.7  10    -0.6 136.
- 3  1998     3   0    12    15.6   8.3  97.8
- 4  1998     4   0    11.7  17.2   6.1 122.
- 5  1998     5   0     5.9   6.7   5   129.
- 6  1998     6   1    10.3  15     5.6  14.4
- 7  1998     7  28.7   9.5  13.9   5     2.6
- 8  1998     8   0.8  10.3  16.1   4.4  10.2
- 9  1998     9   0    12    15     8.9  24.7
-10  1998    10   0     7.8  10     5.6 199.
+ 1  1998     1   0    -5    -1.1  -8.9 107.
+ 2  1998     2   0     4.7  10    -0.6  82.8
+ 3  1998     3   0    12    15.6   8.3  74.7
+ 4  1998     4   0    11.7  17.2   6.1  78.8
+ 5  1998     5   0     5.9   6.7   5    75.6
+ 6  1998     6   1    10.3  15     5.6  34.3
+ 7  1998     7  28.7   9.5  13.9   5    26.8
+ 8  1998     8   0.8  10.3  16.1   4.4  37.5
+ 9  1998     9   0    12    15     8.9  46.8
+10  1998    10   0     7.8  10     5.6  97.6
 # … with 8,391 more rows
 # ℹ Use `print(n = ...)` to see more rows</code></pre></li>
 <li><p>Pilih periode tahun untuk pembuatan dan validasi model dengan perintah berikut.</p>
@@ -367,76 +367,95 @@ D = 12 + \frac{24}{180} arcsin(tan(λ) ~ tan(δ))
 <li><p>Lakukan perhitungan prediktor ke-5 sampai ke-12 sesuai dengan <a href="#tbl-modelball">Tabel&nbsp;<span>3.1</span></a></p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>data_train <span class="ot">&lt;-</span> data_train <span class="sc">%&gt;%</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">mutate</span>(</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>      <span class="at">PRCP_sq =</span> PRCP<span class="sc">^</span><span class="dv">2</span>, <span class="at">TMAX_sq =</span> TMAX<span class="sc">^</span><span class="dv">2</span>,</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>      <span class="at">TMIN_sq =</span> TMIN<span class="sc">^</span><span class="dv">2</span>, <span class="at">DOY_sq  =</span> DOY<span class="sc">^</span><span class="dv">2</span>,</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>      <span class="at">PRCP_TMAX =</span> PRCP <span class="sc">*</span> TMAX,</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>      <span class="at">PRCP_TMIN =</span> PRCP <span class="sc">*</span> TMIN,</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>      <span class="at">TMAX_TMIN =</span> TMAX <span class="sc">*</span> TMIN,</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>      <span class="at">TMAX_DOY  =</span> TMAX <span class="sc">*</span> DOY</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>   )</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>data_test <span class="ot">&lt;-</span> data_test <span class="sc">%&gt;%</span></span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>   <span class="fu">mutate</span>(</span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>      <span class="at">PRCP_sq =</span> PRCP<span class="sc">^</span><span class="dv">2</span>, <span class="at">TMAX_sq =</span> TMAX<span class="sc">^</span><span class="dv">2</span>,</span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>      <span class="at">TMIN_sq =</span> TMIN<span class="sc">^</span><span class="dv">2</span>, <span class="at">DOY_sq  =</span> DOY<span class="sc">^</span><span class="dv">2</span>,</span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>      <span class="at">PRCP_TMAX =</span> PRCP <span class="sc">*</span> TMAX,</span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>      <span class="at">PRCP_TMIN =</span> PRCP <span class="sc">*</span> TMIN,</span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>      <span class="at">TMAX_TMIN =</span> TMAX <span class="sc">*</span> TMIN,</span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>      <span class="at">TMAX_DOY  =</span> TMAX <span class="sc">*</span> DOY</span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>   )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
-<li><p>Lakukan pembuatan model regresi linier berganda pada data <code>data_train</code> sesuai dengan model Ball et al.&nbsp;(2004).</p>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>      <span class="at">PRCP_sq =</span> PRCP<span class="sc">^</span><span class="dv">2</span>, <span class="at">TMAX_sq =</span> TMAX<span class="sc">^</span><span class="dv">2</span>, <span class="at">TMIN_sq =</span> TMIN<span class="sc">^</span><span class="dv">2</span>, <span class="at">DOY_sq  =</span> DOY<span class="sc">^</span><span class="dv">2</span>,</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>      <span class="at">PRCP_TMAX =</span> PRCP <span class="sc">*</span> TMAX, <span class="at">PRCP_TMIN =</span> PRCP <span class="sc">*</span> TMIN,</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>      <span class="at">TMAX_TMIN =</span> TMAX <span class="sc">*</span> TMIN, <span class="at">TMAX_DOY  =</span> TMAX <span class="sc">*</span> DOY</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>   )</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>data_test <span class="ot">&lt;-</span> data_test <span class="sc">%&gt;%</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>   <span class="fu">mutate</span>(</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>      <span class="at">PRCP_sq =</span> PRCP<span class="sc">^</span><span class="dv">2</span>, <span class="at">TMAX_sq =</span> TMAX<span class="sc">^</span><span class="dv">2</span>, <span class="at">TMIN_sq =</span> TMIN<span class="sc">^</span><span class="dv">2</span>, <span class="at">DOY_sq  =</span> DOY<span class="sc">^</span><span class="dv">2</span>,</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>      <span class="at">PRCP_TMAX =</span> PRCP <span class="sc">*</span> TMAX, <span class="at">PRCP_TMIN =</span> PRCP <span class="sc">*</span> TMIN,</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>      <span class="at">TMAX_TMIN =</span> TMAX <span class="sc">*</span> TMIN, <span class="at">TMAX_DOY  =</span> TMAX <span class="sc">*</span> DOY</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>   )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>Lakukan pembuatan model regresi linier berganda pada data <code>data_train</code> sesuai dengan model Ball (<a href="#tbl-modelball">Tabel&nbsp;<span>3.1</span></a>).</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(SRAD <span class="sc">~</span> PRCP <span class="sc">+</span> TMAX <span class="sc">+</span> TMIN <span class="sc">+</span> DOY <span class="sc">+</span> </span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>                   PRCP_sq <span class="sc">+</span> TMAX_sq <span class="sc">+</span> TMIN_sq <span class="sc">+</span> DOY_sq <span class="sc">+</span> </span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>                   PRCP_TMAX <span class="sc">+</span> PRCP_TMIN <span class="sc">+</span> TMAX_TMIN <span class="sc">+</span> TMAX_DOY, </span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">data =</span> data_train)</span>
 <span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<pre><code>   Call:
+<pre><code>Call:
 lm(formula = SRAD ~ PRCP + TMAX + TMIN + DOY + PRCP_sq + TMAX_sq +
     TMIN_sq + DOY_sq + PRCP_TMAX + PRCP_TMIN + TMAX_TMIN + TMAX_DOY,
     data = data_train)
 
 Residuals:
-    Min      1Q  Median      3Q     Max
--528.48  -76.07    0.39   76.62  405.14
+     Min       1Q   Median       3Q      Max
+-230.598  -30.858    2.829   32.497  189.113
 
 Coefficients:
               Estimate Std. Error t value Pr(&gt;|t|)
-(Intercept) -4.466e+01  8.446e+00  -5.287 1.28e-07 ***
-PRCP        -5.623e+00  4.012e-01 -14.016  &lt; 2e-16 ***
-TMAX         3.937e+01  1.790e+00  21.996  &lt; 2e-16 ***
-TMIN        -5.211e+01  1.705e+00 -30.566  &lt; 2e-16 ***
-DOY          1.421e+00  8.335e-02  17.048  &lt; 2e-16 ***
-PRCP_sq      4.851e-02  2.749e-03  17.648  &lt; 2e-16 ***
-TMAX_sq     -1.842e+00  9.502e-02 -19.383  &lt; 2e-16 ***
-TMIN_sq     -2.657e+00  1.083e-01 -24.535  &lt; 2e-16 ***
-DOY_sq      -3.800e-03  2.136e-04 -17.788  &lt; 2e-16 ***
-PRCP_TMAX   -3.527e-01  4.081e-02  -8.643  &lt; 2e-16 ***
-PRCP_TMIN    4.344e-01  4.295e-02  10.116  &lt; 2e-16 ***
-TMAX_TMIN    4.606e+00  1.962e-01  23.478  &lt; 2e-16 ***
-TMAX_DOY     5.286e-03  1.583e-03   3.340 0.000843 ***
+(Intercept) -4.120e+01  4.068e+00 -10.126  &lt; 2e-16 ***
+PRCP        -3.315e+00  1.933e-01 -17.151  &lt; 2e-16 ***
+TMAX         2.259e+01  8.621e-01  26.203  &lt; 2e-16 ***
+TMIN        -2.705e+01  8.212e-01 -32.945  &lt; 2e-16 ***
+DOY          1.988e+00  4.015e-02  49.508  &lt; 2e-16 ***
+PRCP_sq      2.469e-02  1.324e-03  18.649  &lt; 2e-16 ***
+TMAX_sq     -9.876e-01  4.577e-02 -21.577  &lt; 2e-16 ***
+TMIN_sq     -1.481e+00  5.217e-02 -28.386  &lt; 2e-16 ***
+DOY_sq      -5.281e-03  1.029e-04 -51.317  &lt; 2e-16 ***
+PRCP_TMAX   -1.217e-01  1.966e-02  -6.189 6.35e-10 ***
+PRCP_TMIN    1.448e-01  2.069e-02   6.998 2.82e-12 ***
+TMAX_TMIN    2.602e+00  9.450e-02  27.534  &lt; 2e-16 ***
+TMAX_DOY    -1.184e-02  7.625e-04 -15.534  &lt; 2e-16 ***
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
-Residual standard error: 98.17 on 7657 degrees of freedom
-Multiple R-squared:  0.4214,    Adjusted R-squared:  0.4205
-F-statistic: 464.8 on 12 and 7657 DF,  p-value: &lt; 2.2e-16</code></pre>
-<p>Bisa Anda lihat pada bagian <code>Multiple R-squared</code> untuk mengetahui nilai dari koefisien determinasi (R²). Walaupun masih di bawah 50%, namun semua prediktor yang digunakan untuk mengestimasi radiasi matahari sudah signifikan (p-value <span class="math inline">\(&lt; 0.05\)</span>).</p></li>
+Residual standard error: 47.29 on 7657 degrees of freedom
+Multiple R-squared:  0.7423,    Adjusted R-squared:  0.7419
+F-statistic:  1838 on 12 and 7657 DF,  p-value: &lt; 2.2e-16</code></pre>
+<p>Bisa Anda lihat pada bagian <code>Multiple R-squared</code> untuk mengetahui nilai dari koefisien determinasi (R²). Semua prediktor yang digunakan untuk mengestimasi radiasi matahari signifikan (p-value <span class="math inline">\(&lt; 0.05\)</span>) dengan nilai R²=74%.</p></li>
 <li><p>Anda dapat melakukan estimasi nilai radiasi matahari pada model yang sudah dibangun dengan menggunakan data validasi (<code>data_test</code>) dengan perintah berikut.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>data_test <span class="ot">&lt;-</span> data_test <span class="sc">%&gt;%</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">mutate</span>(</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>      <span class="at">SRAD_pred =</span> <span class="fu">predict</span>(model, data_test)</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>   )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">mutate</span>(<span class="at">SRAD_pred =</span> <span class="fu">predict</span>(model, data_test))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
 <li><p>Kemudian, lakukan perhitungan koefisien determinasi (R²) dan korelasi Pearson (r) pada <code>data_test</code> dengan perintah berikut.</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># korelasi Pearson (r)</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>r <span class="ot">&lt;-</span> <span class="fu">cor</span>(data_test<span class="sc">$</span>SRAD, data_test<span class="sc">$</span>SRAD_pred)</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co"># koefisien determinasi (R²)</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>R2 <span class="ot">&lt;-</span> R<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>R2 <span class="ot">&lt;-</span> r<span class="sc">^</span><span class="dv">2</span></span>
 <span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Print</span></span>
 <span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(r); <span class="fu">print</span>(R2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<pre><code>[1] 0.6713033
-[1] 0.4506481</code></pre></li>
+<pre><code>[1] 0.8508384
+[1] 0.7239259</code></pre>
+<p>Atau bisa juga dengan melakukan plot antara nilai aktual dan prediksi radiasi matahari dengan menampilkan garis regresi beserta persamaan regresinya ditambah dengan nilai R² dan r (<a href="#fig-sunplotball1">Gambar&nbsp;<span>3.1</span></a>)</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data_test, <span class="fu">aes</span>(<span class="at">x =</span> SRAD_pred, <span class="at">y =</span> SRAD)) <span class="sc">+</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="dv">0</span>, <span class="at">slope =</span> <span class="dv">1</span>, <span class="at">color =</span> <span class="st">"blue"</span>) <span class="sc">+</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>   <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"Observasi (W/m²)"</span>, <span class="at">x =</span> <span class="st">"Model (W/m²)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-sunplotball1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="Pictures/sun-radiation-actualvspredicted.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Gambar&nbsp;3.1: Perbandingan radiasi matahari aktual dengan model (Ball)</figcaption><p></p>
+</figure>
+</div></li>
+<li><p>Jika Anda perhatikan pada <a href="#fig-sunplotball1">Gambar&nbsp;<span>3.1</span></a>, nilai radiasi matahari tidak mungkin bernilai negatif dan ini umum terjadi saat menggunakan model regresi. Oleh karena itu, nilai radiasi matahari yang bernilai negatif diubah menjadi 0 (<a href="#fig-sunplotball2">Gambar&nbsp;<span>3.2</span></a>).</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>data_test <span class="ot">&lt;-</span> data_test <span class="sc">%&gt;%</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">mutate</span>(<span class="at">SRAD_pred =</span> <span class="fu">ifelse</span>(SRAD_pred <span class="sc">&lt;</span> <span class="dv">0</span>, <span class="dv">0</span>, SRAD_pred))</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data_test, <span class="fu">aes</span>(<span class="at">x =</span> SRAD_pred, <span class="at">y =</span> SRAD)) <span class="sc">+</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="dv">0</span>, <span class="at">slope =</span> <span class="dv">1</span>, <span class="at">color =</span> <span class="st">"blue"</span>) <span class="sc">+</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>   <span class="fu">scale_x_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">400</span>), <span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>)) <span class="sc">+</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>   <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">400</span>), <span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>)) <span class="sc">+</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>   <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"Observasi (W/m²)"</span>, <span class="at">x =</span> <span class="st">"Model (W/m²)"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-sunplotball2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="Pictures/sun-radiation-actualvspredicted-corr.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Gambar&nbsp;3.2: Perbandingan radiasi matahari aktual dengan model (Ball)</figcaption><p></p>
+</figure>
+</div></li>
 </ol>
 </section>
 <section id="model-hunt-et-al.-1998" class="level4 unnumbered">
@@ -444,34 +463,344 @@ F-statistic: 464.8 on 12 and 7657 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p>Langkah-langkah pembuatan model radiasi matahari dengan menggunakan model Hunt et al.&nbsp;(1998) adalah sebagai berikut.</p>
 <ol type="1">
 <li><p>Impor data Excel. Caranya sama seperti pada subbab sebelumnya.</p></li>
-<li><p>Sebelum Anda melakukan pembuatan model regresi linier berganda, Anda harus melakukan perhitungan <span class="math inline">\(S_0\)</span> terlebih dahulu. Kami menyediakan fungsi untuk menghitung nilai <span class="math inline">\(S_0\)</span> seperti pada <a href="#sec-modelhunt"><span>Section&nbsp;3.3</span></a>.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>  S0 <span class="ot">&lt;-</span> <span class="cf">function</span>(lat, doy){</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>      <span class="co"># Fungsi untuk menghitung sin (delta)</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>      sin_delta <span class="ot">&lt;-</span> <span class="sc">-</span><span class="fu">sinpi</span>(<span class="fl">23.45</span> <span class="sc">/</span> <span class="dv">180</span>) <span class="sc">*</span> <span class="fu">cospi</span>((<span class="dv">360</span> <span class="sc">*</span> (doy <span class="sc">+</span> <span class="dv">10</span>) <span class="sc">/</span> <span class="dv">365</span>) <span class="sc">/</span> <span class="dv">180</span>)</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>      asin_delt <span class="ot">&lt;-</span> <span class="fu">asin</span>(sin_delta) <span class="sc">*</span> <span class="dv">180</span> <span class="sc">/</span> pi</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>      <span class="co"># sin(lat) * sin(delta)</span></span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>      s_lat_delt <span class="ot">&lt;-</span> <span class="fu">sinpi</span>(lat <span class="sc">/</span> <span class="dv">180</span>) <span class="sc">*</span> <span class="fu">sinpi</span>(asin_delt <span class="sc">/</span> <span class="dv">180</span>)</span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>      <span class="co"># cos(lat) * cos(delta)</span></span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>      c_lat_delt <span class="ot">&lt;-</span> <span class="fu">cospi</span>(lat <span class="sc">/</span> <span class="dv">180</span>) <span class="sc">*</span> <span class="fu">cospi</span>(asin_delt <span class="sc">/</span> <span class="dv">180</span>)</span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>      <span class="co"># (sin(lat) * sin(delta)) / (cos(lat) * cos(delta))</span></span>
-<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>      t_lat_delt <span class="ot">&lt;-</span> s_lat_delt <span class="sc">/</span> c_lat_delt</span>
-<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>      <span class="co"># Fungi perhitungan panjang hari (D)</span></span>
-<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>      D <span class="ot">&lt;-</span> <span class="dv">12</span> <span class="sc">+</span> <span class="dv">24</span><span class="sc">/</span><span class="dv">180</span> <span class="sc">*</span> <span class="fu">asin</span>(t_lat_delt) <span class="sc">*</span> <span class="dv">180</span> <span class="sc">/</span> pi</span>
-<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>      <span class="co"># Fungsi perhitungan sudut elevasi matahari</span></span>
-<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>      sin_beta <span class="ot">&lt;-</span> <span class="dv">3600</span> <span class="sc">*</span> (D <span class="sc">*</span> s_lat_delt <span class="sc">+</span> <span class="dv">24</span><span class="sc">/</span>pi <span class="sc">*</span> c_lat_delt <span class="sc">*</span> <span class="fu">sqrt</span>(<span class="dv">1</span> <span class="sc">-</span> t_lat_delt<span class="sc">^</span><span class="dv">2</span>))</span>
-<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>      <span class="co"># Fungsi radiasi matahari ekstra terestrial</span></span>
-<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>      S_0 <span class="ot">&lt;-</span> <span class="dv">1370</span> <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">+</span> <span class="fl">0.033</span> <span class="sc">*</span> <span class="fu">cospi</span>(<span class="dv">360</span> <span class="sc">/</span> <span class="dv">180</span> <span class="sc">*</span> doy <span class="sc">/</span> <span class="dv">365</span>)) <span class="sc">*</span> sin_beta</span>
-<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a>      <span class="co"># Konversi J m-2 ke MJ m-2</span></span>
-<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a>      <span class="fu">return</span>(S_0 <span class="sc">/</span> <span class="dv">1000000</span>)</span>
-<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a>  }</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
-<li><p>aaa</p></li>
+<li><p>Sebelum Anda melakukan pembuatan model regresi linier berganda, Anda harus melakukan perhitungan <span class="math inline">\(S_0\)</span> terlebih dahulu. Kami menyediakan fungsi untuk menghitung nilai <span class="math inline">\(S_0\)</span> seperti pada <a href="#sec-modelhunt"><span>Section&nbsp;3.3</span></a>. Anda hanya memasukkan nilai latitude serta <em>day of year</em> pada fungsi ini.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>S0 <span class="ot">&lt;-</span> <span class="cf">function</span>(lat, doy){</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>   <span class="co"># Fungsi untuk menghitung sin(delta)</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>   sin_delta <span class="ot">&lt;-</span> <span class="sc">-</span><span class="fu">sinpi</span>(<span class="fl">23.45</span> <span class="sc">/</span> <span class="dv">180</span>) <span class="sc">*</span> <span class="fu">cospi</span>((<span class="dv">360</span> <span class="sc">*</span> (doy <span class="sc">+</span> <span class="dv">10</span>) <span class="sc">/</span> <span class="dv">365</span>) <span class="sc">/</span> <span class="dv">180</span>)</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>   asin_delt <span class="ot">&lt;-</span> <span class="fu">asin</span>(sin_delta) <span class="sc">*</span> <span class="dv">180</span> <span class="sc">/</span> pi</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>   <span class="co"># sin(lat) * sin(delta)</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>   s_lat_delt <span class="ot">&lt;-</span> <span class="fu">sinpi</span>(lat <span class="sc">/</span> <span class="dv">180</span>) <span class="sc">*</span> <span class="fu">sinpi</span>(asin_delt <span class="sc">/</span> <span class="dv">180</span>)</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>   <span class="co"># cos(lat) * cos(delta)</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>   c_lat_delt <span class="ot">&lt;-</span> <span class="fu">cospi</span>(lat <span class="sc">/</span> <span class="dv">180</span>) <span class="sc">*</span> <span class="fu">cospi</span>(asin_delt <span class="sc">/</span> <span class="dv">180</span>)</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>   <span class="co"># (sin(lat) * sin(delta)) / (cos(lat) * cos(delta))</span></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>   t_lat_delt <span class="ot">&lt;-</span> s_lat_delt <span class="sc">/</span> c_lat_delt</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>   <span class="co"># Fungi perhitungan panjang hari (D)</span></span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>   D <span class="ot">&lt;-</span> <span class="dv">12</span> <span class="sc">+</span> <span class="dv">24</span><span class="sc">/</span><span class="dv">180</span> <span class="sc">*</span> <span class="fu">asin</span>(t_lat_delt) <span class="sc">*</span> <span class="dv">180</span> <span class="sc">/</span> pi</span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>   <span class="co"># Fungsi perhitungan sudut elevasi matahari</span></span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>   sin_beta <span class="ot">&lt;-</span> <span class="dv">3600</span> <span class="sc">*</span> (D <span class="sc">*</span> s_lat_delt <span class="sc">+</span> <span class="dv">24</span><span class="sc">/</span>pi <span class="sc">*</span> c_lat_delt <span class="sc">*</span> <span class="fu">sqrt</span>(<span class="dv">1</span> <span class="sc">-</span> t_lat_delt<span class="sc">^</span><span class="dv">2</span>))</span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>   <span class="co"># Fungsi radiasi matahari ekstra terestrial</span></span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>   S_0 <span class="ot">&lt;-</span> <span class="dv">1370</span> <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">+</span> <span class="fl">0.033</span> <span class="sc">*</span> <span class="fu">cospi</span>(<span class="dv">360</span> <span class="sc">/</span> <span class="dv">180</span> <span class="sc">*</span> doy <span class="sc">/</span> <span class="dv">365</span>)) <span class="sc">*</span> sin_beta</span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a>   <span class="co"># Konversi J/m² ke MJ/m²</span></span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a>   <span class="fu">return</span>(S_0 <span class="sc">/</span> <span class="dv">1000000</span>)</span>
+<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>Kemudian, tambahkan kolom baru pada <code>data</code> yang berisi nilai <span class="math inline">\(S_0\)</span> dengan perintah berikut.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">mutate</span>(</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>      <span class="at">S0 =</span> <span class="fu">S0</span>(<span class="fl">40.77945</span>, DOY) <span class="sc">*</span> <span class="fl">0.0864</span> <span class="co"># 0.0864 adalah konversi dari MJ/m² ke W/m²</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>   )</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<pre><code># A tibble: 8,401 × 8
+    YEAR   DOY  PRCP  TAVG  TMAX  TMIN  SRAD    S0
+   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+ 1  1998     1   0    -5    -1.1  -8.9 107.   1.15
+ 2  1998     2   0     4.7  10    -0.6  82.8  1.16
+ 3  1998     3   0    12    15.6   8.3  74.7  1.16
+ 4  1998     4   0    11.7  17.2   6.1  78.8  1.17
+ 5  1998     5   0     5.9   6.7   5    75.6  1.18
+ 6  1998     6   1    10.3  15     5.6  34.3  1.18
+ 7  1998     7  28.7   9.5  13.9   5    26.8  1.19
+ 8  1998     8   0.8  10.3  16.1   4.4  37.5  1.20
+ 9  1998     9   0    12    15     8.9  46.8  1.20
+10  1998    10   0     7.8  10     5.6  97.6  1.21
+# … with 8,391 more rows
+# ℹ Use `print(n = ...)` to see more rows</code></pre></li>
+<li><p>Untuk membuat model, lakukan pembagian data menjadi <code>data_test</code> dan <code>data_train</code> dengan perintah berikut.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>data_train <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span> <span class="fu">filter</span>(YEAR <span class="sc">&lt;=</span> <span class="dv">2018</span>)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>data_test <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span> <span class="fu">filter</span>(YEAR <span class="sc">&gt;=</span> <span class="dv">2019</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>Hitunglah <code>S0 * (Tmax - Tmin)^0.5</code> dan <code>PRCP^2</code> dengan menambahkan dua kolom baru pada <code>data_train</code> dan <code>data_test</code> dengan perintah berikut.</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>data_train <span class="ot">&lt;-</span> data_train <span class="sc">%&gt;%</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">mutate</span>(</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>      <span class="at">TMAX_TMIN =</span> S0 <span class="sc">*</span> (TMAX <span class="sc">-</span> TMIN)<span class="sc">^</span><span class="fl">0.5</span>,</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>      <span class="at">PRCP_sq =</span> PRCP<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>   )</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>data_test <span class="ot">&lt;-</span> data_test <span class="sc">%&gt;%</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>   <span class="fu">mutate</span>(</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>      <span class="at">TMAX_TMIN =</span> S0 <span class="sc">*</span> (TMAX <span class="sc">-</span> TMIN)<span class="sc">^</span><span class="fl">0.5</span>,</span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>      <span class="at">PRCP_sq =</span> PRCP<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>   )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>Buat model regresi linier berganda</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(SRAD <span class="sc">~</span> TMAX_TMIN <span class="sc">+</span> TMAX <span class="sc">+</span> PRCP <span class="sc">+</span> PRCP_sq, <span class="at">data =</span> data_train)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<pre><code>Call:
+lm(formula = SRAD ~ TMAX_TMIN + TMAX + PRCP + PRCP_sq, data = data_train)
+
+Residuals:
+    Min      1Q  Median      3Q     Max
+-303.18  -30.23    5.38   33.75  172.69
+
+Coefficients:
+             Estimate Std. Error t value Pr(&gt;|t|)
+(Intercept) 17.315218   1.349717  12.829   &lt;2e-16 ***
+TMAX_TMIN   24.430366   0.284492  85.874   &lt;2e-16 ***
+TMAX         0.144476   0.084287   1.714   0.0866 .
+PRCP        -4.237145   0.098195 -43.150   &lt;2e-16 ***
+PRCP_sq      0.028795   0.001301  22.129   &lt;2e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 47.51 on 7665 degrees of freedom
+Multiple R-squared:  0.7396,    Adjusted R-squared:  0.7395
+F-statistic:  5443 on 4 and 7665 DF,  p-value: &lt; 2.2e-16</code></pre></li>
+<li><p>Kemudian, lakukan prediksi pada <code>data_test</code> dan evaluasi hasil estimasi model menggunakan metrik <span class="math inline">\(R^2\)</span> dan korelasi Pearson dengan perintah berikut .</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>data_test <span class="ot">&lt;-</span> data_test <span class="sc">%&gt;%</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">mutate</span>(<span class="at">SRAD_pred =</span> <span class="fu">predict</span>(model, data_test))</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="co"># korelasi Pearson (r)</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>r <span class="ot">&lt;-</span> <span class="fu">cor</span>(data_test<span class="sc">$</span>SRAD, data_test<span class="sc">$</span>SRAD_pred)</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="co"># koefisien determinasi (R²)</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>R2 <span class="ot">&lt;-</span> r<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(r); <span class="fu">print</span>(R2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<pre><code>[1] 0.8474758
+[1] 0.7182153</code></pre></li>
+<li><p>Sama seperti Ball, model Hunt juga dapat dipastikan estimasi radiasi matahari bernilai negatif. Untuk mengubahnya menjadi 0, lakukan hal yang sama seperti pada model Ball pada langkah ke-7 dan buat grafiknya (<a href="#fig-sunmodelhunt">Gambar&nbsp;<span>3.3</span></a>)</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>data_test <span class="ot">&lt;-</span> data_test <span class="sc">%&gt;%</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">mutate</span>(<span class="at">SRAD_pred =</span> <span class="fu">ifelse</span>(SRAD_pred <span class="sc">&lt;</span> <span class="dv">0</span>, <span class="dv">0</span>, SRAD_pred))</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data_test, <span class="fu">aes</span>(<span class="at">x =</span> SRAD_pred, <span class="at">y =</span> SRAD)) <span class="sc">+</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="dv">0</span>, <span class="at">slope =</span> <span class="dv">1</span>, <span class="at">color =</span> <span class="st">"blue"</span>) <span class="sc">+</span></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>   <span class="fu">scale_x_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">400</span>), <span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>)) <span class="sc">+</span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>   <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">400</span>), <span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>)) <span class="sc">+</span></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>   <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"Observasi (W/m²)"</span>, <span class="at">x =</span> <span class="st">"Model (W/m²)"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-sunmodelhunt" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="Pictures/sun-radiation-actualvspredicted-hunt.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Gambar&nbsp;3.3: Perbandingan radiasi matahari aktual terhadap model (Hunt)</figcaption><p></p>
+</figure>
+</div></li>
+</ol>
+</section>
+</section>
+<section id="python" class="level3" data-number="3.4.2">
+<h3 data-number="3.4.2" class="anchored" data-anchor-id="python"><span class="header-section-number">3.4.2</span> Python</h3>
+<p>Package yang digunakan adalah <code>pandas</code>, <code>sklearn</code>, dan <code>matplotlib</code>. Impor kedua package tersebut dengan perintah berikut.</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LinearRegression</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn <span class="im">import</span> metrics</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Sebelum mengimpor data dalam bentuk excel, Anda perlu memasang package <code>openpyxl</code>.</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install openpyxl</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="model-ball-et-al.-2004-1" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="model-ball-et-al.-2004-1">Model Ball et al.&nbsp;(2004)</h4>
+<ol type="1">
+<li><p>Impor data dengan perintah berikut.</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>path <span class="op">=</span> <span class="st">'data'</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> pd.read_excel(<span class="ss">f'</span><span class="sc">{</span>path<span class="sc">}</span><span class="ss">/LaguardiaAirport-NYC.xlsx'</span>, sheet_name<span class="op">=</span><span class="st">'RawData'</span>)</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<pre><code>      YEAR  DOY  PRCP  TAVG  TMAX  TMIN   SRAD
+0     1998    1   0.0  -5.0  -1.1  -8.9  106.8
+1     1998    2   0.0   4.7  10.0  -0.6   82.8
+2     1998    3   0.0  12.0  15.6   8.3   74.7
+3     1998    4   0.0  11.7  17.2   6.1   78.8
+4     1998    5   0.0   5.9   6.7   5.0   75.6
+...    ...  ...   ...   ...   ...   ...    ...
+8396  2020  362   0.0  -0.2   4.4  -2.7   99.4
+8397  2020  363   0.0   6.1  11.1   2.2   61.3
+8398  2020  364   0.0   5.6   7.2   0.0   97.1
+8399  2020  365   0.0   1.8   7.2  -1.0   56.5
+8400  2020  366  13.5   7.7  10.0   3.3   24.0
+
+[8401 rows x 7 columns]</code></pre></li>
+<li><p>Pilih periode tahun untuk pembuatan dan validasi model dengan perintah berikut.</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Pembuatan model</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>data_train <span class="op">=</span> data[data[<span class="st">'YEAR'</span>] <span class="op">&lt;</span> <span class="dv">2019</span>]</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Validasi model</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>data_test <span class="op">=</span> data[data[<span class="st">'YEAR'</span>] <span class="op">&gt;=</span> <span class="dv">2019</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>Lakukan perhitungan prediktor ke-5 sampai ke-12 sesuai dengan <a href="#tbl-modelball">Tabel&nbsp;<span>3.1</span></a></p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>data_train.loc[:, <span class="st">'PRCP_sq'</span>]   <span class="op">=</span> data_train.loc[:, <span class="st">'PRCP'</span>] <span class="op">**</span> <span class="dv">2</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>data_train.loc[:, <span class="st">'TMAX_sq'</span>]   <span class="op">=</span> data_train.loc[:, <span class="st">'TMAX'</span>] <span class="op">**</span> <span class="dv">2</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>data_train.loc[:, <span class="st">'TMIN_sq'</span>]   <span class="op">=</span> data_train.loc[:, <span class="st">'TMIN'</span>] <span class="op">**</span> <span class="dv">2</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>data_train.loc[:, <span class="st">'DOY_sq'</span>]    <span class="op">=</span> data_train.loc[:, <span class="st">'DOY'</span>]  <span class="op">**</span> <span class="dv">2</span></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>data_train.loc[:, <span class="st">'PRCP_TMAX'</span>] <span class="op">=</span> data_train.loc[:, <span class="st">'PRCP'</span>] <span class="op">*</span> data_train.loc[:, <span class="st">'TMAX'</span>]</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>data_train.loc[:, <span class="st">'PRCP_TMIN'</span>] <span class="op">=</span> data_train.loc[:, <span class="st">'PRCP'</span>] <span class="op">*</span> data_train.loc[:, <span class="st">'TMIN'</span>]</span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>data_train.loc[:, <span class="st">'TMAX_TMIN'</span>] <span class="op">=</span> data_train.loc[:, <span class="st">'TMAX'</span>] <span class="op">*</span> data_train.loc[:, <span class="st">'TMIN'</span>]</span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>data_train.loc[:, <span class="st">'TMAX_DOY'</span>]  <span class="op">=</span> data_train.loc[:, <span class="st">'TMAX'</span>] <span class="op">*</span> data_train.loc[:, <span class="st">'DOY'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>Lakukan pembuatan model regresi linier berganda pada data <code>data_train</code> sesuai dengan model Ball (<a href="#tbl-modelball">Tabel&nbsp;<span>3.1</span></a>).</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Model regresi linier</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> LinearRegression()</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>model.fit(</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>   <span class="co"># Prediktor</span></span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>   data_train.loc[:, [<span class="st">'PRCP'</span>, <span class="st">'TAVG'</span>, <span class="st">'TMAX'</span>, <span class="st">'TMIN'</span>, </span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>                      <span class="st">'PRCP_sq'</span>, <span class="st">'TMAX_sq'</span>, <span class="st">'TMIN_sq'</span>, </span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>                      <span class="st">'DOY_sq'</span>, <span class="st">'PRCP_TMAX'</span>, <span class="st">'PRCP_TMIN'</span>, </span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>                      <span class="st">'TMAX_TMIN'</span>, <span class="st">'TMAX_DOY'</span>]],</span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>   <span class="co"># Prediktan</span></span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>   data_train.loc[:, <span class="st">'SRAD'</span>]</span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>Oleh karena respon dari package <code>sklearn</code> tidak bisa menghasilkan <em>summary</em> seperti pada R, Anda perlu membuat fungsi tersendiri. Pada fungsi <code>metrics</code>, telah tersedia beberapa metrik yang dapat digunakan untuk mengevaluasi model.</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> summary(model, x, y):</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>   <span class="co"># Estimasi</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>   y_pred <span class="op">=</span> model.predict(x)</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>   <span class="co"># Jika terdapat nilai negatif, maka nilai tersebut akan diubah menjadi 0</span></span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>   y_pred[y_pred <span class="op">&lt;</span> <span class="dv">0</span>] <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>   <span class="co"># Metrik</span></span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>   r2   <span class="op">=</span> metrics.r2_score(y, y_pred)</span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>   rmse <span class="op">=</span> metrics.mean_squared_error(y, y_pred, squared<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>   mae  <span class="op">=</span> metrics.mean_absolute_error(y, y_pred)</span>
+<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a>   <span class="bu">print</span>(<span class="ss">f'R²   = </span><span class="sc">{</span><span class="bu">round</span>(r2, <span class="dv">2</span>)<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a>   <span class="bu">print</span>(<span class="ss">f'RMSE = </span><span class="sc">{</span><span class="bu">round</span>(rmse, <span class="dv">2</span>)<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb30-15"><a href="#cb30-15" aria-hidden="true" tabindex="-1"></a>   <span class="bu">print</span>(<span class="ss">f'MAE  = </span><span class="sc">{</span><span class="bu">round</span>(mae, <span class="dv">2</span>)<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb30-16"><a href="#cb30-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-17"><a href="#cb30-17" aria-hidden="true" tabindex="-1"></a>summary(model, </span>
+<span id="cb30-18"><a href="#cb30-18" aria-hidden="true" tabindex="-1"></a>   data_train.loc[:, [<span class="st">'PRCP'</span>, <span class="st">'TAVG'</span>, <span class="st">'TMAX'</span>, <span class="st">'TMIN'</span>, </span>
+<span id="cb30-19"><a href="#cb30-19" aria-hidden="true" tabindex="-1"></a>                      <span class="st">'PRCP_sq'</span>, <span class="st">'TMAX_sq'</span>, <span class="st">'TMIN_sq'</span>, </span>
+<span id="cb30-20"><a href="#cb30-20" aria-hidden="true" tabindex="-1"></a>                      <span class="st">'DOY_sq'</span>, <span class="st">'PRCP_TMAX'</span>, <span class="st">'PRCP_TMIN'</span>, </span>
+<span id="cb30-21"><a href="#cb30-21" aria-hidden="true" tabindex="-1"></a>                      <span class="st">'TMAX_TMIN'</span>, <span class="st">'TMAX_DOY'</span>]],</span>
+<span id="cb30-22"><a href="#cb30-22" aria-hidden="true" tabindex="-1"></a>   data_train.loc[:, <span class="st">'SRAD'</span>]</span>
+<span id="cb30-23"><a href="#cb30-23" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<pre><code>R²   = 0.74
+RMSE = 47.25
+MAE  = 37.6</code></pre></li>
+<li><p>Untuk memvalidasi model, Anda perlu menghitung prediktor ke-5 sampai ke-12 pada data <code>data_test</code> sesuai dengan <a href="#tbl-modelball">Tabel&nbsp;<span>3.1</span></a>. Kemudian, gunakan <code>model.predict()</code> untuk menghitung prediksi pada data <code>data_test</code>.</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>data_test.loc[:, <span class="st">'PRCP_sq'</span>]   <span class="op">=</span> data_test.loc[:, <span class="st">'PRCP'</span>] <span class="op">**</span> <span class="dv">2</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>data_test.loc[:, <span class="st">'TMAX_sq'</span>]   <span class="op">=</span> data_test.loc[:, <span class="st">'TMAX'</span>] <span class="op">**</span> <span class="dv">2</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>data_test.loc[:, <span class="st">'TMIN_sq'</span>]   <span class="op">=</span> data_test.loc[:, <span class="st">'TMIN'</span>] <span class="op">**</span> <span class="dv">2</span></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>data_test.loc[:, <span class="st">'DOY_sq'</span>]    <span class="op">=</span> data_test.loc[:, <span class="st">'DOY'</span>]  <span class="op">**</span> <span class="dv">2</span></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>data_test.loc[:, <span class="st">'PRCP_TMAX'</span>] <span class="op">=</span> data_test.loc[:, <span class="st">'PRCP'</span>] <span class="op">*</span> data_test.loc[:, <span class="st">'TMAX'</span>]</span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>data_test.loc[:, <span class="st">'PRCP_TMIN'</span>] <span class="op">=</span> data_test.loc[:, <span class="st">'PRCP'</span>] <span class="op">*</span> data_test.loc[:, <span class="st">'TMIN'</span>]</span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>data_test.loc[:, <span class="st">'TMAX_TMIN'</span>] <span class="op">=</span> data_test.loc[:, <span class="st">'TMAX'</span>] <span class="op">*</span> data_test.loc[:, <span class="st">'TMIN'</span>]</span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>data_test.loc[:, <span class="st">'TMAX_DOY'</span>]  <span class="op">=</span> data_test.loc[:, <span class="st">'TMAX'</span>] <span class="op">*</span> data_test.loc[:, <span class="st">'DOY'</span>]</span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>summary(model, </span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>   data_test.loc[:, [<span class="st">'PRCP'</span>, <span class="st">'TAVG'</span>, <span class="st">'TMAX'</span>, <span class="st">'TMIN'</span>, </span>
+<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a>                     <span class="st">'PRCP_sq'</span>, <span class="st">'TMAX_sq'</span>, <span class="st">'TMIN_sq'</span>, </span>
+<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a>                     <span class="st">'DOY_sq'</span>, <span class="st">'PRCP_TMAX'</span>, <span class="st">'PRCP_TMIN'</span>, </span>
+<span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a>                     <span class="st">'TMAX_TMIN'</span>, <span class="st">'TMAX_DOY'</span>]],</span>
+<span id="cb32-15"><a href="#cb32-15" aria-hidden="true" tabindex="-1"></a>   data_test.loc[:, <span class="st">'SRAD'</span>]</span>
+<span id="cb32-16"><a href="#cb32-16" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<pre><code>R²   = 0.72
+RMSE = 51.69
+MAE  = 40.72</code></pre></li>
+<li><p>Untuk membuat grafik dari <code>data_test</code> maupun <code>data_train</code>, Anda dapat menggunakan <code>matplotlib</code> (<a href="#fig-sunmodelballpy">Gambar&nbsp;<span>3.4</span></a>)</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>y_pred <span class="op">=</span> model.predict(data_train.loc[:, [<span class="st">'PRCP'</span>, <span class="st">'TMAX'</span>, <span class="st">'TMIN'</span>, <span class="st">'DOY'</span>, </span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>                                          <span class="st">'PRCP_sq'</span>, <span class="st">'TMAX_sq'</span>, <span class="st">'TMIN_sq'</span>, </span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>                                          <span class="st">'DOY_sq'</span>, <span class="st">'PRCP_TMAX'</span>, <span class="st">'PRCP_TMIN'</span>, </span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>                                          <span class="st">'TMAX_TMIN'</span>, <span class="st">'TMAX_DOY'</span>]])</span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Grafik data train</span></span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">10</span>))</span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>plt.scatter(data_train.loc[:, <span class="st">'SRAD'</span>], y_pred)</span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a>plt.xlim(<span class="dv">0</span>, <span class="dv">380</span>)</span>
+<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a>plt.ylim(<span class="dv">0</span>, <span class="dv">380</span>)</span>
+<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-13"><a href="#cb34-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Menambahkan label pada sumbu x dan y</span></span>
+<span id="cb34-14"><a href="#cb34-14" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Model (W/m²)'</span>)</span>
+<span id="cb34-15"><a href="#cb34-15" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Observasi (W/m²)'</span>)</span>
+<span id="cb34-16"><a href="#cb34-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-17"><a href="#cb34-17" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-sunmodelballpy" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="Pictures/sun-radiation-actualvspredicted-py.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Gambar&nbsp;3.4: Perbandingan radiasi matahari aktual terhadap model (Ball)</figcaption><p></p>
+</figure>
+</div></li>
+</ol>
+</section>
+<section id="model-hunt-et-al.-1998-1" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="model-hunt-et-al.-1998-1">Model Hunt et al.&nbsp;(1998)</h4>
+<ol type="1">
+<li><p>Impor data Excel. Caranya sama seperti pada subbab sebelumnya.</p></li>
+<li><p>Sebelum Anda melakukan pembuatan model regresi linier berganda, Anda harus melakukan perhitungan <span class="math inline">\(S_0\)</span> terlebih dahulu. Kami menyediakan fungsi untuk menghitung nilai <span class="math inline">\(S_0\)</span> seperti pada <a href="#sec-modelhunt"><span>Section&nbsp;3.3</span></a>. Anda hanya memasukkan nilai latitude serta <em>day of year</em> pada fungsi ini. Perlu modul tambahan <code>numpy</code> untuk menghitung nilai trigonometri.</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> numpy <span class="im">import</span> sin, cos, pi, arcsin, sqrt</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> S0(lat, doy):</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>   <span class="co"># Fungsi untuk menghitung sin(delta)</span></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>   sin_delta <span class="op">=</span> <span class="op">-</span>sin(pi <span class="op">*</span> <span class="fl">23.45</span> <span class="op">/</span> <span class="dv">180</span>) <span class="op">*</span> cos(pi <span class="op">*</span> (<span class="dv">360</span> <span class="op">*</span> (doy <span class="op">+</span> <span class="dv">10</span>) <span class="op">/</span> <span class="dv">365</span>) <span class="op">/</span> <span class="dv">180</span>)</span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>   asin_delt <span class="op">=</span> arcsin(sin_delta) <span class="op">*</span> <span class="dv">180</span> <span class="op">/</span> pi</span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>   <span class="co"># sin(lat) * sin(delta)</span></span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a>   s_lat_delt <span class="op">=</span> sin(pi <span class="op">*</span> lat <span class="op">/</span> <span class="dv">180</span>) <span class="op">*</span> sin(pi <span class="op">*</span> asin_delt <span class="op">/</span> <span class="dv">180</span>)</span>
+<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a>   <span class="co"># cos(lat) * cos(delta)</span></span>
+<span id="cb35-12"><a href="#cb35-12" aria-hidden="true" tabindex="-1"></a>   c_lat_delt <span class="op">=</span> cos(pi <span class="op">*</span> lat <span class="op">/</span> <span class="dv">180</span>) <span class="op">*</span> cos(pi <span class="op">*</span> asin_delt <span class="op">/</span> <span class="dv">180</span>)</span>
+<span id="cb35-13"><a href="#cb35-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-14"><a href="#cb35-14" aria-hidden="true" tabindex="-1"></a>   <span class="co"># (sin(lat) * sin(delta)) / (cos(lat) * cos(delta))</span></span>
+<span id="cb35-15"><a href="#cb35-15" aria-hidden="true" tabindex="-1"></a>   t_lat_delt <span class="op">=</span> s_lat_delt <span class="op">/</span> c_lat_delt</span>
+<span id="cb35-16"><a href="#cb35-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-17"><a href="#cb35-17" aria-hidden="true" tabindex="-1"></a>   <span class="co"># Fungi perhitungan panjang hari (D)</span></span>
+<span id="cb35-18"><a href="#cb35-18" aria-hidden="true" tabindex="-1"></a>   D <span class="op">=</span> <span class="dv">12</span> <span class="op">+</span> <span class="dv">24</span><span class="op">/</span><span class="dv">180</span> <span class="op">*</span> arcsin(t_lat_delt) <span class="op">*</span> <span class="dv">180</span> <span class="op">/</span> pi</span>
+<span id="cb35-19"><a href="#cb35-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-20"><a href="#cb35-20" aria-hidden="true" tabindex="-1"></a>   <span class="co"># Fungsi perhitungan sudut elevasi matahari</span></span>
+<span id="cb35-21"><a href="#cb35-21" aria-hidden="true" tabindex="-1"></a>   sin_beta <span class="op">=</span> <span class="dv">3600</span> <span class="op">*</span> (D <span class="op">*</span> s_lat_delt <span class="op">+</span> <span class="dv">24</span><span class="op">/</span>pi <span class="op">*</span> c_lat_delt <span class="op">*</span> sqrt(<span class="dv">1</span> <span class="op">-</span> t_lat_delt<span class="op">**</span><span class="dv">2</span>))</span>
+<span id="cb35-22"><a href="#cb35-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-23"><a href="#cb35-23" aria-hidden="true" tabindex="-1"></a>   <span class="co"># Fungsi perhitungan radiasi matahari</span></span>
+<span id="cb35-24"><a href="#cb35-24" aria-hidden="true" tabindex="-1"></a>   S_0 <span class="op">=</span> <span class="dv">1370</span> <span class="op">*</span> (<span class="dv">1</span> <span class="op">+</span> <span class="fl">0.033</span> <span class="op">*</span> cos(pi <span class="op">*</span> <span class="dv">360</span> <span class="op">/</span> <span class="dv">180</span> <span class="op">*</span> doy <span class="op">/</span> <span class="dv">365</span>)) <span class="op">*</span> sin_beta</span>
+<span id="cb35-25"><a href="#cb35-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-26"><a href="#cb35-26" aria-hidden="true" tabindex="-1"></a>   <span class="co"># Konversi J/m² ke MJ/m²</span></span>
+<span id="cb35-27"><a href="#cb35-27" aria-hidden="true" tabindex="-1"></a>   <span class="cf">return</span> S_0 <span class="op">/</span> <span class="dv">1000000</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>Kemudian, tambahkan kolom baru pada <code>data</code> yang berisi nilai <span class="math inline">\(S_0\)</span> dengan perintah berikut.</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>data.loc[:, <span class="st">'S0'</span>] <span class="op">=</span> S0(<span class="fl">40.77945</span>, data.loc[:, <span class="st">'DOY'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>Untuk membuat model, lakukan pembagian data menjadi <code>data_test</code> dan <code>data_train</code> dengan perintah berikut.</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Pembuatan model</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>data_train <span class="op">=</span> data[data[<span class="st">'YEAR'</span>] <span class="op">&lt;</span> <span class="dv">2019</span>]</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Validasi model</span></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>data_test <span class="op">=</span> data[data[<span class="st">'YEAR'</span>] <span class="op">&gt;=</span> <span class="dv">2019</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>Hitunglah <code>S0 * (Tmax - Tmin)^0.5</code> dan <code>PRCP^2</code> dengan menambahkan dua kolom baru pada <code>data_train</code> dan <code>data_test</code> dengan perintah berikut.</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Data train</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>data_train.loc[:, <span class="st">'S0_TMAX_TMIN'</span>] <span class="op">=</span> data_train.loc[:, <span class="st">'S0'</span>] <span class="op">*</span> sqrt(data_train.loc[:, <span class="st">'TMAX'</span>] <span class="op">-</span> data_train.loc[:, <span class="st">'TMIN'</span>])</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>data_train.loc[:, <span class="st">'PRCP_sq'</span>] <span class="op">=</span> data_train.loc[:, <span class="st">'PRCP'</span>] <span class="op">**</span> <span class="dv">2</span></span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Data test</span></span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>data_test.loc[:, <span class="st">'S0_TMAX_TMIN'</span>] <span class="op">=</span> data_test.loc[:, <span class="st">'S0'</span>] <span class="op">*</span> sqrt(data_test.loc[:, <span class="st">'TMAX'</span>] <span class="op">-</span> data_test.loc[:, <span class="st">'TMIN'</span>])</span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a>data_test.loc[:, <span class="st">'PRCP_sq'</span>] <span class="op">=</span> data_test.loc[:, <span class="st">'PRCP'</span>] <span class="op">**</span> <span class="dv">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>Buat model regresi linier berganda</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> LinearRegression()</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>model.fit(</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>   <span class="co"># Prediktor   </span></span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>   data_train.loc[:, [<span class="st">'S0_TMAX_TMIN'</span>, <span class="st">'PRCP'</span>, <span class="st">'PRCP_sq'</span>]], </span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>   <span class="co"># Prediktan</span></span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>   data_train.loc[:, <span class="st">'SRAD'</span>]</span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>Kemudian, lakukan validasi model dengan menggunakan <code>data_test</code>.</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>summary(model, </span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>   data_test.loc[:, [<span class="st">'S0_TMAX_TMIN'</span>, <span class="st">'PRCP'</span>, <span class="st">'PRCP_sq'</span>]], </span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>   data_test.loc[:, <span class="st">'SRAD'</span>]</span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<pre><code>R²   = 0.71
+RMSE = 52.53
+MAE  = 41.64</code></pre></li>
+<li><p>Terakhir, lakukan pembuatan grafik dari <code>data_test</code> (<a href="#fig-sunmodelhuntpy">Gambar&nbsp;<span>3.5</span></a>)</p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>y_pred <span class="op">=</span> model.predict(data_test.loc[:, [<span class="st">'S0_TMAX_TMIN'</span>, <span class="st">'PRCP'</span>, <span class="st">'PRCP_sq'</span>]])</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>y_pred[y_pred <span class="op">&lt;</span> <span class="dv">0</span>] <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualize</span></span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> plt.figure(figsize<span class="op">=</span>(<span class="dv">4</span>, <span class="dv">4</span>))</span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Make plot scatter with small size</span></span>
+<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a>plt.scatter(y_pred, data_test.loc[:, <span class="st">'SRAD'</span>], s<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb42-9"><a href="#cb42-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-10"><a href="#cb42-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Make line plot 1:1</span></span>
+<span id="cb42-11"><a href="#cb42-11" aria-hidden="true" tabindex="-1"></a>plt.plot([<span class="dv">0</span>, <span class="dv">400</span>], [<span class="dv">0</span>, <span class="dv">400</span>], color<span class="op">=</span><span class="st">'red'</span>)</span>
+<span id="cb42-12"><a href="#cb42-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-13"><a href="#cb42-13" aria-hidden="true" tabindex="-1"></a><span class="co"># expand plot area</span></span>
+<span id="cb42-14"><a href="#cb42-14" aria-hidden="true" tabindex="-1"></a>plt.xlim(<span class="dv">0</span>, <span class="dv">380</span>)</span>
+<span id="cb42-15"><a href="#cb42-15" aria-hidden="true" tabindex="-1"></a>plt.ylim(<span class="dv">0</span>, <span class="dv">380</span>)</span>
+<span id="cb42-16"><a href="#cb42-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-17"><a href="#cb42-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Set axis labels</span></span>
+<span id="cb42-18"><a href="#cb42-18" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Model (W/m²)'</span>)</span>
+<span id="cb42-19"><a href="#cb42-19" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Observasi (W/m²)'</span>)</span>
+<span id="cb42-20"><a href="#cb42-20" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-sunmodelhuntpy" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="Pictures/sun-radiation-actualvspredicted-Hunt-py.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Gambar&nbsp;3.5: Perbandingan radiasi matahari aktual terhadap model (Hunt)</figcaption><p></p>
+</figure>
+</div></li>
 </ol>
 
 
