@@ -112,6 +112,7 @@ div.csl-indent {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
+<link href="./praktikum-3.html" rel="next">
 <link href="./praktikum-1.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -190,6 +191,11 @@ div.csl-indent {
   <a href="./praktikum-2.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Model Pendugaan Radiasi Matahari</span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./praktikum-3.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Koreksi Bias Statistik</span></a>
+  </div>
+</li>
     </ul>
     </div>
 </nav>
@@ -238,14 +244,14 @@ div.csl-indent {
 </section>
 <section id="sec-modelball" class="level2" data-number="3.2">
 <h2 data-number="3.2" class="anchored" data-anchor-id="sec-modelball"><span class="header-section-number">3.2</span> Model Pendugaan Ball et al.&nbsp;(2004)</h2>
-<p>Ball et al. <span class="citation" data-cites="ball2004">(<a href="#ref-ball2004" role="doc-biblioref">Ball <em>et al.</em> 2004</a>)</span> membangun model empiris untuk menduga radiasi matahari di permukaan bumi dengan masukan suhu udara maksimum, suhu udara minimum, curah hujan, dan <em>julian days</em>. Persamaan yang digunakan berupa regresi linier berganda, yaitu</p>
+<p>Ball et al. <span class="citation" data-cites="ball2004">(<a href="#ref-ball2004" role="doc-biblioref">Ball, Purcell, and Carey 2004</a>)</span> membangun model empiris untuk menduga radiasi matahari di permukaan bumi dengan masukan suhu udara maksimum, suhu udara minimum, curah hujan, dan <em>julian days</em>. Persamaan yang digunakan berupa regresi linier berganda, yaitu</p>
 <p><span class="math display">\[
 Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \beta_3 X_3 + ... + \beta_{12} X_{12}
 \]</span></p>
 <p>di mana keterangan setiap variabel bebas dapat dilihat pada tabel berikut.</p>
 <div id="tbl-modelball" class="anchored">
 <table class="table">
-<caption>Tabel&nbsp;3.1: Keterangan variabel bebas dari persamaan empirik <span class="citation" data-cites="ball2004">(<a href="#ref-ball2004" role="doc-biblioref">Ball <em>et al.</em> 2004</a>)</span></caption>
+<caption>Tabel&nbsp;3.1: Keterangan variabel bebas dari persamaan empirik <span class="citation" data-cites="ball2004">(<a href="#ref-ball2004" role="doc-biblioref">Ball, Purcell, and Carey 2004</a>)</span></caption>
 <thead>
 <tr class="header">
 <th style="text-align: center;">Prediktor</th>
@@ -307,11 +313,11 @@ Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \beta_3 X_3 + ... + \beta_{12} X_{12}
 </section>
 <section id="sec-modelhunt" class="level2" data-number="3.3">
 <h2 data-number="3.3" class="anchored" data-anchor-id="sec-modelhunt"><span class="header-section-number">3.3</span> Model Pendugaan Hunt et al.&nbsp;(1998)</h2>
-<p>Model pendugaan radiasi matahari lain adalah oleh Hunt <span class="citation" data-cites="hunt1998">(<a href="#ref-hunt1998" role="doc-biblioref">Hunt <em>et al.</em> 1998</a>)</span>, yaitu gabungan model mekanistik dan empirik dengan masukan suhu udara maksimum, suhu udara minimum, dan curah hujan. Model mekanistik digunakan untuk menduga radiasi matahari yang berada di permukaan atmosfer (radiasi ekstraterestrial, <span class="math inline">\(S_0\)</span>). Model pendugaan Hunt (1998) adalah sebagai berikut.</p>
+<p>Model pendugaan radiasi matahari lain adalah oleh Hunt <span class="citation" data-cites="hunt1998">(<a href="#ref-hunt1998" role="doc-biblioref">Hunt, Kuchar, and Swanton 1998</a>)</span>, yaitu gabungan model mekanistik dan empirik dengan masukan suhu udara maksimum, suhu udara minimum, dan curah hujan. Model mekanistik digunakan untuk menduga radiasi matahari yang berada di permukaan atmosfer (radiasi ekstraterestrial, <span class="math inline">\(S_0\)</span>). Model pendugaan Hunt (1998) adalah sebagai berikut.</p>
 <p><span class="math display">\[
 R_s = a_0 S_0 (T_{max} - T_{min})^{0.5} + a_1 T_{max} + a_2 P + a_3 P^2 + a_4
 \]</span></p>
-<p>dimana <span class="math inline">\(R_s\)</span> adalah radiasi matahari harian (<span class="math inline">\(MJ~m^{−2}~hari^{−1}\)</span>), <span class="math inline">\(S_0\)</span> adalah radiasi matahari di puncak atmosfer (<span class="math inline">\(MJ~m^{−2}~hari^{−1}\)</span>), <span class="math inline">\(P\)</span> adalah curah hujan (mm), <span class="math inline">\(T_{max}\)</span> adalah suhu udara maksimum (<span class="math inline">\(^o C\)</span>), dan <span class="math inline">\(T_{min}\)</span> adalah suhu udara minimum (<span class="math inline">\(^o C\)</span>). Untuk mengestimasi nilai <span class="math inline">\(S_0\)</span>, Hunt menggunakan persamaan mekanistik dalam Spitters <span class="citation" data-cites="spitters1986">(<a href="#ref-spitters1986" role="doc-biblioref">Spitters <em>et al.</em> 1986</a>)</span>, yaitu:</p>
+<p>dimana <span class="math inline">\(R_s\)</span> adalah radiasi matahari harian (<span class="math inline">\(MJ~m^{−2}~hari^{−1}\)</span>), <span class="math inline">\(S_0\)</span> adalah radiasi matahari di puncak atmosfer (<span class="math inline">\(MJ~m^{−2}~hari^{−1}\)</span>), <span class="math inline">\(P\)</span> adalah curah hujan (mm), <span class="math inline">\(T_{max}\)</span> adalah suhu udara maksimum (<span class="math inline">\(^o C\)</span>), dan <span class="math inline">\(T_{min}\)</span> adalah suhu udara minimum (<span class="math inline">\(^o C\)</span>). Untuk mengestimasi nilai <span class="math inline">\(S_0\)</span>, Hunt menggunakan persamaan mekanistik dalam Spitters <span class="citation" data-cites="spitters1986">(<a href="#ref-spitters1986" role="doc-biblioref">Spitters, Toussaint, and Goudriaan 1986</a>)</span>, yaitu:</p>
 <p><span class="math display">\[
 S_0 = S_{sc} \left[ 1 + 0.033 \cos \left( \frac{360~t_d}{365} \right) \right] sin(β)
 \]</span></p>
@@ -804,15 +810,15 @@ MAE  = 41.64</code></pre></li>
 </ol>
 
 
-<div id="refs" class="references csl-bib-body" role="doc-bibliography">
+<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
 <div id="ref-ball2004" class="csl-entry" role="doc-biblioentry">
-Ball RA, Purcell LC, Carey SK. 2004. Evaluation of solar radiation prediction models in north america. <em>Agronomy Journal</em>. 96(2):391–397.
+Ball, Rosalind A, Larry C Purcell, and Sean K Carey. 2004. <span>“Evaluation of Solar Radiation Prediction Models in North America.”</span> <em>Agronomy Journal</em> 96 (2): 391–97.
 </div>
 <div id="ref-hunt1998" class="csl-entry" role="doc-biblioentry">
-Hunt L, Kuchar L, Swanton C. 1998. Estimation of solar radiation for use in crop modelling. <em>Agricultural and Forest Meteorology</em>. 91(3-4):293–300.
+Hunt, LA, L Kuchar, and CJ Swanton. 1998. <span>“Estimation of Solar Radiation for Use in Crop Modelling.”</span> <em>Agricultural and Forest Meteorology</em> 91 (3-4): 293–300.
 </div>
 <div id="ref-spitters1986" class="csl-entry" role="doc-biblioentry">
-Spitters C, Toussaint H, Goudriaan J. 1986. Separating the diffuse and direct component of global radiation and its implications for modeling canopy photosynthesis part i. Components of incoming radiation. <em>Agricultural and Forest Meteorology</em>. 38(1-3):217–229.
+Spitters, CJT, HAJM Toussaint, and J Goudriaan. 1986. <span>“Separating the Diffuse and Direct Component of Global Radiation and Its Implications for Modeling Canopy Photosynthesis Part i. Components of Incoming Radiation.”</span> <em>Agricultural and Forest Meteorology</em> 38 (1-3): 217–29.
 </div>
 </div>
 </section>
@@ -960,6 +966,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
+      <a href="./praktikum-3.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Koreksi Bias Statistik</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
   </div>
 </nav>
 </div> <!-- /content -->

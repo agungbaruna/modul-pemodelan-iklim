@@ -13,6 +13,7 @@ book:
     - index.qmd
     - praktikum-1.ipynb
     - praktikum-2.ipynb
+    - praktikum-3.qmd
     # - summary.qmd
 bibliography: references.bib
 crossref:
@@ -21,6 +22,8 @@ crossref:
   fig-title: Gambar
   tbl-prefix: Tabel # (default is "Table")
   tbl-title: Tabel
+  eq-prefix: Persamaan
+  eq-title: Persamaan
 csl: ipb.csl
 code-overflow: wrap
 code-block-border-left: true
@@ -45,6 +48,7 @@ format:
     include-in-header: 
       text: |
         \usepackage{fvextra}
+        \usepackage{amsmath}
         \DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,commandchars=\\\{\}}
 
 highlight-style: github
