@@ -1,0 +1,69 @@
+---
+title: "Koreksi Bias Statistik"
+editor: visual
+---
+
+## Pendahuluan
+
+*Global Climate Model* (GCM) adalah alat utama dan paling komprehensif yang digunakan dalam simulasi perubahan iklim pada masa lalu maupun masa mendatang. GCM memiliki kemampuan dalam melakukan simulasi variabilitas iklim dan sifat-sifat di permukaan bumi pada skala global. Kelemahan GCM adalah ketidakmampuan menangkap kejadian-kejadian iklim pada skala regional maupun lokal karena resolusi spasial yang masih kasar. Dynamical downscalling dengan simulasi Regional Climate Model (RCM) dilakukan untuk memperhalus resolusi dari GCM. Simulasi RCM secara umum menunjukkan bias secara sistematik terhadap observasi [@delei2019].
+
+Metode koreksi bias biasanya menggunakan fungsi transfer/koreksi yang mengubah data model menjadi data terkoreksi secara statistik. Selain Delta Method [@sperna2010; @graham2007], metode koreksi bias lain telah dikembangkan, seperti linear scalling correction, power transformation, empirical quantile mapping, dan parametric quantile mapping [@delei2019]. Beberapa keterbatasan dalam melakukan koreksi bias, yaitu umumnya tidak memiliki dasar fisika yang kuat, menghasilkan perubahan konsistensi secara spasial, perubahan hubungan antar variabel, melawan aturan hukum konservasi energi, tidak memperhitungkan ketidakpastian dari kumpulan data observasi dan variabilitas internal, dan galat model dan fungsi koreksi umumnya dianggap stasioner terhadap waktu [@ehret2012hess; @addor2015; @maraun2016]. Ringkasan pengklasifikasian metode koreksi bias dapat dilihat pada [@tbl-watanabe] [@watanabe2012].
+
++---------------+--------------------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------+
+|               | Tipe konstan                                                                         | Tipe variabel                                                                                                                                      | Tipe parametrik                                                                                | Tipe non-parametrik                                                                                                                            |
++===============+======================================================================================+====================================================================================================================================================+================================================================================================+================================================================================================================================================+
+| Definisi      | Nilai statistik pada periode masa depan tidak dimasukkan pada persamaan koreksi bias | Nilai statistik pada periode masa depan dimasukkan pada persamaan koreksi bias                                                                     | Distribusi parametrik diasumsikan masuk ke simulasi dan/atau data observasi                    | Distribusi parametrik tidak digunakan dalam koreksi bias                                                                                       |
++---------------+--------------------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------+
+| Karakteristik | -   Statistik pada periode masa depan tidak mempengaruhi hasil dari koreksi bias     | -   Statistik pada periode masa depan mempengaruhi hasil dari koreksi bias                                                                         | -   Kuat secara statistik                                                                      | -   Diperlukan ekstrapolasi untuk nilai-nilai yang lebih/kurang dari periode dasar                                                             |
+|               | -   Panjang data koreksi bias dapat diperoleh berapapun panjang periodenya           | -   Mudah untuk melakukan penyesuaian perubahan secara statistik dari periode dasar ke masa depan antara data belum terkoreksi dan data terkoreksi |                                                                                                |                                                                                                                                                |
+|               |                                                                                      | -   Panjang data terkoreksi bias harus sama dengan data periode dasar                                                                              | -   Nilai yang tidak realistis dapat dihasilkan jika distribusi tidak diperkirakan dengan baik | -   Karena derajat bebas sama dengan jumlah parameter, ada permasalahan dalam *functional robustness* jika asumsinya distribusi non parametrik |
++---------------+--------------------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------+
+
+: Klasifikasi metode koreksi bias statistik {#tbl-watanabe tbl-colwidths="\[20, 25, 25, 30\]"}
+
+## Metode Delta
+
+Cara paling sederhana untuk melakukan koreksi bias adalah dengan menambahkan/mengalikan data model ke data observasi pada periode dasar. @eq-1 umum digunakan pada koreksi data suhu dan @eq-2 untuk curah hujan.
+
+$$
+x_{cor, i} = x_{o,i} + \mu_{p} - \mu_{b}\tag{1}
+$$ {#eq-1}
+
+$$
+x_{cor,i} = x_{o, i} . \frac{\mu_p}{\mu_b} \tag{2}
+$$ {#eq-2}
+
+dimana $x_{cor,i}$ dan $x_{o,i}$ $(i = 1, 2, …)$ secara berturut-turut dinotasikan sebagai data terkoreksi bias dan observasi dalam periode dasar tertentu, $\mu$ adalah rata-rata. Subskrip $b$, $o$, dan $p$ secara berturut-turut adalah data dasar, observasi, dan proyeksi
+
+## Metode Distribusi
+
+Koreksi bias dengan metode ini berdasarkan distribusi statistik dari data model yang ditransformasikan untuk menyesuaikan distribusi data dari observasi. Distribusi normal umum diasumsikan untuk data suhu udara [@piani2010suhu], sedangkan distribusi gamma untuk data curah hujan [@piani2010pr]. Persamaan *Probability Density Function* (PDF) untuk sebaran normal (@eq-3) dan sebaran gamma (@eq-4) adalah sebagai berikut.
+
+$$ 
+f(x, \mu, \sigma) = \frac{1}{\sigma \sqrt{2\pi}} ~ e^{-0.5 (\frac{x - \mu}{\sigma})^2} \tag{3}
+$$ {#eq-3}
+
+$$
+f(x, \alpha, \beta) = \frac{exp(-\frac{x}{\beta}) . (\frac{x}{\beta})^{\alpha-1}}{\Gamma(\alpha)\beta} \tag{4}
+$$ {#eq-4}
+
+dengan x adalah data curah hujan atau suhu udara, $\alpha$ adalah parameter skala, $\beta$ adalah parameter bentuk, $\sigma$ adalah standar deviasi, dan $\mu$ adalah rata-rata. Proses koreksi bias dihitung dari invers *Cumulative Density Function* (CDF). Pada @eq-4, nilai $\alpha$ dan $\beta$ dapat diestimasi dengan metode Greenwood dan Durand [@greenwood1960]. Persamaannya sebagai berikut.
+
+$$
+\alpha = 
+  \begin{cases}
+    \frac{0.5000876+0.1648852y−0.0544276y^2}{y} &,~ \text{jika} ~ 0 \leq y \leq 0.5772 \\
+    \frac{8.898919+9.05995y+0.9775373y^2}{17.79728y+11.968477y^2+y^3} &, ~ \text{jika} ~ 0.5772 < y \leq 17 \\
+    \frac{1}{y} &, ~ \text{jika} ~ y > 17
+  \end{cases} \tag{5}
+$$ {#eq-5}
+
+$$
+y = ln(\bar{x}) - \frac{1}{n} \sum_{i = 1} ^ n ln(x_i) \tag{6}
+$$ {#eq-6}
+
+$$
+\beta = \frac{\bar{x}}{\alpha} \tag{7}
+$$ {#eq-7}
+
+Persamaan [@eq-5; @eq-6; @eq-7] dapat menjadi permasalahan ketika menerapkannya pada data curah hujan yang bernilai 0.
