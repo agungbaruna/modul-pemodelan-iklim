@@ -66,4 +66,8 @@ $$
 \beta = \frac{\bar{x}}{\alpha} \tag{7}
 $$ {#eq-7}
 
-Persamaan [@eq-5; @eq-6; @eq-7] dapat menjadi permasalahan ketika menerapkannya pada data curah hujan yang bernilai 0.
+Persamaan [@eq-5; @eq-6; @eq-7] menjadi masalah ketika menerapkannya pada data curah hujan yang bernilai 0.
+
+```{python}
+import sklearn
+```
