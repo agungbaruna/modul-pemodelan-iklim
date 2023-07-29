@@ -68,6 +68,4 @@ $$ {#eq-7}
 
 Persamaan [@eq-5; @eq-6; @eq-7] menjadi masalah ketika menerapkannya pada data curah hujan yang bernilai 0.
 
-```{python}
-import sklearn
-```
+

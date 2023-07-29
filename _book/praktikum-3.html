@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.335">
+<meta name="generator" content="quarto-1.3.433">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -17,14 +17,15 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for citations */
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
 }
-.hanging div.csl-entry {
+.hanging-indent div.csl-entry {
   margin-left:2em;
   text-indent:-2em;
 }
@@ -38,8 +39,7 @@ div.csl-right-inline {
 }
 div.csl-indent {
   margin-left: 2em;
-}
-</style>
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -75,10 +75,12 @@ div.csl-indent {
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 </head>
@@ -87,11 +89,16 @@ div.csl-indent {
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-    <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Koreksi Bias Statistik</span></h1>
-      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
-        <i class="bi bi-chevron-right"></i>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./praktikum-3.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Koreksi Bias Statistik</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
       </button>
     </div>
   </nav>
@@ -99,51 +106,56 @@ div.csl-indent {
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Modul Praktikum Pemodelan Iklim</a> 
     </div>
       </div>
-      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
         <div id="quarto-search" class="" title="Search"></div>
         </div>
-      </div>
+        </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">{.unnumbered}</span></a>
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">{.unnumbered}</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./praktikum-1.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title"><em>Dynamical Downscaling</em>: Model Weather Research Forecasting (WRF)</span></a>
+  <a href="./praktikum-1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title"><em>Dynamical Downscaling</em>: Model Weather Research Forecasting (WRF)</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./praktikum-2.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Model Pendugaan Radiasi Matahari</span></a>
+  <a href="./praktikum-2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Model Pendugaan Radiasi Matahari</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./praktikum-3.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Koreksi Bias Statistik</span></a>
+  <a href="./praktikum-3.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Koreksi Bias Statistik</span></span></a>
   </div>
 </li>
     </ul>
     </div>
 </nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#pendahuluan" id="toc-pendahuluan" class="nav-link active" data-scroll-target="#pendahuluan"><span class="toc-section-number">4.1</span>  Pendahuluan</a></li>
-  <li><a href="#metode-delta" id="toc-metode-delta" class="nav-link" data-scroll-target="#metode-delta"><span class="toc-section-number">4.2</span>  Metode Delta</a></li>
-  <li><a href="#metode-distribusi" id="toc-metode-distribusi" class="nav-link" data-scroll-target="#metode-distribusi"><span class="toc-section-number">4.3</span>  Metode Distribusi</a></li>
+  <li><a href="#pendahuluan" id="toc-pendahuluan" class="nav-link active" data-scroll-target="#pendahuluan"><span class="header-section-number">4.1</span> Pendahuluan</a></li>
+  <li><a href="#metode-delta" id="toc-metode-delta" class="nav-link" data-scroll-target="#metode-delta"><span class="header-section-number">4.2</span> Metode Delta</a></li>
+  <li><a href="#metode-distribusi" id="toc-metode-distribusi" class="nav-link" data-scroll-target="#metode-distribusi"><span class="header-section-number">4.3</span> Metode Distribusi</a></li>
   </ul>
 </nav>
     </div>
@@ -152,7 +164,7 @@ div.csl-indent {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Koreksi Bias Statistik</span></h1>
+<h1 class="title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Koreksi Bias Statistik</span></h1>
 </div>
 
 
@@ -169,8 +181,8 @@ div.csl-indent {
 
 <section id="pendahuluan" class="level2" data-number="4.1">
 <h2 data-number="4.1" class="anchored" data-anchor-id="pendahuluan"><span class="header-section-number">4.1</span> Pendahuluan</h2>
-<p><em>Global Climate Model</em> (GCM) adalah alat utama dan paling komprehensif yang digunakan dalam simulasi perubahan iklim pada masa lalu maupun masa mendatang. GCM memiliki kemampuan dalam melakukan simulasi variabilitas iklim dan sifat-sifat di permukaan bumi pada skala global. Kelemahan GCM adalah ketidakmampuan menangkap kejadian-kejadian iklim pada skala regional maupun lokal karena resolusi spasial yang masih kasar. Dynamical downscalling dengan simulasi Regional Climate Model (RCM) dilakukan untuk memperhalus resolusi dari GCM. Simulasi RCM secara umum menunjukkan bias secara sistematik terhadap observasi <span class="citation" data-cites="delei2019">(<a href="#ref-delei2019" role="doc-biblioref">Li et al. 2019</a>)</span>.</p>
-<p>Metode koreksi bias biasanya menggunakan fungsi transfer/koreksi yang mengubah data model menjadi data terkoreksi secara statistik. Selain Delta Method <span class="citation" data-cites="sperna2010 graham2007">(<a href="#ref-sperna2010" role="doc-biblioref">Sperna Weiland et al. 2010</a>; <a href="#ref-graham2007" role="doc-biblioref">Graham, Andréasson, and Carlsson 2007</a>)</span>, metode koreksi bias lain telah dikembangkan, seperti linear scalling correction, power transformation, empirical quantile mapping, dan parametric quantile mapping <span class="citation" data-cites="delei2019">(<a href="#ref-delei2019" role="doc-biblioref">Li et al. 2019</a>)</span>. Beberapa keterbatasan dalam melakukan koreksi bias, yaitu umumnya tidak memiliki dasar fisika yang kuat, menghasilkan perubahan konsistensi secara spasial, perubahan hubungan antar variabel, melawan aturan hukum konservasi energi, tidak memperhitungkan ketidakpastian dari kumpulan data observasi dan variabilitas internal, dan galat model dan fungsi koreksi umumnya dianggap stasioner terhadap waktu <span class="citation" data-cites="ehret2012hess addor2015 maraun2016">(<a href="#ref-ehret2012hess" role="doc-biblioref">Ehret et al. 2012</a>; <a href="#ref-addor2015" role="doc-biblioref">Addor and Fischer 2015</a>; <a href="#ref-maraun2016" role="doc-biblioref">Maraun 2016</a>)</span>. Ringkasan pengklasifikasian metode koreksi bias dapat dilihat pada <a href="#tbl-watanabe">Tabel&nbsp;<span>4.1</span></a> <span class="citation" data-cites="watanabe2012">(<a href="#ref-watanabe2012" role="doc-biblioref">Watanabe et al. 2012</a>)</span>.</p>
+<p><em>Global Climate Model</em> (GCM) adalah alat utama dan paling komprehensif yang digunakan dalam simulasi perubahan iklim pada masa lalu maupun masa mendatang. GCM memiliki kemampuan dalam melakukan simulasi variabilitas iklim dan sifat-sifat di permukaan bumi pada skala global. Kelemahan GCM adalah ketidakmampuan menangkap kejadian-kejadian iklim pada skala regional maupun lokal karena resolusi spasial yang masih kasar. Dynamical downscalling dengan simulasi Regional Climate Model (RCM) dilakukan untuk memperhalus resolusi dari GCM. Simulasi RCM secara umum menunjukkan bias secara sistematik terhadap observasi <span class="citation" data-cites="delei2019">(<a href="#ref-delei2019" role="doc-biblioref">Li <em>et al.</em> 2019</a>)</span>.</p>
+<p>Metode koreksi bias biasanya menggunakan fungsi transfer/koreksi yang mengubah data model menjadi data terkoreksi secara statistik. Selain Delta Method <span class="citation" data-cites="sperna2010 graham2007">(<a href="#ref-graham2007" role="doc-biblioref">Graham <em>et al.</em> 2007</a>; <a href="#ref-sperna2010" role="doc-biblioref">Sperna Weiland <em>et al.</em> 2010</a>)</span>, metode koreksi bias lain telah dikembangkan, seperti linear scalling correction, power transformation, empirical quantile mapping, dan parametric quantile mapping <span class="citation" data-cites="delei2019">(<a href="#ref-delei2019" role="doc-biblioref">Li <em>et al.</em> 2019</a>)</span>. Beberapa keterbatasan dalam melakukan koreksi bias, yaitu umumnya tidak memiliki dasar fisika yang kuat, menghasilkan perubahan konsistensi secara spasial, perubahan hubungan antar variabel, melawan aturan hukum konservasi energi, tidak memperhitungkan ketidakpastian dari kumpulan data observasi dan variabilitas internal, dan galat model dan fungsi koreksi umumnya dianggap stasioner terhadap waktu <span class="citation" data-cites="ehret2012hess addor2015 maraun2016">(<a href="#ref-ehret2012hess" role="doc-biblioref">Ehret <em>et al.</em> 2012</a>; <a href="#ref-addor2015" role="doc-biblioref">Addor and Fischer 2015</a>; <a href="#ref-maraun2016" role="doc-biblioref">Maraun 2016</a>)</span>. Ringkasan pengklasifikasian metode koreksi bias dapat dilihat pada <a href="#tbl-watanabe">Tabel&nbsp;<span>4.1</span></a> <span class="citation" data-cites="watanabe2012">(<a href="#ref-watanabe2012" role="doc-biblioref">Watanabe <em>et al.</em> 2012</a>)</span>.</p>
 <div id="tbl-watanabe" class="anchored">
 <table class="table">
 <caption>Tabel&nbsp;4.1: Klasifikasi metode koreksi bias statistik</caption>
@@ -235,20 +247,20 @@ x_{cor,i} = x_{o, i} . \frac{\mu_p}{\mu_b} \tag{2}
 </section>
 <section id="metode-distribusi" class="level2" data-number="4.3">
 <h2 data-number="4.3" class="anchored" data-anchor-id="metode-distribusi"><span class="header-section-number">4.3</span> Metode Distribusi</h2>
-<p>Koreksi bias dengan metode ini berdasarkan distribusi statistik dari data model yang ditransformasikan untuk menyesuaikan distribusi data dari observasi. Distribusi normal umum diasumsikan untuk data suhu udara <span class="citation" data-cites="piani2010suhu">(<a href="#ref-piani2010suhu" role="doc-biblioref">Piani et al. 2010</a>)</span>, sedangkan distribusi gamma untuk data curah hujan <span class="citation" data-cites="piani2010pr">(<a href="#ref-piani2010pr" role="doc-biblioref">Piani, Haerter, and Coppola 2010</a>)</span>. Persamaan <em>Probability Density Function</em> (PDF) untuk sebaran normal (<a href="#eq-3">Persamaan&nbsp;<span>4.3</span></a>) dan sebaran gamma (<a href="#eq-4">Persamaan&nbsp;<span>4.4</span></a>) adalah sebagai berikut.</p>
+<p>Koreksi bias dengan metode ini berdasarkan distribusi statistik dari data model yang ditransformasikan untuk menyesuaikan distribusi data dari observasi. Distribusi normal umum diasumsikan untuk data suhu udara <span class="citation" data-cites="piani2010suhu">(<a href="#ref-piani2010suhu" role="doc-biblioref">Piani, Weedon, <em>et al.</em> 2010</a>)</span>, sedangkan distribusi gamma untuk data curah hujan <span class="citation" data-cites="piani2010pr">(<a href="#ref-piani2010pr" role="doc-biblioref">Piani, Haerter, <em>et al.</em> 2010</a>)</span>. Persamaan <em>Probability Density Function</em> (PDF) untuk sebaran normal (<a href="#eq-3">Persamaan&nbsp;<span>4.3</span></a>) dan sebaran gamma (<a href="#eq-4">Persamaan&nbsp;<span>4.4</span></a>) adalah sebagai berikut.</p>
 <p><span id="eq-3"><span class="math display">\[
 f(x, \mu, \sigma) = \frac{1}{\sigma \sqrt{2\pi}} ~ e^{-0.5 (\frac{x - \mu}{\sigma})^2} \tag{3}
 \tag{4.3}\]</span></span></p>
 <p><span id="eq-4"><span class="math display">\[
 f(x, \alpha, \beta) = \frac{exp(-\frac{x}{\beta}) . (\frac{x}{\beta})^{\alpha-1}}{\Gamma(\alpha)\beta} \tag{4}
 \tag{4.4}\]</span></span></p>
-<p>dengan x adalah data curah hujan atau suhu udara, <span class="math inline">\(\alpha\)</span> adalah parameter skala, <span class="math inline">\(\beta\)</span> adalah parameter bentuk, <span class="math inline">\(\sigma\)</span> adalah standar deviasi, dan <span class="math inline">\(\mu\)</span> adalah rata-rata. Proses koreksi bias dihitung dari invers <em>Cumulative Density Function</em> (CDF). Pada <a href="#eq-4">Persamaan&nbsp;<span>4.4</span></a>, nilai <span class="math inline">\(\alpha\)</span> dan <span class="math inline">\(\beta\)</span> dapat diestimasi dengan metode <span class="citation" data-cites="greenwood1960">Greenwood and Durand (<a href="#ref-greenwood1960" role="doc-biblioref">1960</a>)</span>. Persamaannya sebagai berikut.</p>
+<p>dengan x adalah data curah hujan atau suhu udara, <span class="math inline">\(\alpha\)</span> adalah parameter skala, <span class="math inline">\(\beta\)</span> adalah parameter bentuk, <span class="math inline">\(\sigma\)</span> adalah standar deviasi, dan <span class="math inline">\(\mu\)</span> adalah rata-rata. Proses koreksi bias dihitung dari invers <em>Cumulative Density Function</em> (CDF). Pada <a href="#eq-4">Persamaan&nbsp;<span>4.4</span></a>, nilai <span class="math inline">\(\alpha\)</span> dan <span class="math inline">\(\beta\)</span> dapat diestimasi dengan metode Greenwood dan Durand <span class="citation" data-cites="greenwood1960">(<a href="#ref-greenwood1960" role="doc-biblioref">Greenwood and Durand 1960</a>)</span>. Persamaannya sebagai berikut.</p>
 <p><span id="eq-5"><span class="math display">\[
 \alpha =
   \begin{cases}
-    \frac{0.5000876+0.1648852y−0.0544276y^2}{y}, &amp; \text{jika} ~ 0 \leq y \leq 0.5772 \\
-    \frac{8.898919+9.05995y+0.9775373y^2}{17.79728y+11.968477y^2+y^3}, &amp; \text{jika} ~ 0.5772 &lt; y \leq 17 \\
-    \frac{1}{y}, &amp; \text{jika} ~ y &gt; 17
+    \frac{0.5000876+0.1648852y−0.0544276y^2}{y} &amp;,~ \text{jika} ~ 0 \leq y \leq 0.5772 \\
+    \frac{8.898919+9.05995y+0.9775373y^2}{17.79728y+11.968477y^2+y^3} &amp;, ~ \text{jika} ~ 0.5772 &lt; y \leq 17 \\
+    \frac{1}{y} &amp;, ~ \text{jika} ~ y &gt; 17
   \end{cases} \tag{5}
 \tag{4.5}\]</span></span></p>
 <p><span id="eq-6"><span class="math display">\[
@@ -257,38 +269,39 @@ y = ln(\bar{x}) - \frac{1}{n} \sum_{i = 1} ^ n ln(x_i) \tag{6}
 <p><span id="eq-7"><span class="math display">\[
 \beta = \frac{\bar{x}}{\alpha} \tag{7}
 \tag{4.7}\]</span></span></p>
+<p>Persamaan <a href="#eq-5">Persamaan&nbsp;<span>4.5</span></a>, <a href="#eq-6">Persamaan&nbsp;<span>4.6</span></a>, <a href="#eq-7">Persamaan&nbsp;<span>4.7</span></a> menjadi masalah ketika menerapkannya pada data curah hujan yang bernilai 0.</p>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
-<div id="ref-addor2015" class="csl-entry" role="doc-biblioentry">
-Addor, Nans, and Erich M Fischer. 2015. <span>“The Influence of Natural Variability and Interpolation Errors on Bias Characterization in RCM Simulations.”</span> <em>Journal of Geophysical Research: Atmospheres</em> 120 (19): 10–180.
+<div id="refs" class="references csl-bib-body" role="list">
+<div id="ref-addor2015" class="csl-entry" role="listitem">
+Addor N, Fischer EM. 2015. The influence of natural variability and interpolation errors on bias characterization in RCM simulations. <em>Journal of Geophysical Research: Atmospheres</em>. 120(19):10–180.
 </div>
-<div id="ref-ehret2012hess" class="csl-entry" role="doc-biblioentry">
-Ehret, Uwe, Erwin Zehe, V Wulfmeyer, K Warrach-Sagi, and J Liebert. 2012. <span>“HESS Opinions" Should We Apply Bias Correction to Global and Regional Climate Model Data?".”</span> <em>Hydrology &amp; Earth System Sciences Discussions</em> 9 (4).
+<div id="ref-ehret2012hess" class="csl-entry" role="listitem">
+Ehret U, Zehe E, Wulfmeyer V, Warrach-Sagi K, Liebert J. 2012. HESS opinions" should we apply bias correction to global and regional climate model data?". <em>Hydrology &amp; Earth System Sciences Discussions</em>. 9(4).
 </div>
-<div id="ref-graham2007" class="csl-entry" role="doc-biblioentry">
-Graham, L Phil, Johan Andréasson, and Bengt Carlsson. 2007. <span>“Assessing Climate Change Impacts on Hydrology from an Ensemble of Regional Climate Models, Model Scales and Linking Methods–a Case Study on the Lule River Basin.”</span> <em>Climatic Change</em> 81 (1): 293–307.
+<div id="ref-graham2007" class="csl-entry" role="listitem">
+Graham LP, Andréasson J, Carlsson B. 2007. Assessing climate change impacts on hydrology from an ensemble of regional climate models, model scales and linking methods–a case study on the lule river basin. <em>Climatic Change</em>. 81(1):293–307.
 </div>
-<div id="ref-greenwood1960" class="csl-entry" role="doc-biblioentry">
-Greenwood, J Arthur, and David Durand. 1960. <span>“Aids for Fitting the Gamma Distribution by Maximum Likelihood.”</span> <em>Technometrics</em> 2 (1): 55–65.
+<div id="ref-greenwood1960" class="csl-entry" role="listitem">
+Greenwood JA, Durand D. 1960. Aids for fitting the gamma distribution by maximum likelihood. <em>Technometrics</em>. 2(1):55–65.
 </div>
-<div id="ref-delei2019" class="csl-entry" role="doc-biblioentry">
-Li, Delei, Jianlong Feng, Zhenhua Xu, Baoshu Yin, Hongyuan Shi, and Jifeng Qi. 2019. <span>“Statistical Bias Correction for Simulated Wind Speeds over CORDEX-East Asia.”</span> <em>Earth and Space Science</em> 6 (2): 200–211. <a href="https://agupubs.onlinelibrary.wiley.com/doi/abs/10.1029/2018EA000493">https://agupubs.onlinelibrary.wiley.com/doi/abs/10.1029/2018EA000493</a>.
+<div id="ref-delei2019" class="csl-entry" role="listitem">
+Li D, Feng J, Xu Z, Yin B, Shi H, Qi J. 2019. <a href="https://agupubs.onlinelibrary.wiley.com/doi/abs/10.1029/2018EA000493">Statistical bias correction for simulated wind speeds over CORDEX-east asia</a>. <em>Earth and Space Science</em>. 6(2):200–211.
 </div>
-<div id="ref-maraun2016" class="csl-entry" role="doc-biblioentry">
-Maraun, Douglas. 2016. <span>“Bias Correcting Climate Change Simulations-a Critical Review.”</span> <em>Current Climate Change Reports</em> 2 (4): 211–20.
+<div id="ref-maraun2016" class="csl-entry" role="listitem">
+Maraun D. 2016. Bias correcting climate change simulations-a critical review. <em>Current Climate Change Reports</em>. 2(4):211–220.
 </div>
-<div id="ref-piani2010pr" class="csl-entry" role="doc-biblioentry">
-Piani, C, JO Haerter, and E Coppola. 2010. <span>“Statistical Bias Correction for Daily Precipitation in Regional Climate Models over Europe.”</span> <em>Theoretical and Applied Climatology</em> 99 (1-2): 187–92.
+<div id="ref-piani2010pr" class="csl-entry" role="listitem">
+Piani C, Haerter J, Coppola E. 2010. Statistical bias correction for daily precipitation in regional climate models over europe. <em>Theoretical and Applied Climatology</em>. 99(1-2):187–192.
 </div>
-<div id="ref-piani2010suhu" class="csl-entry" role="doc-biblioentry">
-Piani, C, GP Weedon, M Best, SM Gomes, P Viterbo, S Hagemann, and JO Haerter. 2010. <span>“Statistical Bias Correction of Global Simulated Daily Precipitation and Temperature for the Application of Hydrological Models.”</span> <em>Journal of Hydrology</em> 395 (3-4): 199–215.
+<div id="ref-piani2010suhu" class="csl-entry" role="listitem">
+Piani C, Weedon G, Best M, Gomes S, Viterbo P, Hagemann S, Haerter J. 2010. Statistical bias correction of global simulated daily precipitation and temperature for the application of hydrological models. <em>Journal of Hydrology</em>. 395(3-4):199–215.
 </div>
-<div id="ref-sperna2010" class="csl-entry" role="doc-biblioentry">
-Sperna Weiland, FC, LPH Van Beek, JCJ Kwadijk, and MFP Bierkens. 2010. <span>“The Ability of a GCM-Forced Hydrological Model to Reproduce Global Discharge Variability.”</span> <em>Hydrology and Earth System Sciences</em> 14: 1595–1621.
+<div id="ref-sperna2010" class="csl-entry" role="listitem">
+Sperna Weiland F, Van Beek L, Kwadijk J, Bierkens M. 2010. The ability of a GCM-forced hydrological model to reproduce global discharge variability. <em>Hydrology and Earth System Sciences</em>. 14:1595–1621.
 </div>
-<div id="ref-watanabe2012" class="csl-entry" role="doc-biblioentry">
-Watanabe, Satoshi, Shinjiro Kanae, Shinta Seto, Pat J-F Yeh, Yukiko Hirabayashi, and Taikan Oki. 2012. <span>“Intercomparison of Bias-Correction Methods for Monthly Temperature and Precipitation Simulated by Multiple Climate Models.”</span> <em>Journal of Geophysical Research: Atmospheres</em> 117 (D23).
+<div id="ref-watanabe2012" class="csl-entry" role="listitem">
+Watanabe S, Kanae S, Seto S, Yeh PJ-F, Hirabayashi Y, Oki T. 2012. Intercomparison of bias-correction methods for monthly temperature and precipitation simulated by multiple climate models. <em>Journal of Geophysical Research: Atmospheres</em>. 117(D23).
 </div>
 </div>
 </section>
@@ -321,9 +334,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -388,6 +415,92 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
   const findCites = (el) => {
     const parentEl = el.parentElement;
     if (parentEl) {

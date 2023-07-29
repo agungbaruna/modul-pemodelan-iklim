@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.335">
+<meta name="generator" content="quarto-1.3.433">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -17,9 +17,10 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -46,48 +47,19 @@ pre.numberSource code > span > a:first-child::before
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
     padding: 0 4px; width: 4em;
-    color: #aaaaaa;
   }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
 div.sourceCode
   {   }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { color: #008000; } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { color: #008000; font-weight: bold; } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+/* CSS for citations */
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
 }
-.hanging div.csl-entry {
+.hanging-indent div.csl-entry {
   margin-left:2em;
   text-indent:-2em;
 }
@@ -101,8 +73,7 @@ div.csl-right-inline {
 }
 div.csl-indent {
   margin-left: 2em;
-}
-</style>
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -139,10 +110,12 @@ div.csl-indent {
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 </head>
@@ -151,11 +124,16 @@ div.csl-indent {
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-    <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Model Pendugaan Radiasi Matahari</span></h1>
-      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
-        <i class="bi bi-chevron-right"></i>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./praktikum-2.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Model Pendugaan Radiasi Matahari</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
       </button>
     </div>
   </nav>
@@ -163,55 +141,60 @@ div.csl-indent {
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Modul Praktikum Pemodelan Iklim</a> 
     </div>
       </div>
-      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
         <div id="quarto-search" class="" title="Search"></div>
         </div>
-      </div>
+        </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">{.unnumbered}</span></a>
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">{.unnumbered}</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./praktikum-1.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title"><em>Dynamical Downscaling</em>: Model Weather Research Forecasting (WRF)</span></a>
+  <a href="./praktikum-1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title"><em>Dynamical Downscaling</em>: Model Weather Research Forecasting (WRF)</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./praktikum-2.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Model Pendugaan Radiasi Matahari</span></a>
+  <a href="./praktikum-2.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Model Pendugaan Radiasi Matahari</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./praktikum-3.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Koreksi Bias Statistik</span></a>
+  <a href="./praktikum-3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Koreksi Bias Statistik</span></span></a>
   </div>
 </li>
     </ul>
     </div>
 </nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#pendahuluan" id="toc-pendahuluan" class="nav-link active" data-scroll-target="#pendahuluan"><span class="toc-section-number">3.1</span>  Pendahuluan</a></li>
-  <li><a href="#sec-modelball" id="toc-sec-modelball" class="nav-link" data-scroll-target="#sec-modelball"><span class="toc-section-number">3.2</span>  Model Pendugaan Ball et al.&nbsp;(2004)</a></li>
-  <li><a href="#sec-modelhunt" id="toc-sec-modelhunt" class="nav-link" data-scroll-target="#sec-modelhunt"><span class="toc-section-number">3.3</span>  Model Pendugaan Hunt et al.&nbsp;(1998)</a></li>
-  <li><a href="#pengolahan-data" id="toc-pengolahan-data" class="nav-link" data-scroll-target="#pengolahan-data"><span class="toc-section-number">3.4</span>  Pengolahan Data</a>
+  <li><a href="#pendahuluan" id="toc-pendahuluan" class="nav-link active" data-scroll-target="#pendahuluan"><span class="header-section-number">3.1</span> Pendahuluan</a></li>
+  <li><a href="#sec-modelball" id="toc-sec-modelball" class="nav-link" data-scroll-target="#sec-modelball"><span class="header-section-number">3.2</span> Model Pendugaan Ball et al.&nbsp;(2004)</a></li>
+  <li><a href="#sec-modelhunt" id="toc-sec-modelhunt" class="nav-link" data-scroll-target="#sec-modelhunt"><span class="header-section-number">3.3</span> Model Pendugaan Hunt et al.&nbsp;(1998)</a></li>
+  <li><a href="#pengolahan-data" id="toc-pengolahan-data" class="nav-link" data-scroll-target="#pengolahan-data"><span class="header-section-number">3.4</span> Pengolahan Data</a>
   <ul class="collapse">
-  <li><a href="#r" id="toc-r" class="nav-link" data-scroll-target="#r"><span class="toc-section-number">3.4.1</span>  R</a></li>
-  <li><a href="#python" id="toc-python" class="nav-link" data-scroll-target="#python"><span class="toc-section-number">3.4.2</span>  Python</a></li>
+  <li><a href="#r" id="toc-r" class="nav-link" data-scroll-target="#r"><span class="header-section-number">3.4.1</span> R</a></li>
+  <li><a href="#python" id="toc-python" class="nav-link" data-scroll-target="#python"><span class="header-section-number">3.4.2</span> Python</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -221,7 +204,7 @@ div.csl-indent {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Model Pendugaan Radiasi Matahari</span></h1>
+<h1 class="title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Model Pendugaan Radiasi Matahari</span></h1>
 </div>
 
 
@@ -244,14 +227,14 @@ div.csl-indent {
 </section>
 <section id="sec-modelball" class="level2" data-number="3.2">
 <h2 data-number="3.2" class="anchored" data-anchor-id="sec-modelball"><span class="header-section-number">3.2</span> Model Pendugaan Ball et al.&nbsp;(2004)</h2>
-<p>Ball et al. <span class="citation" data-cites="ball2004">(<a href="#ref-ball2004" role="doc-biblioref">Ball, Purcell, and Carey 2004</a>)</span> membangun model empiris untuk menduga radiasi matahari di permukaan bumi dengan masukan suhu udara maksimum, suhu udara minimum, curah hujan, dan <em>julian days</em>. Persamaan yang digunakan berupa regresi linier berganda, yaitu</p>
+<p>Ball et al. <span class="citation" data-cites="ball2004">(<a href="#ref-ball2004" role="doc-biblioref">Ball <em>et al.</em> 2004</a>)</span> membangun model empiris untuk menduga radiasi matahari di permukaan bumi dengan masukan suhu udara maksimum, suhu udara minimum, curah hujan, dan <em>julian days</em>. Persamaan yang digunakan berupa regresi linier berganda, yaitu</p>
 <p><span class="math display">\[
 Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \beta_3 X_3 + ... + \beta_{12} X_{12}
 \]</span></p>
 <p>di mana keterangan setiap variabel bebas dapat dilihat pada tabel berikut.</p>
 <div id="tbl-modelball" class="anchored">
 <table class="table">
-<caption>Tabel&nbsp;3.1: Keterangan variabel bebas dari persamaan empirik <span class="citation" data-cites="ball2004">(<a href="#ref-ball2004" role="doc-biblioref">Ball, Purcell, and Carey 2004</a>)</span></caption>
+<caption>Tabel&nbsp;3.1: Keterangan variabel bebas dari persamaan empirik <span class="citation" data-cites="ball2004">(<a href="#ref-ball2004" role="doc-biblioref">Ball <em>et al.</em> 2004</a>)</span></caption>
 <thead>
 <tr class="header">
 <th style="text-align: center;">Prediktor</th>
@@ -313,11 +296,11 @@ Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \beta_3 X_3 + ... + \beta_{12} X_{12}
 </section>
 <section id="sec-modelhunt" class="level2" data-number="3.3">
 <h2 data-number="3.3" class="anchored" data-anchor-id="sec-modelhunt"><span class="header-section-number">3.3</span> Model Pendugaan Hunt et al.&nbsp;(1998)</h2>
-<p>Model pendugaan radiasi matahari lain adalah oleh Hunt <span class="citation" data-cites="hunt1998">(<a href="#ref-hunt1998" role="doc-biblioref">Hunt, Kuchar, and Swanton 1998</a>)</span>, yaitu gabungan model mekanistik dan empirik dengan masukan suhu udara maksimum, suhu udara minimum, dan curah hujan. Model mekanistik digunakan untuk menduga radiasi matahari yang berada di permukaan atmosfer (radiasi ekstraterestrial, <span class="math inline">\(S_0\)</span>). Model pendugaan Hunt (1998) adalah sebagai berikut.</p>
+<p>Model pendugaan radiasi matahari lain adalah oleh Hunt <span class="citation" data-cites="hunt1998">(<a href="#ref-hunt1998" role="doc-biblioref">Hunt <em>et al.</em> 1998</a>)</span>, yaitu gabungan model mekanistik dan empirik dengan masukan suhu udara maksimum, suhu udara minimum, dan curah hujan. Model mekanistik digunakan untuk menduga radiasi matahari yang berada di permukaan atmosfer (radiasi ekstraterestrial, <span class="math inline">\(S_0\)</span>). Model pendugaan Hunt (1998) adalah sebagai berikut.</p>
 <p><span class="math display">\[
 R_s = a_0 S_0 (T_{max} - T_{min})^{0.5} + a_1 T_{max} + a_2 P + a_3 P^2 + a_4
 \]</span></p>
-<p>dimana <span class="math inline">\(R_s\)</span> adalah radiasi matahari harian (<span class="math inline">\(MJ~m^{−2}~hari^{−1}\)</span>), <span class="math inline">\(S_0\)</span> adalah radiasi matahari di puncak atmosfer (<span class="math inline">\(MJ~m^{−2}~hari^{−1}\)</span>), <span class="math inline">\(P\)</span> adalah curah hujan (mm), <span class="math inline">\(T_{max}\)</span> adalah suhu udara maksimum (<span class="math inline">\(^o C\)</span>), dan <span class="math inline">\(T_{min}\)</span> adalah suhu udara minimum (<span class="math inline">\(^o C\)</span>). Untuk mengestimasi nilai <span class="math inline">\(S_0\)</span>, Hunt menggunakan persamaan mekanistik dalam Spitters <span class="citation" data-cites="spitters1986">(<a href="#ref-spitters1986" role="doc-biblioref">Spitters, Toussaint, and Goudriaan 1986</a>)</span>, yaitu:</p>
+<p>dimana <span class="math inline">\(R_s\)</span> adalah radiasi matahari harian (<span class="math inline">\(MJ~m^{−2}~hari^{−1}\)</span>), <span class="math inline">\(S_0\)</span> adalah radiasi matahari di puncak atmosfer (<span class="math inline">\(MJ~m^{−2}~hari^{−1}\)</span>), <span class="math inline">\(P\)</span> adalah curah hujan (mm), <span class="math inline">\(T_{max}\)</span> adalah suhu udara maksimum (<span class="math inline">\(^o C\)</span>), dan <span class="math inline">\(T_{min}\)</span> adalah suhu udara minimum (<span class="math inline">\(^o C\)</span>). Untuk mengestimasi nilai <span class="math inline">\(S_0\)</span>, Hunt menggunakan persamaan mekanistik dalam Spitters <span class="citation" data-cites="spitters1986">(<a href="#ref-spitters1986" role="doc-biblioref">Spitters <em>et al.</em> 1986</a>)</span>, yaitu:</p>
 <p><span class="math display">\[
 S_0 = S_{sc} \left[ 1 + 0.033 \cos \left( \frac{360~t_d}{365} \right) \right] sin(β)
 \]</span></p>
@@ -435,18 +418,13 @@ F-statistic:  1838 on 12 and 7657 DF,  p-value: &lt; 2.2e-16</code></pre>
 <span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(r); <span class="fu">print</span>(R2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <pre><code>[1] 0.8508384
 [1] 0.7239259</code></pre>
-<p>Atau bisa juga dengan melakukan plot antara nilai aktual dan prediksi radiasi matahari dengan menampilkan garis regresi beserta persamaan regresinya ditambah dengan nilai R² dan r (<a href="#fig-sunplotball1">Gambar&nbsp;<span>3.1</span></a>)</p>
+<p>Atau bisa juga dengan melakukan plot antara nilai aktual dan prediksi radiasi matahari dengan menampilkan garis regresi beserta persamaan regresinya ditambah dengan nilai R² dan r (<span class="quarto-unresolved-ref">?fig-sunplotball1</span>)</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data_test, <span class="fu">aes</span>(<span class="at">x =</span> SRAD_pred, <span class="at">y =</span> SRAD)) <span class="sc">+</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_point</span>() <span class="sc">+</span></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="dv">0</span>, <span class="at">slope =</span> <span class="dv">1</span>, <span class="at">color =</span> <span class="st">"blue"</span>) <span class="sc">+</span></span>
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>   <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"Observasi (W/m²)"</span>, <span class="at">x =</span> <span class="st">"Model (W/m²)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div id="fig-sunplotball1" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="Pictures/sun-radiation-actualvspredicted.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Gambar&nbsp;3.1: Perbandingan radiasi matahari aktual dengan model (Ball)</figcaption><p></p>
-</figure>
-</div></li>
-<li><p>Jika Anda perhatikan pada <a href="#fig-sunplotball1">Gambar&nbsp;<span>3.1</span></a>, nilai radiasi matahari tidak mungkin bernilai negatif dan ini umum terjadi saat menggunakan model regresi. Oleh karena itu, nilai radiasi matahari yang bernilai negatif diubah menjadi 0 (<a href="#fig-sunplotball2">Gambar&nbsp;<span>3.2</span></a>).</p>
+<img src="Pictures/sun-radiation-actualvspredicted.png" id="fig-sunplotball1" class="img-fluid" alt="Perbandingan radiasi matahari aktual dengan model (Ball)"></li>
+<li><p>Jika Anda perhatikan pada <span class="quarto-unresolved-ref">?fig-sunplotball1</span>, nilai radiasi matahari tidak mungkin bernilai negatif dan ini umum terjadi saat menggunakan model regresi. Oleh karena itu, nilai radiasi matahari yang bernilai negatif diubah menjadi 0 (<span class="quarto-unresolved-ref">?fig-sunplotball2</span>).</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>data_test <span class="ot">&lt;-</span> data_test <span class="sc">%&gt;%</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">mutate</span>(<span class="at">SRAD_pred =</span> <span class="fu">ifelse</span>(SRAD_pred <span class="sc">&lt;</span> <span class="dv">0</span>, <span class="dv">0</span>, SRAD_pred))</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -456,12 +434,7 @@ F-statistic:  1838 on 12 and 7657 DF,  p-value: &lt; 2.2e-16</code></pre>
 <span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>   <span class="fu">scale_x_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">400</span>), <span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>)) <span class="sc">+</span></span>
 <span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>   <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">400</span>), <span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>)) <span class="sc">+</span></span>
 <span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>   <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"Observasi (W/m²)"</span>, <span class="at">x =</span> <span class="st">"Model (W/m²)"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div id="fig-sunplotball2" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="Pictures/sun-radiation-actualvspredicted-corr.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Gambar&nbsp;3.2: Perbandingan radiasi matahari aktual dengan model (Ball)</figcaption><p></p>
-</figure>
-</div></li>
+<img src="Pictures/sun-radiation-actualvspredicted-corr.png" id="fig-sunplotball2" class="img-fluid" alt="Perbandingan radiasi matahari aktual dengan model (Ball)"></li>
 </ol>
 </section>
 <section id="model-hunt-et-al.-1998" class="level4 unnumbered">
@@ -568,7 +541,7 @@ F-statistic:  5443 on 4 and 7665 DF,  p-value: &lt; 2.2e-16</code></pre></li>
 <span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(r); <span class="fu">print</span>(R2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <pre><code>[1] 0.8474758
 [1] 0.7182153</code></pre></li>
-<li><p>Sama seperti Ball, model Hunt juga dapat dipastikan estimasi radiasi matahari bernilai negatif. Untuk mengubahnya menjadi 0, lakukan hal yang sama seperti pada model Ball pada langkah ke-7 dan buat grafiknya (<a href="#fig-sunmodelhunt">Gambar&nbsp;<span>3.3</span></a>)</p>
+<li><p>Sama seperti Ball, model Hunt juga dapat dipastikan estimasi radiasi matahari bernilai negatif. Untuk mengubahnya menjadi 0, lakukan hal yang sama seperti pada model Ball pada langkah ke-7 dan buat grafiknya (<span class="quarto-unresolved-ref">?fig-sunmodelhunt</span>)</p>
 <div class="sourceCode" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>data_test <span class="ot">&lt;-</span> data_test <span class="sc">%&gt;%</span></span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">mutate</span>(<span class="at">SRAD_pred =</span> <span class="fu">ifelse</span>(SRAD_pred <span class="sc">&lt;</span> <span class="dv">0</span>, <span class="dv">0</span>, SRAD_pred))</span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -578,12 +551,7 @@ F-statistic:  5443 on 4 and 7665 DF,  p-value: &lt; 2.2e-16</code></pre></li>
 <span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>   <span class="fu">scale_x_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">400</span>), <span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>)) <span class="sc">+</span></span>
 <span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>   <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">400</span>), <span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>)) <span class="sc">+</span></span>
 <span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>   <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"Observasi (W/m²)"</span>, <span class="at">x =</span> <span class="st">"Model (W/m²)"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div id="fig-sunmodelhunt" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="Pictures/sun-radiation-actualvspredicted-hunt.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Gambar&nbsp;3.3: Perbandingan radiasi matahari aktual terhadap model (Hunt)</figcaption><p></p>
-</figure>
-</div></li>
+<img src="Pictures/sun-radiation-actualvspredicted-hunt.png" id="fig-sunmodelhunt" class="img-fluid" alt="Perbandingan radiasi matahari aktual terhadap model (Hunt)"></li>
 </ol>
 </section>
 </section>
@@ -691,7 +659,7 @@ MAE  = 37.6</code></pre></li>
 <pre><code>R²   = 0.72
 RMSE = 51.69
 MAE  = 40.72</code></pre></li>
-<li><p>Untuk membuat grafik dari <code>data_test</code> maupun <code>data_train</code>, Anda dapat menggunakan <code>matplotlib</code> (<a href="#fig-sunmodelballpy">Gambar&nbsp;<span>3.4</span></a>)</p>
+<li><p>Untuk membuat grafik dari <code>data_test</code> maupun <code>data_train</code>, Anda dapat menggunakan <code>matplotlib</code> (<span class="quarto-unresolved-ref">?fig-sunmodelballpy</span>)</p>
 <div class="sourceCode" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>y_pred <span class="op">=</span> model.predict(data_train.loc[:, [<span class="st">'PRCP'</span>, <span class="st">'TMAX'</span>, <span class="st">'TMIN'</span>, <span class="st">'DOY'</span>, </span>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>                                          <span class="st">'PRCP_sq'</span>, <span class="st">'TMAX_sq'</span>, <span class="st">'TMIN_sq'</span>, </span>
 <span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>                                          <span class="st">'DOY_sq'</span>, <span class="st">'PRCP_TMAX'</span>, <span class="st">'PRCP_TMIN'</span>, </span>
@@ -709,12 +677,7 @@ MAE  = 40.72</code></pre></li>
 <span id="cb34-15"><a href="#cb34-15" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Observasi (W/m²)'</span>)</span>
 <span id="cb34-16"><a href="#cb34-16" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb34-17"><a href="#cb34-17" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div id="fig-sunmodelballpy" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="Pictures/sun-radiation-actualvspredicted-py.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Gambar&nbsp;3.4: Perbandingan radiasi matahari aktual terhadap model (Ball)</figcaption><p></p>
-</figure>
-</div></li>
+<img src="Pictures/sun-radiation-actualvspredicted-py.png" id="fig-sunmodelballpy" class="img-fluid" alt="Perbandingan radiasi matahari aktual terhadap model (Ball)"></li>
 </ol>
 </section>
 <section id="model-hunt-et-al.-1998-1" class="level4 unnumbered">
@@ -780,7 +743,7 @@ MAE  = 40.72</code></pre></li>
 <pre><code>R²   = 0.71
 RMSE = 52.53
 MAE  = 41.64</code></pre></li>
-<li><p>Terakhir, lakukan pembuatan grafik dari <code>data_test</code> (<a href="#fig-sunmodelhuntpy">Gambar&nbsp;<span>3.5</span></a>)</p>
+<li><p>Terakhir, lakukan pembuatan grafik dari <code>data_test</code> (<span class="quarto-unresolved-ref">?fig-sunmodelhuntpy</span>)</p>
 <div class="sourceCode" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>y_pred <span class="op">=</span> model.predict(data_test.loc[:, [<span class="st">'S0_TMAX_TMIN'</span>, <span class="st">'PRCP'</span>, <span class="st">'PRCP_sq'</span>]])</span>
 <span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>y_pred[y_pred <span class="op">&lt;</span> <span class="dv">0</span>] <span class="op">=</span> <span class="dv">0</span></span>
 <span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -801,24 +764,19 @@ MAE  = 41.64</code></pre></li>
 <span id="cb42-18"><a href="#cb42-18" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Model (W/m²)'</span>)</span>
 <span id="cb42-19"><a href="#cb42-19" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Observasi (W/m²)'</span>)</span>
 <span id="cb42-20"><a href="#cb42-20" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div id="fig-sunmodelhuntpy" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="Pictures/sun-radiation-actualvspredicted-Hunt-py.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Gambar&nbsp;3.5: Perbandingan radiasi matahari aktual terhadap model (Hunt)</figcaption><p></p>
-</figure>
-</div></li>
+<img src="Pictures/sun-radiation-actualvspredicted-Hunt-py.png" id="fig-sunmodelhuntpy" class="img-fluid" alt="Perbandingan radiasi matahari aktual terhadap model (Hunt)"></li>
 </ol>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
-<div id="ref-ball2004" class="csl-entry" role="doc-biblioentry">
-Ball, Rosalind A, Larry C Purcell, and Sean K Carey. 2004. <span>“Evaluation of Solar Radiation Prediction Models in North America.”</span> <em>Agronomy Journal</em> 96 (2): 391–97.
+<div id="refs" class="references csl-bib-body" role="list">
+<div id="ref-ball2004" class="csl-entry" role="listitem">
+Ball RA, Purcell LC, Carey SK. 2004. Evaluation of solar radiation prediction models in north america. <em>Agronomy Journal</em>. 96(2):391–397.
 </div>
-<div id="ref-hunt1998" class="csl-entry" role="doc-biblioentry">
-Hunt, LA, L Kuchar, and CJ Swanton. 1998. <span>“Estimation of Solar Radiation for Use in Crop Modelling.”</span> <em>Agricultural and Forest Meteorology</em> 91 (3-4): 293–300.
+<div id="ref-hunt1998" class="csl-entry" role="listitem">
+Hunt L, Kuchar L, Swanton C. 1998. Estimation of solar radiation for use in crop modelling. <em>Agricultural and Forest Meteorology</em>. 91(3-4):293–300.
 </div>
-<div id="ref-spitters1986" class="csl-entry" role="doc-biblioentry">
-Spitters, CJT, HAJM Toussaint, and J Goudriaan. 1986. <span>“Separating the Diffuse and Direct Component of Global Radiation and Its Implications for Modeling Canopy Photosynthesis Part i. Components of Incoming Radiation.”</span> <em>Agricultural and Forest Meteorology</em> 38 (1-3): 217–29.
+<div id="ref-spitters1986" class="csl-entry" role="listitem">
+Spitters C, Toussaint H, Goudriaan J. 1986. Separating the diffuse and direct component of global radiation and its implications for modeling canopy photosynthesis part i. Components of incoming radiation. <em>Agricultural and Forest Meteorology</em>. 38(1-3):217–229.
 </div>
 </div>
 </section>
@@ -853,9 +811,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -920,6 +892,92 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
   const findCites = (el) => {
     const parentEl = el.parentElement;
     if (parentEl) {
