@@ -10,7 +10,7 @@ book:
     - index.qmd
     - praktikum-1.ipynb
     - praktikum-2.ipynb
-    - praktikum-3.qmd
+    - praktikum-3.ipynb
     # - summary.qmd
 bibliography: references.bib
 crossref:
