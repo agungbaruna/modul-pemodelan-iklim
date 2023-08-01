@@ -27,8 +27,8 @@ code-block-border-left: true
 code-block-bg: "EFF5F5"
 
 format:
-  html:
-    theme: cosmo
+#  html:
+#    theme: cosmo
   pdf:
     colorlinks: true
     geometry:
