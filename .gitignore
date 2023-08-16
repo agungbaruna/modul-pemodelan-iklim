@@ -1,4 +1,6 @@
 /.quarto/
+.DS_Store
+/data/.DS_Store
 .Rproj.user
 *.Rproj
 *.Rhistory
