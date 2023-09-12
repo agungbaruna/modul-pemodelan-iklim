@@ -41,7 +41,7 @@ format:
     papersize: letter
     toc-title: "Daftar Isi"
     cite-method: biblatex
-    biblio-title: "Daftar Pustaka"
+    biblio-title: "Referensi"
     include-in-header: 
       text: |
         \usepackage{fvextra}
