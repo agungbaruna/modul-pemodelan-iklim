@@ -32,7 +32,7 @@ format:
   pdf:
     colorlinks: true
     geometry:
-      - top=30mm
+      - top=20mm
       - left=20mm
       - right=20mm
       - bottom=30mm
