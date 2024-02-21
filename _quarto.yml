@@ -25,7 +25,9 @@ csl: ipb.csl
 code-overflow: wrap
 code-block-border-left: true
 code-block-bg: "EFF5F5"
-
+monofont: 'Courier'
+monofontoptions: 
+  - Scale=0.8
 format:
 #  html:
 #    theme: cosmo
