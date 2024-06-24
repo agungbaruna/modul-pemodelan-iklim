@@ -1,4 +1,6 @@
-wrf.raster <- function(wrf.file, var.name, zona="UTC", nlev=1) {
+wrf.raster <- function(wrf.file, 
+                       var.name = c("rain", "tc", "ws", "wdir", "wdir_met", "rh", "tc", "tskc"),
+                       zone="UTC", nlev=1) {
   wrf.file <- nc_open(wrf.file)
   
   #Require Library
@@ -107,10 +109,10 @@ wrf.raster <- function(wrf.file, var.name, zona="UTC", nlev=1) {
   
   #Simulation Start Date
   xt <- glo$SIMULATION_START_DATE
-  xt <- as.POSIXct(xt, format = "%Y-%m-%d_%H:%M:%S", tz = zona)
+  xt <- as.POSIXct(xt, format = "%Y-%m-%d_%H:%M:%S", tz = zone)
   
   #Assign time format
-  xtt <- as.POSIXct(XTIME * 60, format = "%Y-%m-%d %H:%M:%S", origin = xt, tz = zona)
+  xtt <- as.POSIXct(XTIME * 60, format = "%Y-%m-%d %H:%M:%S", origin = xt, tz = zone)
   w.r <- setZ(w.r, xtt)
   
   #Return the raster
